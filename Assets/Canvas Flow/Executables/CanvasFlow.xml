@@ -1,0 +1,1349 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CanvasFlow</name>
+    </assembly>
+    <members>
+        <member name="T:P7.CanvasFlow.CanvasController">
+            <summary>
+            A canvas controller represents a single screen in your user interface. Canvas 
+            controllers can present and dismiss other canvas controllers, or screens, 
+            allowing you to easily build a user interface flow, presenting and dismissing 
+            screens as required. A canvas controller automatically manages the presentation 
+            hierarchy, as well as loading and unloading itself as it is presented or dismissed.
+            </summary>
+            
+            <remarks>
+            Canvas controllers should be created with Unity's *Create* menu - found 
+            by either right-clicking in the Project window or selecting Assets in the menu 
+            bar - and selecting <i>Create/Canvas Flow/Canvas Controller</i>.
+            
+            <para/>Present and dismiss canvas controllers with the 
+            <see cref="M:P7.CanvasFlow.CanvasController.PresentCanvasController``1(System.Boolean,System.Action{``0},System.Action{``0},System.Nullable{UnityEngine.Vector3},System.Boolean)"/> 
+            and <see cref="M:P7.CanvasFlow.CanvasController.DismissCanvasController(System.Boolean,System.Action)"/> methods. To present 
+            or dismiss an initial canvas controller use the 
+            <see cref="M:P7.CanvasFlow.CanvasController.PresentInitialCanvasController``1(System.Action{``0},System.Action{``0},System.Boolean,System.Nullable{UnityEngine.Vector3},System.Boolean,P7.CanvasFlow.CanvasControllerWorldSpaceContainer)"/> 
+            and <see cref="M:P7.CanvasFlow.CanvasController.DismissAllCanvasControllers(System.Boolean,System.Action)"/> methods.
+            
+            <para/>A canvas controller can override its appearance methods to be notified of 
+            the appearance events <see cref="M:P7.CanvasFlow.CanvasController.CanvasWillAppear"/>, <see cref="M:P7.CanvasFlow.CanvasController.CanvasDidAppear"/>, 
+            <see cref="M:P7.CanvasFlow.CanvasController.CanvasWillDisappear"/>, and <see cref="M:P7.CanvasFlow.CanvasController.CanvasDidDisappear"/>.
+            
+            <para/>Canvas controllers can be used with storyboards to visually define the 
+            presentation flow. When working with storyboards, data can be passed between canvas 
+            controllers by overriding the 
+            <see cref="M:P7.CanvasFlow.CanvasController.PrepareForStoryboardTransition(P7.CanvasFlow.StoryboardTransition)"/> method. Additionally, 
+            storyboard transitions can be triggered from a canvas controller using the 
+            <see cref="M:P7.CanvasFlow.CanvasController.PerformTransitionWithIdentifier(System.String)"/> method.
+            
+            <para/>Canvas controllers can be presented in world space by either setting a storyboard's
+            <see cref="T:P7.CanvasFlow.StoryboardPresentationSpace" relpath="../storyboards/"/> to <c>WorldSpace</c>, or by passing a 
+            <see cref="T:P7.CanvasFlow.CanvasControllerWorldSpaceContainer" relpath="/"/> to 
+            <see cref="M:P7.CanvasFlow.CanvasController.PresentInitialCanvasController``1(System.Action{``0},System.Action{``0},System.Boolean,System.Nullable{UnityEngine.Vector3},System.Boolean,P7.CanvasFlow.CanvasControllerWorldSpaceContainer)"/>.
+            Canvas controllers presented from a world space canvas controller will also be presented 
+            in world space and contained within the presenter's container.
+            </remarks>
+        </member>
+        <member name="F:P7.CanvasFlow.CanvasController.canvas">
+            <summary>
+            The canvas controller's main canvas.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.CanvasController.camera">
+            <summary>
+            The canvas controller's camera.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.CanvasController.scene">
+            <summary>
+            The canvas controller's scene.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.CanvasController.content">
+            <summary>
+            The canvas controller's content transform.
+            </summary>
+            <remarks>
+            All content should be placed under the content transform.
+            </remarks>
+        </member>
+        <member name="P:P7.CanvasFlow.CanvasController.ContentPosition">
+            <summary>
+            Get/set the position of the canvas controller's content. This is equivalent to
+            calling <c>content.localPosition</c>.
+            </summary>
+        </member>
+        <member name="P:P7.CanvasFlow.CanvasController.ContentScale">
+            <summary>
+            Get/set the scale of the canvas controller's content. This is equivalent to 
+            calling <c>content.localScale</c>.
+            </summary>
+        </member>
+        <member name="P:P7.CanvasFlow.CanvasController.ContentActive">
+            <summary>
+            Enable/disable the canvas contoller's content. This is equivalent to 
+            calling <c>content.gameObject.activeSelf</c> and
+            <c>content.gameObject.SetActive</c>.
+            </summary>
+            
+            <remarks>
+            If you intend to hide the canvas controller completely, use the <see cref="P:P7.CanvasFlow.CanvasController.Hidden"/>
+            property as this will disable the canvas' camera as well as the content.
+            </remarks>
+        </member>
+        <member name="P:P7.CanvasFlow.CanvasController.Hidden">
+            <summary>
+            Hide/show the canvas controller. This will enable/disable both the canvas controller's
+            <see cref="F:P7.CanvasFlow.CanvasController.camera"/> and <see cref="F:P7.CanvasFlow.CanvasController.content"/>. Note that if the canvas controller
+            is container within a <see cref="T:P7.CanvasFlow.CanvasControllerWorldSpaceContainer" relpath="/"/>, 
+            only its content will be affected.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.CanvasController.backgroundImage">
+            <summary>
+            The canvas controller's background image.
+            </summary>
+        </member>
+        <member name="P:P7.CanvasFlow.CanvasController.Storyboard">
+            <summary>
+            Get the canvas controller's storyboard.
+            </summary>
+            
+            <remarks>
+            When a canvas controller is presented from a storyboard, this property will
+            be set to the storyboard whom presented it. Otherwise, it will be null.
+            </remarks>
+        </member>
+        <member name="P:P7.CanvasFlow.CanvasController.WorldSpaceContainer">
+            <summary>
+            Get the canvas controller's world space container.
+            </summary>
+            
+            <remarks>
+            When a canvas controller is presented in world space, it is contained within a
+            <see cref="T:P7.CanvasFlow.CanvasControllerWorldSpaceContainer" relpath="/"/>. In this scenario,
+            this property will be set to the container. Otherwise, it will be null.
+            </remarks>
+        </member>
+        <member name="P:P7.CanvasFlow.CanvasController.IsEmbeddedInWorldSpaceContainer">
+            <summary>
+            Is the canvas controller embedded in a world space container?
+            </summary>
+            
+            <remarks>
+            When a canvas controller is presented in world space, it is contained within a
+            <see cref="T:P7.CanvasFlow.CanvasControllerWorldSpaceContainer" relpath="/"/>.
+            </remarks>
+        </member>
+        <member name="P:P7.CanvasFlow.CanvasController.PresentingCanvasController">
+            <summary>
+            Get the presenting canvas controller - the canvas controller's presenter.
+            </summary>
+            
+            <remarks>
+            If no canvas controller presented this canvas controller then the presenting canvas
+            controller will be null. This is true for initial canvas controllers - canvas
+            controllers presented from a storyboard entry transition or using 
+            <see cref="M:P7.CanvasFlow.CanvasController.PresentInitialCanvasController``1(System.Action{``0},System.Action{``0},System.Boolean,System.Nullable{UnityEngine.Vector3},System.Boolean,P7.CanvasFlow.CanvasControllerWorldSpaceContainer)"/>.
+            </remarks>
+        </member>
+        <member name="P:P7.CanvasFlow.CanvasController.PresentedCanvasController">
+            <summary>
+            Get the presented canvas controller.
+            </summary>
+            
+            <remarks>
+            If this canvas controller has not presented a canvas controller then the presented 
+            canvas controller will be null.
+            </remarks>
+        </member>
+        <member name="F:P7.CanvasFlow.CanvasController.transitioningAnimatorVendor">
+            <summary>
+            The canvas controller's 'transitioning animator' vendor.
+            </summary>
+            
+            <remarks>
+            When a canvas controller is about to be presented or dismissed, it will ask its 
+            <c>transitioningAnimatorVendor</c> for an animator to animate the transition. Specify
+            a vendor to supply transition animators to a transitioning canvas controller.
+            </remarks>
+        </member>
+        <member name="P:P7.CanvasFlow.CanvasController.IsTransitioning">
+            <summary>
+            Is the canvas controller currently transitioning?
+            </summary>
+            
+            <remarks>
+            This returns true on both canvas controllers involved in a transition whilst that
+            transition is executing.
+            </remarks>
+        </member>
+        <member name="F:P7.CanvasFlow.CanvasController.presentationMode">
+            <summary>
+            The canvas controller's presentation mode.
+            </summary>
+            
+            <remarks>
+            <para/>See also:
+            <seealso cref="T:P7.CanvasFlow.CanvasControllerPresentationMode" relpath="/"/>
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.CanvasWillAppear">
+            <summary>
+            Override this method in your canvas controller to be notified just before the canvas 
+            is about to transition on screen. This could be because it is about to be presented 
+            or about to dismiss its <see cref="P:P7.CanvasFlow.CanvasController.PresentedCanvasController"/>.
+            </summary>
+            
+            <remarks>
+            <para/>See also:
+            <seealso cref="P:P7.CanvasFlow.CanvasController.IsBeingPresented"/>
+            <seealso cref="P:P7.CanvasFlow.CanvasController.IsBeingDismissed"/>
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.CanvasDidAppear">
+            <summary>
+            Override this method in your canvas controller to be notified just after the canvas 
+            has transitioned on screen. This could be because it has just been presented or has 
+            just dismissed its <see cref="P:P7.CanvasFlow.CanvasController.PresentedCanvasController"/>.
+            </summary>
+            
+            <remarks>
+            <para/>See also:
+            <seealso cref="P:P7.CanvasFlow.CanvasController.IsBeingPresented"/>
+            <seealso cref="P:P7.CanvasFlow.CanvasController.IsBeingDismissed"/>
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.CanvasWillDisappear">
+            <summary>
+            Override this method in your canvas controller to be notified just before the canvas 
+            is about to transition off screen. This could be because it is about to be dismissed 
+            or about to present a canvas controller.
+            </summary>
+            
+            <remarks>
+            <para/>See also:
+            <seealso cref="P:P7.CanvasFlow.CanvasController.IsBeingPresented"/>
+            <seealso cref="P:P7.CanvasFlow.CanvasController.IsBeingDismissed"/>
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.CanvasDidDisappear">
+            <summary>
+            Override this method in your canvas controller to be notified just after the canvas 
+            has transitioned off screen. This could be because it has just been dismissed or 
+            has just presented a canvas controller.
+            </summary>
+            
+            <remarks>
+            <para/>See also:
+            <seealso cref="P:P7.CanvasFlow.CanvasController.IsBeingPresented"/>
+            <seealso cref="P:P7.CanvasFlow.CanvasController.IsBeingDismissed"/>
+            </remarks>
+        </member>
+        <member name="P:P7.CanvasFlow.CanvasController.ChildCanvasControllers">
+            <summary>
+            Get the canvas controller's children.
+            </summary>
+            
+            <remarks>
+            Use the
+            <see cref="M:P7.CanvasFlow.CanvasController.AddChildCanvasController``1(UnityEngine.RectTransform,System.Action{``0},System.Action{``0},System.Boolean)"/>
+            and <see cref="M:P7.CanvasFlow.CanvasController.RemoveAndUnloadChildCanvasController(P7.CanvasFlow.CanvasController)"/> methods to
+            add and remove child canvas controllers.
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.Awake">
+            <summary>
+            Awake is called when the canvas controller is loaded.
+            </summary>
+            
+            <remarks>
+            If you override Awake, always call <c>base.Awake()</c> in your derived class's 
+            implementation.
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.Start">
+            <summary>
+            Start is called on the frame when the canvas controller is loaded, after 
+            <see cref="M:P7.CanvasFlow.CanvasController.Awake"/>.
+            </summary>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.PresentInitialCanvasController(System.String,System.Action{P7.CanvasFlow.CanvasController},System.Action{P7.CanvasFlow.CanvasController},System.Boolean,System.Nullable{UnityEngine.Vector3},System.Boolean,P7.CanvasFlow.CanvasControllerWorldSpaceContainer)">
+            <summary>
+            Present an initial canvas controller, specifying a name.
+            </summary>
+            
+            <remarks>
+            This method is used to present an initial canvas controller - the first canvas
+            controller in the hierarchy. From there, the
+            <see cref="M:P7.CanvasFlow.CanvasController.PresentCanvasController``1(System.Boolean,System.Action{``0},System.Action{``0},System.Nullable{UnityEngine.Vector3},System.Boolean)"/>
+            and <see cref="M:P7.CanvasFlow.CanvasController.DismissCanvasController(System.Boolean,System.Action)"/> methods can be used.
+            </remarks>
+            
+            <param name="canvasControllerName">The name of the canvas controller to present.</param>
+            <param name="configuration">A configuration action, called after the canvas controller
+            has been loaded but before it has been presented.</param>
+            <param name="completion">A completion action, called after the canvas controller
+            has been presented.</param>
+            <param name="animated">Is the transition animated?</param>
+            <param name="canvasWorldPositionOverride">A position in world space at which 
+            to place the loaded canvas controller. If no override is specified, the canvas
+            controller will be positioned next to the presenting canvas controller.</param>
+            <param name="loadAsynchronously">Should the canvas controller be loaded asynchronously?
+            By default, all canvas controllers are loaded asynchronously.</param>
+            <param name="worldSpaceContainer">Specify a world space container to present this canvas
+            controller in world space.</param>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.PresentInitialCanvasController``1(System.Action{``0},System.Action{``0},System.Boolean,System.Nullable{UnityEngine.Vector3},System.Boolean,P7.CanvasFlow.CanvasControllerWorldSpaceContainer)">
+            <summary>
+            Present an initial canvas controller, specifying a type.
+            </summary>
+            
+            <remarks>
+            This method is used to present an initial canvas controller - the first canvas
+            controller in the hierarchy. From there, the
+            <see cref="M:P7.CanvasFlow.CanvasController.PresentCanvasController``1(System.Boolean,System.Action{``0},System.Action{``0},System.Nullable{UnityEngine.Vector3},System.Boolean)"/>
+            and <see cref="M:P7.CanvasFlow.CanvasController.DismissCanvasController(System.Boolean,System.Action)"/> methods can be used.
+            </remarks>
+            
+            <typeparam name="T">The type of the canvas controller to present.</typeparam>
+            <param name="configuration">A configuration action, called after the canvas controller
+            has been loaded but before it has been presented.</param>
+            <param name="completion">A completion action, called after the canvas controller
+            has been presented.</param>
+            <param name="animated">Is the transition animated?</param>
+            <param name="canvasWorldPositionOverride">A position in world space at which 
+            to place the loaded canvas controller. If no override is specified, the canvas
+            controller will be positioned next to the presenting canvas controller.</param>
+            <param name="loadAsynchronously">Should the canvas controller be loaded asynchronously?
+            By default, all canvas controllers are loaded asynchronously.</param>
+            <param name="worldSpaceContainer">Specify a world space container to present this canvas
+            controller in world space.</param>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.PresentInitialCanvasController``1(System.String,System.Action{``0},System.Action{``0},System.Boolean,System.Nullable{UnityEngine.Vector3},System.Boolean,P7.CanvasFlow.CanvasControllerWorldSpaceContainer)">
+            <summary>
+            Present an initial canvas controller, specifying a type and a name.
+            </summary>
+            
+            <remarks>
+            This method is used to present an initial canvas controller - the first canvas
+            controller in the hierarchy. From there, the
+            <see cref="M:P7.CanvasFlow.CanvasController.PresentCanvasController``1(System.Boolean,System.Action{``0},System.Action{``0},System.Nullable{UnityEngine.Vector3},System.Boolean)"/>
+            and <see cref="M:P7.CanvasFlow.CanvasController.DismissCanvasController(System.Boolean,System.Action)"/> methods can be used.
+            </remarks>
+            
+            <typeparam name="T">The type of the canvas controller to present.</typeparam>
+            <param name="canvasControllerName">The name of the canvas controller to present.</param>
+            <param name="configuration">A configuration action, called after the canvas controller
+            has been loaded but before it has been presented.</param>
+            <param name="completion">A completion action, called after the canvas controller
+            has been presented.</param>
+            <param name="animated">Is the transition animated?</param>
+            <param name="canvasWorldPositionOverride">A position in world space at which 
+            to place the loaded canvas controller. If no override is specified, the canvas
+            controller will be positioned next to the presenting canvas controller.</param>
+            <param name="loadAsynchronously">Should the canvas controller be loaded asynchronously?
+            By default, all canvas controllers are loaded asynchronously.</param>
+            <param name="worldSpaceContainer">Specify a world space container to present this canvas
+            controller in world space.</param>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.PresentCanvasController(System.String,System.Boolean,System.Action{P7.CanvasFlow.CanvasController},System.Action{P7.CanvasFlow.CanvasController},System.Nullable{UnityEngine.Vector3},System.Boolean)">
+            <summary>
+            Present a canvas controller, specifying a name.
+            </summary>
+            
+            <remarks>
+            The specified canvas controller's scene will be loaded and subsequently presented
+            by this canvas controller.
+            </remarks>
+            
+            <param name="canvasControllerName">The name of the canvas controller to present.</param>
+            <param name="animated">Is the transition animated?</param>
+            <param name="configuration">A configuration action, called after the canvas controller
+            has been loaded but before it has been presented.</param>
+            <param name="completion">A completion action, called after the canvas controller
+            has been presented.</param>
+            <param name="canvasWorldPositionOverride">A position in world space at which 
+            to place the loaded canvas controller. If no override is specified, the canvas
+            controller will be positioned next to the presenting canvas controller.</param>
+            <param name="loadAsynchronously">Should the canvas controller be loaded asynchronously?
+            By default, all canvas controllers are loaded asynchronously.</param>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.PresentCanvasController``1(System.Boolean,System.Action{``0},System.Action{``0},System.Nullable{UnityEngine.Vector3},System.Boolean)">
+            <summary>
+            Present a canvas controller, specifying a type.
+            </summary>
+            
+            <remarks>
+            The specified canvas controller's scene will be loaded and subsequently presented
+            by this canvas controller.
+            </remarks>
+            
+            <typeparam name="T">The type of the canvas controller to present.</typeparam>
+            <param name="animated">Is the transition animated?</param>
+            <param name="configuration">A configuration action, called after the canvas controller
+            has been loaded but before it has been presented.</param>
+            <param name="completion">A completion action, called after the canvas controller
+            has been presented.</param>
+            <param name="canvasWorldPositionOverride">A position in world space at which 
+            to place the loaded canvas controller. If no override is specified, the canvas
+            controller will be positioned next to the presenting canvas controller.</param>
+            <param name="loadAsynchronously">Should the canvas controller be loaded asynchronously?
+            By default, all canvas controllers are loaded asynchronously.</param>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.PresentCanvasController``1(System.String,System.Boolean,System.Action{``0},System.Action{``0},System.Nullable{UnityEngine.Vector3},System.Boolean)">
+            <summary>
+            Present a canvas controller, specifying a type and a name.
+            </summary>
+            
+            <remarks>
+            The specified canvas controller's scene will be loaded and subsequently presented
+            by this canvas controller.
+            </remarks>
+            
+            <typeparam name="T">The type of the canvas controller to present.</typeparam>
+            <param name="canvasControllerName">The name of the canvas controller to present.</param>
+            <param name="animated">Is the transition animated?</param>
+            <param name="configuration">A configuration action, called after the canvas controller
+            has been loaded but before it has been presented.</param>
+            <param name="completion">A completion action, called after the canvas controller
+            has been presented.</param>
+            <param name="canvasWorldPositionOverride">A position in world space at which 
+            to place the loaded canvas controller. If no override is specified, the canvas
+            controller will be positioned next to the presenting canvas controller.</param>
+            <param name="loadAsynchronously">Should the canvas controller be loaded asynchronously?
+            By default, all canvas controllers are loaded asynchronously.</param>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.DismissCanvasController(System.Boolean,System.Action)">
+            <summary>
+            Dismiss a canvas controller.
+            </summary>
+            
+            <remarks>
+            This method dismisses the canvas controller's top-most
+            <see cref="P:P7.CanvasFlow.CanvasController.PresentedCanvasController"/> - i.e. its PresentedCanvasController's
+            PresentedCanvasController's... etc. If any intermediary canvas controllers exist
+            between this canvas controller and the top-most presented one, they will be unloaded.
+            Only the top-most canvas controller and this canvas controller will be animated
+            during the transition.
+            
+            <para/>If this canvas controller has no <see cref="P:P7.CanvasFlow.CanvasController.PresentedCanvasController"/>, it
+            will be dismissed by its <see cref="P:P7.CanvasFlow.CanvasController.PresentingCanvasController"/>.
+            
+            <para/>If this canvas controller is an initial canvas controller, it will be 
+            dismissed completely.
+            </remarks>
+            
+            <param name="animated">Is the transition animated?</param>
+            <param name="completion">A completion action, called after the canvas controller
+            has been dismissed.</param>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.DismissAllCanvasControllers(System.Boolean,System.Action)">
+            <summary>
+            Dismisses all canvas controllers in the current hierarchy.
+            </summary>
+            
+            <remarks>
+            This method dismisses all canvas controllers in the current presentation stack.
+            Only the top-most canvas controller will be animated in the transition. All canvas
+            controllers in the stack will be unloaded.
+            </remarks>
+            
+            <param name="animated">Is the transition animated?</param>
+            <param name="completion">A completion action, called after the canvas controller
+            has been dismissed.</param>
+        </member>
+        <member name="P:P7.CanvasFlow.CanvasController.IsBeingPresented">
+            <summary>
+            Is the canvas controller currently being presented?
+            </summary>
+            <remarks>
+            Will return true if the canvas controller is currently involved in a transition in
+            which it is being presented.
+            </remarks>
+        </member>
+        <member name="P:P7.CanvasFlow.CanvasController.IsBeingDismissed">
+            <summary>
+            Is the canvas controller currently being dismissed?
+            </summary>
+            <remarks>
+            Will return true if the canvas controller is currently involved in a transition in
+            which it is being dismissed.
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.AddChildCanvasController(System.String,UnityEngine.RectTransform,System.Action{P7.CanvasFlow.CanvasController},System.Action{P7.CanvasFlow.CanvasController},System.Boolean)">
+            <summary>
+            Load the specified canvas controller and add it as a child.
+            </summary>
+            
+            <remarks>
+            This method will load the specified canvas controller and add it as a child of the 
+            receiving canvas controller. This causes the child canvas controller to be added to
+            the parent's hierarchy under the specified transform. The child canvas controller's
+            camera will be disabled and it will now be rendered by its parent's camera.
+            </remarks>
+            
+            <param name="canvasControllerName">The name of the canvas controller to add.</param>
+            <param name="childContainer">The parent's rect transform under which the child should
+            be added.</param>
+            <param name="configuration">A configuration action, called after the canvas controller
+            has been loaded but before it has been added as a child.</param>
+            <param name="completion">A completion action, called after the canvas controller
+            has been added as a child.</param>
+            <param name="loadAsynchronously">Should the child canvas controller be loaded
+            asynchronously? By default, all canvas controllers are loaded asynchronously.</param>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.AddChildCanvasController``1(UnityEngine.RectTransform,System.Action{``0},System.Action{``0},System.Boolean)">
+            <summary>
+            Load the specified canvas controller and add it as a child.
+            </summary>
+            
+            <remarks>
+            This method will load the specified canvas controller and add it as a child of the 
+            receiving canvas controller. This causes the child canvas controller to be added to
+            the parent's hierarchy under the specified transform. The child canvas controller's
+            camera will be disabled and it will now be rendered by its parent's camera.
+            </remarks>
+            
+            <typeparam name="T">The type of the canvas controller to add.</typeparam>
+            <param name="childContainer">The parent's rect transform under which the child should
+            be added.</param>
+            <param name="configuration">A configuration action, called after the canvas controller
+            has been loaded but before it has been added as a child.</param>
+            <param name="completion">A completion action, called after the canvas controller
+            has been added as a child.</param>
+            <param name="loadAsynchronously">Should the child canvas controller be loaded
+            asynchronously? By default, all canvas controllers are loaded asynchronously.</param>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.AddChildCanvasController``1(System.String,UnityEngine.RectTransform,System.Action{``0},System.Action{``0},System.Boolean)">
+            <summary>
+            Load the specified canvas controller and add it as a child.
+            </summary>
+            
+            <remarks>
+            This method will load the specified canvas controller and add it as a child of the 
+            receiving canvas controller. This causes the child canvas controller to be added to
+            the parent's hierarchy under the specified transform. The child canvas controller's
+            camera will be disabled and it will now be rendered by its parent's camera.
+            </remarks>
+            
+            <typeparam name="T">The type of the canvas controller to add.</typeparam>
+            <param name="canvasControllerName">The name of the canvas controller to add.</param>
+            <param name="childContainer">The parent's rect transform under which the child should
+            be added.</param>
+            <param name="configuration">A configuration action, called after the canvas controller
+            has been loaded but before it has been added as a child.</param>
+            <param name="completion">A completion action, called after the canvas controller
+            has been added as a child.</param>
+            <param name="loadAsynchronously">Should the child canvas controller be loaded
+            asynchronously? By default, all canvas controllers are loaded asynchronously.</param>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.RemoveAndUnloadChildCanvasController(P7.CanvasFlow.CanvasController)">
+            <summary>
+            Remove and unload a child canvas controller.
+            </summary>
+            <param name="canvasController">The child canvas controller to remove and unload.</param>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.PrepareForStoryboardTransition(P7.CanvasFlow.StoryboardTransition)">
+            <summary>
+            Override this method to be notified when the canvas controller is about to be involved
+            in a storyboard transition.
+            </summary>
+            
+            <remarks>
+            When a transition occurs in a storyboard, the transition's source canvas controller 
+            will have its <c>PrepareForStoryboardTransition</c> method called. This gives an
+            opportunity to pass data between canvas controllers.
+            
+            <para/>This method will only be called on a canvas controller whom has been loaded from
+            a storyboard.
+            </remarks>
+            
+            <param name="transition">The storyboard transition, which provides 
+            information about the transition such as the canvas controllers involved.</param>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasController.PerformTransitionWithIdentifier(System.String)">
+            <summary>
+            Perform the storyboard transition with this identifier.
+            </summary>
+            
+            <remarks>
+            If a canvas controller has been loaded from a storyboard, its storyboard transitions
+            can be triggered with this method. The identifier specified must be set on the
+            transition in the storyboard editor.
+            
+            If a canvas controller has not been loaded from a storyboard, its
+            <see cref="P:P7.CanvasFlow.CanvasController.Storyboard"/> property will be <c>null</c>.
+            </remarks>
+            <param name="identifier">Identifier.</param>
+        </member>
+        <member name="T:P7.CanvasFlow.CanvasControllerExtensions">
+            <summary>
+            <see cref="T:P7.CanvasFlow.CanvasController" relpath="/"/> extension methods.
+            </summary>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasControllerExtensions.IsScreenSpace(P7.CanvasFlow.CanvasController)">
+            <summary>
+            Is the canvas controller’s canvas in screen space?
+            </summary>
+            
+            <remarks>
+            Returns <c>true</c> if the canvas controller’s canvas is in a screen 
+            space render mode.
+            
+            <para/>See also:
+            <seealso cref = "F:P7.CanvasFlow.CanvasController.canvas" relpath="/"/>
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasControllerExtensions.OnScreenContentPosition(P7.CanvasFlow.CanvasController)">
+            <summary>
+            The on-screen position for the canvas controller’s content.
+            </summary>
+            
+            <remarks>
+            You might use this method when animating or moving a canvas controller’s 
+            content. This is always Vector3.zero.
+            
+            <para/>See also:
+            <seealso cref="P:P7.CanvasFlow.CanvasController.ContentPosition" relpath="/"/>
+            <seealso cref = "F:P7.CanvasFlow.CanvasController.content" relpath="/"/>
+            <seealso cref = "F:P7.CanvasFlow.CanvasController.canvas" relpath="/"/>
+            <seealso cref = "F:P7.CanvasFlow.CanvasController.camera" relpath="/"/>
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasControllerExtensions.OffScreenBottomContentPosition(P7.CanvasFlow.CanvasController)">
+            <summary>
+            The position for the canvas controller’s content that will position it 
+            off the bottom of the screen.
+            </summary>
+            
+            <remarks>
+            This is calculated using the height of the canvas controller’s canvas. You 
+            might use this method when animating or moving a canvas controller’s content 
+            to or from the bottom of the screen.
+            
+            <para/>See also:
+            <seealso cref = "P:P7.CanvasFlow.CanvasController.ContentPosition" relpath="/"/>
+            <seealso cref = "F:P7.CanvasFlow.CanvasController.content" relpath="/"/>
+            <seealso cref = "F:P7.CanvasFlow.CanvasController.canvas" relpath="/"/>
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasControllerExtensions.OffScreenLeftContentPosition(P7.CanvasFlow.CanvasController)">
+            <summary>
+            The position for the canvas controller’s content that will position it off 
+            the left of the screen.
+            </summary>
+            
+            <remarks>
+            This is calculated using the width of the canvas controller’s canvas. You might 
+            use this method when animating or moving a canvas controller’s content to or 
+            from the left of the screen.
+            
+            <para/>See also:
+            <seealso cref = "P:P7.CanvasFlow.CanvasController.ContentPosition" relpath="/"/>
+            <seealso cref = "F:P7.CanvasFlow.CanvasController.content" relpath="/"/>
+            <seealso cref = "F:P7.CanvasFlow.CanvasController.canvas" relpath="/"/>
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasControllerExtensions.OffScreenTopContentPosition(P7.CanvasFlow.CanvasController)">
+            <summary>
+            The position for the canvas controller’s content that will position it off 
+            the top of the screen.
+            </summary>
+            
+            <remarks>
+            This is calculated using the height of the canvas controller’s canvas. You might 
+            use this method when animating or moving a canvas controller’s content to or 
+            from the top of the screen.
+            
+            <para/>See also:
+            <seealso cref = "P:P7.CanvasFlow.CanvasController.ContentPosition" relpath="/"/>
+            <seealso cref = "F:P7.CanvasFlow.CanvasController.content" relpath="/"/>
+            <seealso cref = "F:P7.CanvasFlow.CanvasController.canvas" relpath="/"/>
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasControllerExtensions.OffScreenRightContentPosition(P7.CanvasFlow.CanvasController)">
+            <summary>
+            The position for the canvas controller’s content that will position it off 
+            the right of the screen.
+            </summary>
+            
+            <remarks>
+            This is calculated using the width of the canvas controller’s canvas. You might 
+            use this method when animating or moving a canvas controller’s content to or 
+            from the right of the screen.
+            
+            <para/>See also:
+            <seealso cref = "P:P7.CanvasFlow.CanvasController.ContentPosition" relpath="/"/>
+            <seealso cref = "F:P7.CanvasFlow.CanvasController.content" relpath="/"/>
+            <seealso cref = "F:P7.CanvasFlow.CanvasController.canvas" relpath="/"/>
+            </remarks>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:P7.CanvasFlow.CanvasControllerExtensions.CanvasRectTransform(P7.CanvasFlow.CanvasController)" -->
+        <member name="M:P7.CanvasFlow.CanvasControllerExtensions.CanvasSize(P7.CanvasFlow.CanvasController)">
+            <summary>
+            The canvas controller’s canvas’ size.
+            </summary>
+            
+            <remarks>
+            This is equivalent to calling 
+            <c>canvasController.CanvasRectTransform().rect.size</c>.
+            
+            <para/>See also:
+            <seealso cref = "F:P7.CanvasFlow.CanvasController.canvas" relpath="/"/>
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasControllerExtensions.CanvasWorldCorners(P7.CanvasFlow.CanvasController)">
+            <summary>
+            The canvas controller’s canvas’ corners in world space.
+            </summary>
+            
+            <remarks>
+            You might use this method when doing canvas-related world space calculations. 
+            For example, Canvas Flow uses this internally to position canvas controller’s
+            next to one another in world space.
+            
+            <para/>See also:
+            <seealso cref = "F:P7.CanvasFlow.CanvasController.canvas" relpath="/"/>
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasControllerExtensions.CanvasWorldBounds(P7.CanvasFlow.CanvasController)">
+            <summary>
+            The canvas controller’s canvas’ bounds in world space.
+            </summary>
+            
+            <remarks>
+            You might use this method when doing canvas-related world space calculations. 
+            For example, Canvas Flow uses this internally to position canvas controller’s
+            next to one another in world space.
+            
+            <para/>See also:
+            <seealso cref = "F:P7.CanvasFlow.CanvasController.canvas" relpath="/"/>
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasControllerExtensions.CanvasWorldSize(P7.CanvasFlow.CanvasController)">
+            <summary>
+            The canvas controller’s canvas’ size in world space. This is the difference 
+            between the top right world corner and the bottom left world corner.
+            </summary>
+            
+            <remarks>
+            You might use this method when doing canvas-related world space calculations. 
+            For example, Canvas Flow uses this internally to position canvas controller’s
+            next to one another in world space.
+            
+            <para/>See also:
+            <seealso cref = "F:P7.CanvasFlow.CanvasController.canvas" relpath="/"/>
+            </remarks>
+        </member>
+        <member name="T:P7.CanvasFlow.CanvasControllerPresentationMode">
+            <summary>
+            The presentation mode of a canvas controller.
+            </summary>
+            <remarks>
+            When a canvas controller is presented, its presentation mode determines
+            what will happen to its presenter once the presentation transition is
+            complete. By default, the presenter is hidden to prevent rendering a
+            canvas that may not be visible, as denoted by the <see cref="F:P7.CanvasFlow.CanvasControllerPresentationMode.HidePresenter"/>
+            presentation mode.
+            <para/>The <see cref="F:P7.CanvasFlow.CanvasControllerPresentationMode.KeepPresenterVisible"/> presentation mode indicates
+            that the canvas controller’s presenter should not to be hidden. A
+            transparent canvas controller could use this mode to ensure that its
+            presenting canvas controller can still be seen through its transparent
+            canvas.
+            </remarks>
+        </member>
+        <member name="F:P7.CanvasFlow.CanvasControllerPresentationMode.HidePresenter">
+            <summary>
+            Upon presentation, hide the canvas controller’s presenter.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.CanvasControllerPresentationMode.KeepPresenterVisible">
+            <summary>
+            Upon presentation, keep the canvas controller’s presenter visible.
+            </summary>
+        </member>
+        <member name="T:P7.CanvasFlow.CanvasControllerTransitionContext">
+            <summary>
+            When a transition between two canvas controllers occurs, a transition context 
+            is created to describe the transition. This context is passed to the transition’s 
+            animator to provide the animator with the necessary data in order to carry out 
+            the animation.
+            </summary>
+            
+            <remarks>
+            When implementing a custom transition animator, you use the context to access
+            the canvas controllers involved in the transition in order to animate them. 
+            The <see cref="F:P7.CanvasFlow.CanvasControllerTransitionContext.sourceCanvasController"/> is the canvas controller being 
+            transitioned from; the <see cref="F:P7.CanvasFlow.CanvasControllerTransitionContext.destinationCanvasController"/> is the canvas 
+            controller being transition to. Note that you always transition from the source 
+            to the destination. This includes in an upstream transition - a dismissal - in 
+            which the source is the canvas controller being dismissed and the destination is 
+            the canvas controller being returned to.
+            
+            <para/>In the event that the transition is presenting or dismissing an initial 
+            canvas controller, either the context's <see cref="F:P7.CanvasFlow.CanvasControllerTransitionContext.sourceCanvasController"/> or
+             <see cref="F:P7.CanvasFlow.CanvasControllerTransitionContext.destinationCanvasController"/> will be null, depending on whether 
+            the transition is upstream - i.e. it is presenting/dismissing to 'nothing'.
+            
+            <para/>You must call <see cref="M:P7.CanvasFlow.CanvasControllerTransitionContext.CompleteTransition"/> on the context when your 
+            transition animator has completed its animation. This tells Canvas Flow that 
+            the custom animation has been performed and to complete the transition.
+            
+            <para/>See also:
+            <seealso cref = "T:P7.CanvasFlow.CanvasControllerTransitioningAnimator" relpath="/"/>
+            <seealso cref = "F:P7.CanvasFlow.CanvasController.transitioningAnimatorVendor" relpath="/"/>
+            
+            </remarks>
+        </member>
+        <member name="F:P7.CanvasFlow.CanvasControllerTransitionContext.sourceCanvasController">
+            <summary>
+            The canvas controller being transitioned from.
+            </summary>
+            
+            <remarks>
+            In a downstream transition - a presentation - this is the canvas controller 
+            whom is presenting - the presenter. In an upstream transition - a dismissal - 
+            this is the canvas controller being dismissed.
+            </remarks>
+        </member>
+        <member name="F:P7.CanvasFlow.CanvasControllerTransitionContext.destinationCanvasController">
+            <summary>
+            The canvas controller being transitioned to.
+            </summary>
+            
+            <remarks>
+            In a downstream transition - a presentation - this is the canvas controller 
+            being presented. In an upstream transition - a dismissal - this is the canvas 
+            controller whom is being dismissed to.
+            </remarks>
+        </member>
+        <member name="F:P7.CanvasFlow.CanvasControllerTransitionContext.isUpstream">
+            <summary>
+            Is the transition upstream?
+            </summary>
+            
+            <remarks>
+            An upstream transition refers to a dismissal. If <c>false</c> the transition is 
+            downstream, which refers to a presentation. You might use this flag to
+            distinguish between an upstream and a downstream transition (a dismissal or 
+            a presentation) in your transition animator.
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasControllerTransitionContext.SourceCanvasController``1">
+            <summary>
+            The canvas controller being transitioned from, if it is of type T.
+            </summary>
+            
+            <remarks>
+            In a downstream transition - a presentation - this is the canvas controller 
+            whom is presenting - the presenter. In an upstream transition - a dismissal - 
+            this is the canvas controller being dismissed. If the <c>sourceCanvasController</c> 
+            is not of type T, returns null.
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasControllerTransitionContext.DestinationCanvasController``1">
+            <summary>
+            The canvas controller being transitioned to, if it is of type T.
+            </summary>
+            
+            <remarks>
+            In a downstream transition - a presentation - this is the canvas controller
+            being presented. In an upstream transition - a dismissal - this is the canvas
+            controller whom is being dismissed to.  If the <c>destinationCanvasController</c>
+            is not of type T, returns null.
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.CanvasControllerTransitionContext.CompleteTransition">
+            <summary>
+            You must call <c>CompleteTransition()</c> on the context when your
+            transition animator has completed its animation. This tells Canvas Flow
+            that the custom animation has been performed and to complete the transition.
+            </summary>
+        </member>
+        <member name="T:P7.CanvasFlow.CanvasControllerTransitioningAnimator">
+            <summary>
+            An abstract base class for a <c>ScriptableObject</c> based implementation of the 
+            <see cref="T:P7.CanvasFlow.ICanvasControllerTransitioningAnimator" relpath="/"/> interface. This 
+            class is used when creating a new custom transition animator in Unity's 'Create'
+             menu.
+            
+            <para/>See also:
+            <seealso cref = "T:P7.CanvasFlow.ICanvasControllerTransitioningAnimator" relpath="/"/>
+            </summary>
+        </member>
+        <member name="T:P7.CanvasFlow.ICanvasControllerTransitioningAnimator">
+            <summary>
+            The <c>ICanvasControllerTransitioningAnimator</c> interface defines the methods
+            required to perform a transition animation between two canvas controllers. To
+            implement a custom transition animation, you create an object that implements
+            this interface - a transition animator. You can then provide, or vend, this
+            animator to Canvas Flow via the target canvas controller's
+            <see cref= "F:P7.CanvasFlow.CanvasController.transitioningAnimatorVendor" relpath="/"/> when
+            the relevant transition is triggered.
+            </summary>
+            
+            <remarks>
+            When a transition between canvas controllers is to be performed, Canvas Flow
+            will ask the target canvas controller's* 
+            <see cref= "F:P7.CanvasFlow.CanvasController.transitioningAnimatorVendor" relpath="/"/> for an
+            animator. This is where you can return, or vend, your custom animator. Your 
+            animator will then have the appropriate <see cref= "M:P7.CanvasFlow.ICanvasControllerTransitioningAnimator.AnimateTransition(P7.CanvasFlow.CanvasControllerTransitionContext)"/> method 
+            called, where you can perform your transition animation. Please refer to the 
+            included transition animators' source code for examples of animating the transition. 
+            These can be found in <i>Canvas Flow/Transition Animators</i>.
+            
+            <para/>The recommended way to create a custom transition animator, as documented 
+            in the manual, is to use the menu item in the Unity Editor at 
+            <i>Assets/Create/Canvas Flow/Custom Transition Animator</i>. This creates a 
+            <see cref= "T:P7.CanvasFlow.CanvasControllerTransitioningAnimator" relpath="/"/>, which is derived 
+            from <c>ScriptableObject</c> so it can be used in storyboards, be referenced in 
+            the Unity Editor, provide easily tweakable properties, and support having multiple 
+            instances. However, you may provide any object that implements this interface as 
+            an animator.
+            
+            <para/>Once your transition animator has completed its animation, you must call 
+            <see cref="M:P7.CanvasFlow.CanvasControllerTransitionContext.CompleteTransition" relpath="/"/> on 
+            the provided transition context. This tells Canvas Flow that the custom animation 
+            has been performed and to complete the transition.
+            
+            * The target canvas controller is the canvas controller being acted upon - i.e. the 
+            canvas controler being presented or being dismissed. Therefore, in a downstream 
+            transition - a presentation, this will be the 
+            <see cref= "F:P7.CanvasFlow.CanvasControllerTransitionContext.destinationCanvasController" relpath="/"/> , 
+            whereas in an upstream transition - a dismissal, this will be the 
+            <see cref= "F:P7.CanvasFlow.CanvasControllerTransitionContext.sourceCanvasController" relpath="/"/>.
+            
+            <para/>See also:
+            <seealso cref = "T:P7.CanvasFlow.CanvasControllerTransitioningAnimator" relpath="/"/> 
+            <seealso cref = "T:P7.CanvasFlow.CanvasControllerTransitionContext" relpath="/"/> 
+            <seealso cref = "F:P7.CanvasFlow.CanvasController.transitioningAnimatorVendor" relpath="/"/> 
+            <seealso cref = "T:P7.CanvasFlow.Routine" relpath="../routine/"/>
+            <seealso cref = "T:P7.CanvasFlow.CanvasControllerExtensions" relpath="/"/> 
+            <seealso cref = "N:P7.CanvasFlow.DynamicObjectExtensions" relpath="../extensions/"/>
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.ICanvasControllerTransitioningAnimator.AnimateTransition(P7.CanvasFlow.CanvasControllerTransitionContext)">
+            <summary>
+            Perform your transition animation with the <c>transitionContext</c>'s canvas
+            controllers.
+            </summary>
+            
+            <remarks>
+            Note that you must call 
+            <see cref="M:P7.CanvasFlow.CanvasControllerTransitionContext.CompleteTransition" relpath="/"/> 
+            on the provided transition context when your transition animator has completed its 
+            animation. This tells Canvas Flow that the custom animation has been performed and 
+            to complete the transition.
+            </remarks>
+            
+            <param name="transitionContext">The transition's context, which provides information 
+            about the transition such as the canvas controllers involved.</param>
+        </member>
+        <member name="M:P7.CanvasFlow.ICanvasControllerTransitioningAnimator.AnimateTransitionForInitialCanvasController(P7.CanvasFlow.CanvasControllerTransitionContext)">
+            <summary>
+            Perform your transition animation for an initial canvas controller.
+            </summary>
+            
+            <remarks>
+            Canvas Flow will call this method on a transition animator instead of 
+            <see cref="M:P7.CanvasFlow.ICanvasControllerTransitioningAnimator.AnimateTransition(P7.CanvasFlow.CanvasControllerTransitionContext)"/> when the transition is presenting or dismissing 
+            an initial canvas controller. An initial canvas controller is one with no presenter 
+            - i.e. it was the first canvas controller presented, perhaps from a storyboard 
+            entry transition or using 
+            <see cref="M:P7.CanvasFlow.CanvasController.PresentInitialCanvasController(System.String,System.Action{P7.CanvasFlow.CanvasController},System.Action{P7.CanvasFlow.CanvasController},System.Boolean,System.Nullable{UnityEngine.Vector3},System.Boolean,P7.CanvasFlow.CanvasControllerWorldSpaceContainer)" relpath="/"/>. The only
+             difference from the <see cref="M:P7.CanvasFlow.ICanvasControllerTransitioningAnimator.AnimateTransition(P7.CanvasFlow.CanvasControllerTransitionContext)"/> method is that either the 
+            context's <c>sourceCanvasController</c> or <c>destinationCanvasController</c> will 
+            be null, depending on whether the transition is upstream - i.e. it is 
+            presenting/dismissing to 'nothing'.
+            
+            <para/>Note that you must call 
+            <see cref="M:P7.CanvasFlow.CanvasControllerTransitionContext.CompleteTransition" relpath="/"/> on 
+            the provided transition context when your transition animator has completed its 
+            animation. This tells Canvas Flow that the custom animation has been performed 
+            and to complete the transition.
+            </remarks>
+            
+            <param name="transitionContext">The transition's context, which provides information 
+            about the transition such as the canvas controllers involved.</param>
+        </member>
+        <member name="T:P7.CanvasFlow.ICanvasControllerTransitioningAnimatorVendor">
+            <summary>
+            The <c>ICanvasControllerTransitioningAnimatorVendor</c> interface defines the 
+            methods required to supply transition animators to a transitioning canvas 
+            controller.
+            </summary>
+            
+            <remarks>
+            When a canvas controller is about to be presented or dismissed, it will ask 
+            its <see cref="F:P7.CanvasFlow.CanvasController.transitioningAnimatorVendor" relpath="/"/> for 
+            an animator to animate the transition. The vendor returns an 
+            <see cref="T:P7.CanvasFlow.ICanvasControllerTransitioningAnimator" relpath="/"/> object that will be used 
+            to animate the transition. Different animators may be returned depending on 
+            the values of the <see cref="T:P7.CanvasFlow.CanvasControllerTransitionContext" relpath="/"/> 
+            parameter. The vendor may return <c>null</c> to have the transition be animated 
+            by the default animator.
+            
+            <para/>See also:
+            <seealso cref = "T:P7.CanvasFlow.ICanvasControllerTransitioningAnimator" relpath="/"/>
+            <seealso cref = "T:P7.CanvasFlow.CanvasControllerTransitionContext" relpath="/"/>
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.ICanvasControllerTransitioningAnimatorVendor.TransitioningAnimatorForContext(P7.CanvasFlow.CanvasControllerTransitionContext)">
+            <summary>
+            Return the transition animator that will be used to animate the transition. 
+            You may return <c>null</c> to have the transition be animated by the default 
+            animator.
+            </summary>
+            <param name="transitionContext">The transition's context, which provides 
+            information about the transition such as the canvas controllers involved.</param>
+        </member>
+        <member name="T:P7.CanvasFlow.DynamicObjectExtensions.DynamicObjectExtensions">
+            <summary>
+            Dynamic property lookup for classes and structs.
+            </summary>
+            <remarks>
+            This class uses reflection to dynamically lookup a class or struct property. To use it,
+            include its namespace: <c>P7.CanvasFlow.DynamicObjectExtensions</c>.
+            
+            <para/>Canvas Flow's Scale And Fade Background transition animator uses the
+            <c>GetField</c> extension method to dynamically find the 
+            <c>contentToScalePropertyName</c> specified in the animator's inspector.
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.DynamicObjectExtensions.DynamicObjectExtensions.GetField``1(UnityEngine.Object,System.String)">
+            <summary>
+            Get the class' field with the specified name and type using reflection.
+            </summary>
+            <typeparam name="T">The type of the field.</typeparam>
+            <param name="fieldName">The name of the field.</param>
+        </member>
+        <member name="M:P7.CanvasFlow.DynamicObjectExtensions.DynamicObjectExtensions.GetValueField``1(UnityEngine.Object,System.String)">
+            <summary>
+            Get the struct's field with the specified name and type using reflection.
+            </summary>
+            <typeparam name="T">The type of the field.</typeparam>
+            <param name="fieldName">The name of the field.</param>
+        </member>
+        <member name="T:P7.CanvasFlow.RectTransformExtensions.RectTransformExtensions">
+            <summary>
+            Rect transform extension methods.
+            </summary>
+        </member>
+        <member name="M:P7.CanvasFlow.RectTransformExtensions.RectTransformExtensions.FillParent(UnityEngine.RectTransform)">
+            <summary>
+            Make a rect transform fill its parent.
+            </summary>
+        </member>
+        <member name="T:P7.CanvasFlow.Storyboard">
+            <summary>
+            A storyboard component used to present a storyboard in the scene.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.Storyboard.storyboard">
+            <summary>
+            The storyboard asset.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.Storyboard.automaticPresentationMode">
+            <summary>
+            The automatic presentation mode of the storyboard component. Can be one of
+            <i>PresentOnAwake</i>, <i>PresentOnStart</i>, or <i>DontPresentAutomatically</i>.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.Storyboard.presentationSpace">
+            <summary>
+            The presentation space in which the storyboard will be presented. Can be either
+            <i>ScreenSpace</i> or <i>WorldSpace</i>.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.Storyboard.worldSpaceContainer">
+            <summary>
+            When set to <c>StoryboardPresentationSpace.WorldSpace</c>, the world space container
+            specifies the world canvas in which the subsequently loaded canvas controllers will be
+            contained.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.Storyboard.StoryboardWillPresentInitialCanvasController">
+            <summary>
+            A UnityEvent that is triggered when the storyboard is about to perform its entry
+            transition, i.e. present its initial canvas controller.
+            </summary>
+            
+            <remarks>
+            This event receives a <see cref="T:P7.CanvasFlow.StoryboardTransition" relpath="/"/> for the
+            transition to be performed. Therefore, the required method signature to use this
+            event is <c>public void yourMethodName(StoryboardTransition transition)</c>.
+            </remarks>
+        </member>
+        <member name="F:P7.CanvasFlow.Storyboard.StoryboardWillPerformTransition">
+            <summary>
+            A UnityEvent that is triggered when the storyboard is about to perform a transition,
+            excluding its initial/entry transition.
+            </summary>
+            
+            <remarks>
+            This event receives a <see cref="T:P7.CanvasFlow.StoryboardTransition" relpath="/"/> for the
+            transition to be performed. Therefore, the required method signature to use this
+            event is <c>public void yourMethodName(StoryboardTransition transition)</c>.
+            </remarks>
+        </member>
+        <member name="F:P7.CanvasFlow.Storyboard.StoryboardWillDismiss">
+            <summary>
+            A UnityEvent that is triggered when the storyboard is about to perform its exit
+            transition, i.e. dismiss its initial canvas controller.
+            </summary>
+            
+            <remarks>
+            This event receives a <see cref="T:P7.CanvasFlow.StoryboardTransition" relpath="/"/> for the
+            transition to be performed. Therefore, the required method signature to use this
+            event is <c>public void yourMethodName(StoryboardTransition transition)</c>.
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.Storyboard.Present">
+            <summary>
+            Present the storyboard manually.
+            </summary>
+            
+            <remarks>
+            This can be used in conjunction with <see cref="F:P7.CanvasFlow.Storyboard.automaticPresentationMode"/> to present
+            the storyboard manually.
+            </remarks>
+        </member>
+        <member name="T:P7.CanvasFlow.StoryboardData">
+            <summary>
+            A storyboard asset file containg all of a storyboard's data.
+            </summary>
+        </member>
+        <member name="T:P7.CanvasFlow.StoryboardTransition">
+            <summary>
+            A <c>StoryboardTransition</c> object is created at runtime when a transition in a
+            storyboard is invoked. This object can be used to infer information about the transition,
+            such as the canvas controllers involved, the <see cref="F:P7.CanvasFlow.StoryboardTransition.direction"/> of the transition,
+            whether the transition is <see cref="F:P7.CanvasFlow.StoryboardTransition.animated"/>, as well as the <see cref="F:P7.CanvasFlow.StoryboardTransition.invokedHook"/>
+            that triggered the transition.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.StoryboardTransition.direction">
+            <summary>
+            The direction of the transition.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.StoryboardTransition.animated">
+            <summary>
+            Is the transition animated?
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.StoryboardTransition.presentationMode">
+            <summary>
+            The presentation mode of the presented canvas controller.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.StoryboardTransition.invokedHook">
+            <summary>
+            The <see cref="T:P7.CanvasFlow.StoryboardHook" relpath="../storyboards/hooks/"/> that triggered this transition.
+            </summary>
+            
+            <remarks>
+            If the transition was invoked manually with
+            <see cref="M:P7.CanvasFlow.CanvasController.PerformTransitionWithIdentifier(System.String)" relpath="../canvas-controller/"/>,
+             this will be null.
+            </remarks>
+        </member>
+        <member name="F:P7.CanvasFlow.StoryboardTransition.userIdentifier">
+            <summary>
+            The user identifier associated with the transition.
+            </summary>
+        </member>
+        <member name="M:P7.CanvasFlow.StoryboardTransition.SourceCanvasController``1">
+            <summary>
+            The transition's source canvas controller, if it is of type T.
+            </summary>
+            <typeparam name="T">The type to cast the source canvas controller to.</typeparam>
+        </member>
+        <member name="M:P7.CanvasFlow.StoryboardTransition.SourceCanvasController">
+            <summary>
+            The transition's source canvas controller.
+            </summary>
+        </member>
+        <member name="M:P7.CanvasFlow.StoryboardTransition.DestinationCanvasController``1">
+            <summary>
+            The transition's destination canvas controller, if it is of type T.
+            </summary>
+            <typeparam name="T">The type to cast the destination canvas controller to.</typeparam>
+        </member>
+        <member name="M:P7.CanvasFlow.StoryboardTransition.DestinationCanvasController">
+            <summary>
+            The transition's destination canvas controller.
+            </summary>
+        </member>
+        <member name="T:P7.CanvasFlow.StoryboardHook">
+            <summary>
+            A storyboard hook component is attached to game objects to make them <i>hookable</i>
+            in the storyboard editor.
+            </summary>
+            
+            <remarks>
+            A <see cref="T:P7.CanvasFlow.StoryboardTransition" relpath="../"/> will contain a reference to the
+            storyboard hook component whom triggered it. You could use this reference to access the
+            hook itself, as well as any other components on the hook's game object.
+            
+            This class is not used directly. It is derived from to create custom storyboard hooks,
+            as documented in the manual.
+            </remarks>
+        </member>
+        <member name="P:P7.CanvasFlow.StoryboardHook.Identifier">
+            <summary>
+            The hook's unique identifier.
+            </summary>
+        </member>
+        <member name="P:P7.CanvasFlow.StoryboardHook.AutoAddComponentType">
+            <summary>
+            Override to specify the component type to which this hook should be automatically added.
+            </summary>
+            
+            <remarks>
+            When a canvas controller scene is saved in the Editor, Canvas Flow will ensure that 
+            storyboard hooks are present on any game objects with the hook's 'auto-add' component 
+            type. Here you can return the target type of your hook, such as your custom button 
+            type, to have your hook automatically added to any game objects with the target 
+            component type.
+            </remarks>
+        </member>
+        <member name="M:P7.CanvasFlow.StoryboardHook.Connect(System.Action{P7.CanvasFlow.StoryboardHook})">
+            <summary>
+            Override to attach the provided callback to your storyboard hook.
+            </summary>
+            
+            <remarks>
+            When a canvas controller is loaded from a storyboard at runtime, its connected hooks
+            will be provided with a callback via the <c>Connect()</c> method. Your hook's 
+            responsibility is to simply invoke this callback when it deems itself to have been 
+            triggered. Invoking the provided callback is all that is required to trigger a 
+            storyboard transition.
+            </remarks>
+            <param name="invokeTransition">Invoke transition.</param>
+        </member>
+        <member name="M:P7.CanvasFlow.StoryboardHook.CalculateRect01">
+            <summary>
+            A normalized rect used to position the hook element within the canvas preview area
+            of the node view in the storyboard editor.
+            </summary>
+            <remarks>
+            This method is invoked by Canvas Flow in the Editor when laying out a node's hooks in
+            the storyboard editor. The default implementation of this method calculates the
+            relative position of the hook's <c>RectTransform</c> component to its highest parent
+            canvas. You may override it to specify a custom implementation.
+            </remarks>
+        </member>
+        <member name="F:P7.CanvasFlow.Routine.duration">
+            <summary>
+            The duration of the routine, in seconds.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.Routine.delay">
+            <summary>
+            The delay, in seconds, to wait before starting the routine after
+            <see cref="M:P7.CanvasFlow.Routine.Run(System.Action{System.Single},System.Action)"/> is called.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.Routine.updateMode">
+            <summary>
+            The update mode of the routine. Can either be <i>UnscaledTime</i> or <i>ScaledTime</i>.
+            </summary>
+        </member>
+        <member name="M:P7.CanvasFlow.Routine.#ctor(System.Single,System.Single,P7.CanvasFlow.RoutineUpdateMode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:P7.CanvasFlow.Routine"/> class.
+            </summary>
+            <param name="duration">The duration of the routine, in seconds.</param>
+            <param name="delay">The delay, in seconds, to wait before starting the routine after
+            <see cref="M:P7.CanvasFlow.Routine.Run(System.Action{System.Single},System.Action)"/> is called.</param>
+            <param name="updateMode">The update mode of the routine. Can either be 
+            <i>UnscaledTime</i> or <i>ScaledTime</i>.</param>
+        </member>
+        <member name="P:P7.CanvasFlow.Routine.IsRunning">
+            <summary>
+            Is the routine running?
+            </summary>
+        </member>
+        <member name="M:P7.CanvasFlow.Routine.Run(System.Action{System.Single},System.Action)">
+            <summary>
+            Run the routine with the specified OnUpdate and OnComplete callbacks.
+            </summary>
+            <param name="OnUpdate">The OnUpdate action. This will be called every frame with a
+            progress value for the routine's duration.</param>
+            <param name="OnComplete">The OnComplete action. This will be called once when the
+            routine has reached its duration.</param>
+        </member>
+        <member name="M:P7.CanvasFlow.Routine.Stop">
+            <summary>
+            Stop the routine.
+            </summary>
+        </member>
+        <member name="T:P7.CanvasFlow.StoryboardTransitionDirection">
+            <summary>
+            The direction of a storyboard transition.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.StoryboardTransitionDirection.Downstream">
+            <summary>
+            A downstream direction refers to a presentation transition - represented by a blue
+            color in the storyboard editor.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.StoryboardTransitionDirection.Upstream">
+            <summary>
+            An upstream direction refers to a dismissal transition - represented by an orange
+            color in the storyboard editor.
+            </summary>
+        </member>
+        <member name="T:P7.CanvasFlow.StoryboardPresentationSpace">
+            <summary>
+            The presentation space of a storyboard.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.StoryboardPresentationSpace.ScreenSpace">
+            <summary>
+            The storyboard will be presented in screen space.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.StoryboardPresentationSpace.WorldSpace">
+            <summary>
+            The storyboard will be presented in world space.
+            </summary>
+        </member>
+        <member name="T:P7.CanvasFlow.CanvasControllerWorldSpaceContainer">
+            <summary>
+            A world space container for Canvas Controllers.
+            </summary>
+            
+            <remarks>
+            A canvas controller world space container is used to present canvas controllers in world space.
+            You can either create one in your scene and pass it to <c>PresentInitialCanvasController</c>
+            or set a storyboard's presentation space to <c>World Space</c>, which will create one
+            automatically for you.
+            
+            The world space container gives you a world canvas, allowing you to freely position your
+            container in world space. Subsequently presented canvas controllers (or storyboards) will 
+            then be contained, or embedded, within the world canvas.
+            </remarks>
+        </member>
+        <member name="F:P7.CanvasFlow.CanvasControllerWorldSpaceContainer.worldCanvas">
+            <summary>
+            The world canvas within which canvas controllers will be contained, or embedded.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.CanvasControllerWorldSpaceContainer.worldCamera">
+            <summary>
+            The camera used to render the world space UI. By default, this will be the scene's main
+            camera.
+            </summary>
+        </member>
+        <member name="F:P7.CanvasFlow.CanvasControllerWorldSpaceContainer.mask">
+            <summary>
+            A rectangular mask used to clip the contents of the world canvas to its rect.
+            </summary>
+        </member>
+    </members>
+</doc>

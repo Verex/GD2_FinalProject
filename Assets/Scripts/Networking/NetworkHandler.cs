@@ -5,5 +5,4 @@ using UnityEngine.Networking;
 
 public class NetworkHandler : NetworkManager
 {
-
 }
