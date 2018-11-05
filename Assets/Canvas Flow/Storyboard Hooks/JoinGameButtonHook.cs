@@ -10,12 +10,13 @@ namespace P7.CanvasFlow
 {
     // A Storyboard Hook for Unity UI Button components.
     [UnityEngine.RequireComponent(typeof(UnityEngine.UI.Button))]
-    public class HostGameButtonHook : StoryboardHook
-	{
+    public class JoinGameButtonHook : StoryboardHook
+    {
         public UnityEngine.UI.Button button;
 
-        [SerializeField] private Text portInput;
+        [SerializeField] private Text connectionInput;
         [SerializeField] private GameObject networkHandlerPrefab;
+        [SerializeField] private string defaultAddress = "localhost";
         [SerializeField] private int defaultPort = 2566;
 
         #region Mono Lifecycle
@@ -47,26 +48,49 @@ namespace P7.CanvasFlow
         {
             // For a Unity UI Button we invoke our storyboard transition when
             // our Button is clicked.
-            button.onClick.AddListener(() => {
+            button.onClick.AddListener(() =>
+            {
                 // Instantiate network handler.
                 GameObject networkHandlerObject = Instantiate(networkHandlerPrefab);
 
                 // Get network handler component.
                 NetworkHandler networkHandler = networkHandlerObject.GetComponent<NetworkHandler>();
 
-                // Parse port input.
-                Int32.TryParse(portInput.text, out defaultPort);
+                // Check for custom connection text.
+                if (!string.IsNullOrEmpty(connectionInput.text))
+                {
+                    // Split connection text to get address to get port.
+                    string[] connection = connectionInput.text.Split(':');
+
+                    // Check for new port.
+                    if (connection.Length > 1)
+                    {
+                        // Parse port input.
+                        Int32.TryParse(connection[1], out defaultPort);
+                    }
+
+                    // Assign address.
+                    networkHandler.networkAddress = connection[0];
+                }
+                else
+                {
+                    // Assign default address.
+                    networkHandler.networkAddress = defaultAddress;
+                }
 
                 // Apply port to network handler.
                 networkHandler.networkPort = defaultPort;
 
-                // Start network host.
-                networkHandler.StartHost();
+                Debug.Log(networkHandler.networkAddress);
+                Debug.Log(networkHandler.networkPort);
 
-                //invokeTransition(this);
+                // Start network client and connect to server.
+                networkHandler.StartClient();
+
+                invokeTransition(this);
             });
         }
 
         #endregion
-	}
+    }
 }

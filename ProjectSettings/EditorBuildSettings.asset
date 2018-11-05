@@ -12,11 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 6d0163c463f662a4ab30b4956ccd53b5
   - enabled: 1
-    path: Assets/Scenes/Online.unity
-    guid: 68146b13a5d315d41b04c6289a835a72
-  - enabled: 1
     path: Assets/Scenes/Offline.unity
     guid: 4720bc92740a4f045a599be93bc40d34
+  - enabled: 1
+    path: Assets/Scenes/Online.unity
+    guid: 68146b13a5d315d41b04c6289a835a72
   - enabled: 1
     path: Assets/Canvas Flow/Examples/1. Game Example - Floaty Cube/Scenes/FCMenuScene.unity
     guid: bd5f90fd0537f4ca4b0c7174041ff171
