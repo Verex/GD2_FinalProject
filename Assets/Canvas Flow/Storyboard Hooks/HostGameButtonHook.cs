@@ -11,8 +11,9 @@ namespace P7.CanvasFlow
     // A Storyboard Hook for Unity UI Button components.
     [UnityEngine.RequireComponent(typeof(UnityEngine.UI.Button))]
     public class HostGameButtonHook : StoryboardHook
-	{
+    {
         public UnityEngine.UI.Button button;
+        public NetworkHandler NetworkHandler;
 
         [SerializeField] private Text portInput;
         [SerializeField] private GameObject networkHandlerPrefab;
@@ -47,26 +48,30 @@ namespace P7.CanvasFlow
         {
             // For a Unity UI Button we invoke our storyboard transition when
             // our Button is clicked.
-            button.onClick.AddListener(() => {
+            button.onClick.AddListener(() =>
+            {
                 // Instantiate network handler.
                 GameObject networkHandlerObject = Instantiate(networkHandlerPrefab);
 
                 // Get network handler component.
-                NetworkHandler networkHandler = networkHandlerObject.GetComponent<NetworkHandler>();
+                NetworkHandler = networkHandlerObject.GetComponent<NetworkHandler>();
 
-                // Parse port input.
-                Int32.TryParse(portInput.text, out defaultPort);
+                // Check if port string is not empty.
+                if (!string.IsNullOrEmpty(portInput.text))
+                {
+                    // Parse port input.
+                    Int32.TryParse(portInput.text, out defaultPort);
+                }
 
                 // Apply port to network handler.
-                networkHandler.networkPort = defaultPort;
+                NetworkHandler.networkPort = defaultPort;
 
-                // Start network host.
-                networkHandler.StartHost();
+                Debug.Log(NetworkHandler.networkPort);
 
-                //invokeTransition(this);
+                invokeTransition(this);
             });
         }
 
         #endregion
-	}
+    }
 }

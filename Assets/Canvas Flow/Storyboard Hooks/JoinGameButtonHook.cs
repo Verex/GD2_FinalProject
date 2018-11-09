@@ -14,6 +14,8 @@ namespace P7.CanvasFlow
     {
         public UnityEngine.UI.Button button;
 
+        public NetworkHandler NetworkHandler;
+
         [SerializeField] private Text connectionInput;
         [SerializeField] private GameObject networkHandlerPrefab;
         [SerializeField] private string defaultAddress = "localhost";
@@ -54,7 +56,7 @@ namespace P7.CanvasFlow
                 GameObject networkHandlerObject = Instantiate(networkHandlerPrefab);
 
                 // Get network handler component.
-                NetworkHandler networkHandler = networkHandlerObject.GetComponent<NetworkHandler>();
+                NetworkHandler = networkHandlerObject.GetComponent<NetworkHandler>();
 
                 // Check for custom connection text.
                 if (!string.IsNullOrEmpty(connectionInput.text))
@@ -70,23 +72,21 @@ namespace P7.CanvasFlow
                     }
 
                     // Assign address.
-                    networkHandler.networkAddress = connection[0];
+                    NetworkHandler.networkAddress = connection[0];
                 }
                 else
                 {
                     // Assign default address.
-                    networkHandler.networkAddress = defaultAddress;
+                    NetworkHandler.networkAddress = defaultAddress;
                 }
 
                 // Apply port to network handler.
-                networkHandler.networkPort = defaultPort;
+                NetworkHandler.networkPort = defaultPort;
 
-                Debug.Log(networkHandler.networkAddress);
-                Debug.Log(networkHandler.networkPort);
+                Debug.Log(NetworkHandler.networkAddress);
+                Debug.Log(NetworkHandler.networkPort);
 
-                // Start network client and connect to server.
-                networkHandler.StartClient();
-
+                // Invoke transition to next canvas.
                 invokeTransition(this);
             });
         }

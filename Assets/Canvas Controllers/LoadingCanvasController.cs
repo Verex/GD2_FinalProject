@@ -5,6 +5,12 @@ using System.Collections;
 
 public class LoadingCanvasController : CanvasController
 {
+    public enum NetworkMode
+    {
+        CLIENT,
+        SERVER
+    }
+
     private string sceneToLoad;
     public string SceneToLoad
     {
@@ -14,10 +20,13 @@ public class LoadingCanvasController : CanvasController
         }
     }
 
+    public NetworkHandler NetworkHandler;
+    public NetworkMode handlerMode;
+
     #region Canvas Controller Appearance
 
-	protected override void CanvasDidAppear()
-	{
+    protected override void CanvasDidAppear()
+    {
         if (string.IsNullOrEmpty(sceneToLoad) == false)
         {
             StartCoroutine(LoadSceneRoutine(sceneToLoad));
@@ -25,6 +34,24 @@ public class LoadingCanvasController : CanvasController
         else
         {
             Debug.LogError("No SceneToLoad has been set on FCLoadingCanvasController.");
+        }
+    }
+
+    protected override void CanvasDidDisappear()
+    {
+        // Ensure network handler instantiated.
+        if (NetworkHandler != null)
+        {
+            // Handle network start.
+            switch (handlerMode)
+            {
+                case NetworkMode.CLIENT:
+                    NetworkHandler.StartClient();
+                    break;
+                case NetworkMode.SERVER:
+                    NetworkHandler.StartServer();
+                    break;
+            }
         }
     }
 
