@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+
 public class NetworkHandler : NetworkManager {
 
 	//Singleton Design Pattern =) 
@@ -39,4 +40,3 @@ public class NetworkHandler : NetworkManager {
 	void Update () {
 		
 	}
-}
