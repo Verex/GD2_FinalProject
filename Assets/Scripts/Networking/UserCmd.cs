@@ -1,5 +1,8 @@
 using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
+[System.Serializable]
 public class UserCmd
 {
 
@@ -16,5 +19,25 @@ public class UserCmd
     public UserCmd(int sequenceNumber)
     {
         m_SequenceNumber = sequenceNumber;
+    }
+
+    public byte[] Serialize() {
+        BinaryFormatter bf = new BinaryFormatter();  
+        using(MemoryStream ms = new MemoryStream()) {
+            bf.Serialize(ms, this);
+            return ms.ToArray();
+        }  
+        return null;
+    }
+
+    public static UserCmd DeSerialize(byte[] data) {
+        BinaryFormatter bf = new BinaryFormatter();
+        using(MemoryStream ms = new MemoryStream(data)) {
+            var deserailzedCmd = bf.Deserialize(
+                ms
+            ) as UserCmd;
+            return deserailzedCmd;
+        }
+        return null;
     }
 }

@@ -23,22 +23,6 @@ public class NetworkHandler : NetworkManager
         }
     }
 
-    private int m_LastOutgoingSeq = 0;
-    public int LastOutgoingSequence
-    {
-        get
-        {
-            return m_LastOutgoingSeq;
-        }
-    }
-
-    UserCmd CreateUserCmd()
-    {
-        UserCmd newCommand = new UserCmd(LastOutgoingSequence);
-        m_LastOutgoingSeq++;
-        return newCommand;
-    }
-
     void Start()
     {
 
