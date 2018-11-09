@@ -21,13 +21,20 @@ public class DynamicNetworkTransform : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		//Interpolate between our last two positional updates
 		if(isClient) {
 			var lerpFraction = (Time.time - m_LastClientSyncTime) / GetNetworkSendInterval();
 			transform.position = Vector3.Lerp(
 				m_PreviousPosition,
 				m_TargetSyncPosition,
 				lerpFraction
+			);
+		}
+		if(isServer) {
+			transform.position = new Vector3(
+				Mathf.Sin(Time.time * 2f) * 3f,
+				Mathf.Cos(Time.time * 2f) * 3f,
+				0f
 			);
 		}
 		if(!hasAuthority)
