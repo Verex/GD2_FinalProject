@@ -24,6 +24,5 @@ class Player : NetworkBehaviour {
     public void FixedUpdate() {
         //Process input, serialize and send to server to be handled by NetworkTransform
         var networkHandler = NetworkHandler.Instance;
-
     }
 } 

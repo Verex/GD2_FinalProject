@@ -6,7 +6,6 @@ using UnityEngine.Networking;
 
 public class NetworkHandler : NetworkManager
 {
-
     //Singleton Design Pattern =) 
     private static NetworkHandler s_Instance;
     public static NetworkHandler Instance
