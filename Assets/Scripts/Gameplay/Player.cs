@@ -5,71 +5,19 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Assertions;
 
-class Player : NetworkBehaviour
+
+[RequireComponent(typeof(PlayerInputSynchronization))]
+class Player : MonoBehaviour
 {
 
     //This is the target ship controller, it can be set in the editor or overrided at runtime. 
     [SerializeField] private ShipController m_TargetController;
+    
+    private PlayerInputSynchronization m_Input;
 
-    private int m_LastOutgoingSeq = 0;
-    private int m_LastIncomingSeq = 0;
-
-    private UserCmd m_OutgoingCmd;
-
-    private UserCmd CreateUserCmd()
+    public void Awake()
     {
-        UserCmd newCommand = new UserCmd(
-            m_LastOutgoingSeq++
-        ); //TODO(Jake): Ensure object creation, check packet choking
-
-        return newCommand;
-    }
-
-    public override void OnDeserialize(NetworkReader reader, bool initialState)
-    {
-        if (isServer && NetworkServer.localClientActive)
-            return;
-        if (!initialState)
-        {
-            if (reader.ReadPackedUInt32() == 0)
-                return;
-        }
-        if (isServer)
-        {
-            //Check incoming user command sequence
-            var incomingCmdSize = reader.ReadInt32();
-            var incomingCmdData = reader.ReadBytes(incomingCmdSize);
-            var incomingCmd = UserCmd.DeSerialize(
-                incomingCmdData
-            );
-            var incomingSequence = incomingCmd.SequenceNumber;
-        }
-        else
-        {
-
-        }
-    }
-
-    public override bool OnSerialize(NetworkWriter writer, bool initialState)
-    {
-        if(initialState) {
-
-        }
-        else if(syncVarDirtyBits == 0) {
-            writer.WritePackedUInt32(0);
-            return false;
-        } else {
-            writer.WritePackedUInt32(1);
-        }
-        
-        var serializedCmd = m_OutgoingCmd.Serialize();
-        writer.Write(serializedCmd.Length);
-        writer.Write(
-            serializedCmd,
-            serializedCmd.Length
-        );
-
-        return true;
+        m_Input = GetComponent<PlayerInputSynchronization>();
     }
 
     public void Possess(ShipController sc)
@@ -87,10 +35,8 @@ class Player : NetworkBehaviour
     }
     public void FixedUpdate()
     {
-        //Process input, serialize and send to server to be handled by NetworkTransform
-        var newCmd = CreateUserCmd();
-        m_OutgoingCmd = newCmd;
-        SetDirtyBit(1);
-        //Construct usercmd
+        UserCmd newCommand = m_Input.CreateUserCmd();
+        //Fill user command
+        m_Input.PipeUserCommand(newCommand); //Pipe new command to server
     }
 }

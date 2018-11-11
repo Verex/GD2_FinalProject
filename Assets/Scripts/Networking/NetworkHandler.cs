@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Networking;
 
 
@@ -23,14 +24,12 @@ public class NetworkHandler : NetworkManager
         }
     }
 
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+    public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
+        GameObject playerObj = Instantiate(
+            playerPrefab,
+            Vector3.zero,
+            Quaternion.identity
+        );
+        Assert.IsNotNull(playerObj);
     }
 }

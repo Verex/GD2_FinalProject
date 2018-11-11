@@ -2,6 +2,11 @@ using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
+using UnityEngine.Networking;
+
+//TODO(Jake): Maybe add some more statistics in the message here that the server can use to combat lag 
+
+
 [System.Serializable]
 public class UserCmd
 {
@@ -15,6 +20,8 @@ public class UserCmd
             return m_SequenceNumber;
         }
     }
+
+    public UserCmd() {}
 
     public UserCmd(int sequenceNumber)
     {

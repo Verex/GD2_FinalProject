@@ -131,7 +131,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &134971143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,8 +331,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1734284415}
-  - component: {fileID: 1734284416}
   - component: {fileID: 1734284417}
+  - component: {fileID: 1734284416}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -361,7 +361,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1734284414}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -822479833, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 5bb52ffeb366bd546970addd95f27272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_NetworkPort: 7777
@@ -373,8 +373,9 @@ MonoBehaviour:
   m_ScriptCRCCheck: 1
   m_MaxDelay: 0.01
   m_LogLevel: 2
-  m_PlayerPrefab: {fileID: 0}
-  m_AutoCreatePlayer: 0
+  m_PlayerPrefab: {fileID: 1646614590711604, guid: 8f1ca78ad406e564fa152425348eee40,
+    type: 2}
+  m_AutoCreatePlayer: 1
   m_PlayerSpawnMethod: 0
   m_OfflineScene: TestScene
   m_OnlineScene: TestScene
