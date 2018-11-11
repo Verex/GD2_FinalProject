@@ -28,11 +28,8 @@ public class PlayerInputSynchronization : NetworkBehaviour {
     private int m_LastOutgoingSeq = 0;
     private int m_LastIncomingSeq = 0;
 
-    private NetworkClient m_Client;
-
-    public void Initialize(NetworkClient client) {
-        m_Client = client;
-
+    [Server]
+    public void InitializeServer() {
         //Set server command receive delegate
         NetworkServer.RegisterHandler(
             InputSynchronizationMessage.MessageID,
@@ -51,9 +48,16 @@ public class PlayerInputSynchronization : NetworkBehaviour {
 
     public void PipeUserCommand(UserCmd cmd) {
         var newMessage = InputSynchronizationMessage.FromUserCmd(cmd);
+        connectionToServer.SendByChannel(
+            InputSynchronizationMessage.MessageID,
+            newMessage,
+            Channels.DefaultUnreliable
+        );
     }
 
     void ServerReceiveCommand(NetworkMessage message) {
-
+        var inputCommandMessage = message.ReadMessage<InputSynchronizationMessage>();
+        var inputCommand = UserCmd.DeSerialize(inputCommandMessage.messageData);
+        Debug.Log("Received command: " + inputCommand.SequenceNumber);
     }
 }

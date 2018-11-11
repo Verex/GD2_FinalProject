@@ -30,5 +30,10 @@ public class NetworkHandler : NetworkManager
             Quaternion.identity
         );
         Assert.IsNotNull(playerObj);
+        var input = playerObj.GetComponent<PlayerInputSynchronization>() as PlayerInputSynchronization;
+
+        input.InitializeServer(); //Setup message handler
+
+        NetworkServer.AddPlayerForConnection(conn, playerObj, playerControllerId);
     }
 }
