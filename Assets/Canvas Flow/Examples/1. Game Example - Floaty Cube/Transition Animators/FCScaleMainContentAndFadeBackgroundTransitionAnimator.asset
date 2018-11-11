@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a00861075fb84cbcbd23f312d65e13f, type: 3}
+  m_Name: FCScaleMainContentAndFadeBackgroundTransitionAnimator
+  m_EditorClassIdentifier: 
+  description: 'The ''scale and fade background'' transition animator presents content
+    by scaling it up from the center of the screen, whilst fading in the backgroundImage
+    property. It dismisses content by performing the reverse - scaling content down
+    and fading out the backgroundImage property.
+
+
+    The ''contentToScalePropertyName'' field allows you to specify what content gets
+    scaled in your transition. You can set this to the name of any RectTransform property
+    on your canvas controller. If none is specified or the property does not exist,
+    the canvas controller''s ''content'' transform will be scaled.
+
+
+    The reverseScaleCurveOnUpstream and reverseFadeCurveOnUpstream flags cause the
+    relevant animation curves to be evaluated backwards on upstream transitions.'
+  duration: 0.4
+  scaleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 3.00052
+      outSlope: 3.00052
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0.05463887
+      outSlope: 0.05463887
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  contentToScalePropertyName: mainContent
+  reverseScaleCurveOnUpstream: 0
+  fadeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 3.00052
+      outSlope: 3.00052
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0.05463887
+      outSlope: 0.05463887
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverseFadeCurveOnUpstream: 0
+  useScaledTime: 0
