@@ -50,4 +50,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Canvas Controllers/LoadingCanvasController.unity
     guid: db0b7fda90738c54ab18fdaa2b4273a6
+  - enabled: 1
+    path: Assets/Canvas Controllers/GameUICanvasController.unity
+    guid: 1acd39d8fe20d854bac0b59eb7e10108
+  - enabled: 1
+    path: Assets/Canvas Controllers/GameWaitingCanvasController.unity
+    guid: 3a2486f73ecbcfa4d9b929f7d1d9b047
   m_configObjects: {}
