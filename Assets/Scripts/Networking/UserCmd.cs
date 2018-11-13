@@ -4,14 +4,14 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 using UnityEngine.Networking;
 
-//TODO(Jake): Maybe add some more statistics in the message here that the server can use to combat lag 
-
 
 [System.Serializable]
 public class UserCmd
 {
 
     private readonly int m_SequenceNumber;
+
+    public byte Buttons;
 
     public int SequenceNumber
     {
@@ -21,25 +21,34 @@ public class UserCmd
         }
     }
 
-    public UserCmd() {}
+    public UserCmd() { }
 
     public UserCmd(int sequenceNumber)
     {
         m_SequenceNumber = sequenceNumber;
     }
 
-    public byte[] Serialize() {
-        BinaryFormatter bf = new BinaryFormatter();  
-        using(MemoryStream ms = new MemoryStream()) {
+    public bool ActionPressed(ushort field)
+    {
+        return ((Buttons & field) == 1);
+    }
+
+    public byte[] Serialize()
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        using (MemoryStream ms = new MemoryStream())
+        {
             bf.Serialize(ms, this);
             return ms.ToArray();
-        }  
+        }
         return null;
     }
 
-    public static UserCmd DeSerialize(byte[] data) {
+    public static UserCmd DeSerialize(byte[] data)
+    {
         BinaryFormatter bf = new BinaryFormatter();
-        using(MemoryStream ms = new MemoryStream(data)) {
+        using (MemoryStream ms = new MemoryStream(data))
+        {
             var deserailzedCmd = bf.Deserialize(
                 ms
             ) as UserCmd;

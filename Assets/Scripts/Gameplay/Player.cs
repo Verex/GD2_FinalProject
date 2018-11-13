@@ -12,7 +12,7 @@ class Player : MonoBehaviour
 
     //This is the target ship controller, it can be set in the editor or overrided at runtime. 
     [SerializeField] private ShipController m_TargetController;
-    
+
     private PlayerInputSynchronization m_Input;
 
     public void Awake()
@@ -28,15 +28,26 @@ class Player : MonoBehaviour
         //TODO(Any): Maybe create an OnShipPossessed event or something
     }
 
+    /*
+        ProcessUserCmd
+        Parameters: 
+        1) UserCmd cmd
+            This is the usercmd that we're going to process, this code should only be called on the server instance of the object
+        TODO(Jake): Allow the local player to process their own usercmd upon creation AKA Client-Sided Prediction 
+        https://en.wikipedia.org/wiki/Client-side_prediction
+     */
+    public void ProcessUserCmd(UserCmd cmd)
+    {
+        if (cmd.ActionPressed(PlayerInputSynchronization.IN_FIRE))
+        {
+            //Fire!
+        }
+    }
+
     public void Update()
     {
         //Accumulate mouse samples, keyboard samples, etc.
 
     }
-    public void FixedUpdate()
-    {
-        UserCmd newCommand = m_Input.CreateUserCmd();
-        //Fill user command
-        m_Input.PipeUserCommand(newCommand); //Pipe new command to server
-    }
+
 }
