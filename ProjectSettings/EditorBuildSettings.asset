@@ -59,4 +59,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Canvas Controllers/GameWaitingCanvasController.unity
     guid: 3a2486f73ecbcfa4d9b929f7d1d9b047
+  - enabled: 1
+    path: Assets/Scenes/TestScene.unity
+    guid: 17ea522eefc6e4347bbb640179032317
   m_configObjects: {}
