@@ -42,6 +42,11 @@ public class Player : MonoBehaviour
         {
             //Fire!
         }
+        if(cmd.ActionPressed(PlayerInputSynchronization.IN_ACCELERATE))
+        {
+            //Accelerate!
+            Debug.Log("Accelerate!");
+        }
     }
 
     public void Update()
