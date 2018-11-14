@@ -49,7 +49,7 @@ public class LoadingCanvasController : CanvasController
                     NetworkHandler.StartClient();
                     break;
                 case NetworkMode.SERVER:
-                    NetworkHandler.StartServer();
+                    NetworkHandler.StartHost();
                     break;
             }
         }

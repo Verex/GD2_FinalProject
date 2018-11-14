@@ -38,6 +38,7 @@ public class NetworkHandler : NetworkManager
         return newCommand;
     }
 
+
     void Start()
     {
 
