@@ -20,20 +20,21 @@ public class NetworkHandler : NetworkManager
                     typeof(NetworkHandler)
                 ) as NetworkHandler; //Initialize our network handler
             }
-            
+
             return s_Instance;
         }
     }
 
 
-    public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
+    public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
+    {
         // Create player game object.
         GameObject playerObject = Instantiate(
             playerPrefab,
             Vector3.zero,
             Quaternion.identity
         );
-        
+
         Assert.IsNotNull(playerObject);
 
         // Get sync component.
@@ -50,19 +51,23 @@ public class NetworkHandler : NetworkManager
 
         // Ready the player for connection.
         NetworkServer.AddPlayerForConnection(conn, playerObject, playerControllerId);
+
+        Debug.Log("Player added. (" + Players.Count + ")");
     }
 
-    public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController player)
+    public override void OnServerDisconnect(NetworkConnection conn)
     {
-        base.OnServerRemovePlayer(conn, player);
+        if (conn.playerControllers.Count > 0)
+        {
+            // Get player component reference.
+            Player playerComponent = conn.playerControllers[0].gameObject.GetComponent<Player>();
 
-        // Get player component reference.
-        Player playerComponent = player.gameObject.GetComponent<Player>();
+            // Remove from list.
+            Players.Remove(playerComponent);
 
-        // Remove from list.
-        Players.Remove(playerComponent);
+            Debug.Log("Player removed. (" + Players.Count + ")");
+        }
 
-        
-        Debug.Log(Players.Count);
+        base.OnServerConnect(conn);
     }
 }

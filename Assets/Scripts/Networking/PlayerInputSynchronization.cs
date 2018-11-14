@@ -136,8 +136,8 @@ public class PlayerInputSynchronization : NetworkBehaviour
     {
         var inputCommandMessage = message.ReadMessage<InputSynchronizationMessage>();
         var inputCommand = UserCmd.DeSerialize(inputCommandMessage.messageData);
+        
         //HACK HACK(Jake): Commands should definitely be stored first before trying to execute them upon receiving this is for TESTING purposes ONLY.
-        GetComponent<Player>().ProcessUserCmd(inputCommand); 
-        Debug.Log("Received command: " + inputCommand.SequenceNumber);
+        GetComponent<Player>().ProcessUserCmd(inputCommand);
     }
 }
