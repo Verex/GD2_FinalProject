@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Networking;
 
 
@@ -22,31 +23,17 @@ public class NetworkHandler : NetworkManager
         }
     }
 
-    private int m_LastOutgoingSeq = 0;
-    public int LastOutgoingSequence
-    {
-        get
-        {
-            return m_LastOutgoingSeq;
-        }
-    }
+    public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
+        GameObject playerObj = Instantiate(
+            playerPrefab,
+            Vector3.zero,
+            Quaternion.identity
+        );
+        Assert.IsNotNull(playerObj);
+        var input = playerObj.GetComponent<PlayerInputSynchronization>() as PlayerInputSynchronization;
 
-    UserCmd CreateUserCmd()
-    {
-        UserCmd newCommand = new UserCmd(LastOutgoingSequence);
-        m_LastOutgoingSeq++;
-        return newCommand;
-    }
+        input.InitializeServer(); //Setup message handler
 
-
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        NetworkServer.AddPlayerForConnection(conn, playerObj, playerControllerId);
     }
 }
