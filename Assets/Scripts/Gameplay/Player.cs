@@ -46,7 +46,6 @@ class Player : MonoBehaviour
 
     public void Update()
     {
-        //Accumulate mouse samples, keyboard samples, etc.
 
     }
 
