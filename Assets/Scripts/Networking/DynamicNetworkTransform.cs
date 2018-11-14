@@ -31,11 +31,13 @@ public class DynamicNetworkTransform : NetworkBehaviour {
 			);
 		}
 		if(isServer) {
-			transform.position = new Vector3(
+            /*
+            transform.position = new Vector3(
 				Mathf.Sin(Time.time * 2f) * 3f,
 				Mathf.Cos(Time.time * 2f) * 3f,
 				0f
 			);
+            */
 		}
 		if(!hasAuthority)
 			return;

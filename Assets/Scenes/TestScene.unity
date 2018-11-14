@@ -124,13 +124,14 @@ GameObject:
   - component: {fileID: 134971144}
   - component: {fileID: 134971143}
   - component: {fileID: 134971146}
+  - component: {fileID: 134971147}
   m_Layer: 0
   m_Name: TestShip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &134971143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,6 +234,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf0a0855a779beb458abbf194a0d876d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &134971147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 134971142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92122c6318ce4e04b9469128a90776ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TargetController: {fileID: 0}
 --- !u!1 &1417909544
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,8 +331,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1734284415}
-  - component: {fileID: 1734284416}
   - component: {fileID: 1734284417}
+  - component: {fileID: 1734284416}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -348,7 +361,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1734284414}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -822479833, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 5bb52ffeb366bd546970addd95f27272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_NetworkPort: 7777
@@ -360,8 +373,9 @@ MonoBehaviour:
   m_ScriptCRCCheck: 1
   m_MaxDelay: 0.01
   m_LogLevel: 2
-  m_PlayerPrefab: {fileID: 0}
-  m_AutoCreatePlayer: 0
+  m_PlayerPrefab: {fileID: 1646614590711604, guid: 8f1ca78ad406e564fa152425348eee40,
+    type: 2}
+  m_AutoCreatePlayer: 1
   m_PlayerSpawnMethod: 0
   m_OfflineScene: TestScene
   m_OnlineScene: TestScene
@@ -432,4 +446,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4614dbae3fe75d043afd110a922d59d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ClientState: 1
+  m_ClientState: 0
+--- !u!1 &1998455217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1998455219}
+  - component: {fileID: 1998455218}
+  m_Layer: 0
+  m_Name: InControl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1998455218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1998455217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7b5e8de77c5b4597ae7fbfb49a95e22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logDebugInfo: 1
+  invertYAxis: 0
+  useFixedUpdate: 0
+  dontDestroyOnLoad: 1
+  suspendInBackground: 0
+  enableICade: 0
+  enableXInput: 0
+  xInputOverrideUpdateRate: 0
+  xInputUpdateRate: 0
+  xInputOverrideBufferSize: 0
+  xInputBufferSize: 0
+  enableNativeInput: 1
+  nativeInputEnableXInput: 1
+  nativeInputPreventSleep: 0
+  nativeInputOverrideUpdateRate: 0
+  nativeInputUpdateRate: 0
+  customProfiles: []
+--- !u!4 &1998455219
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1998455217}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
