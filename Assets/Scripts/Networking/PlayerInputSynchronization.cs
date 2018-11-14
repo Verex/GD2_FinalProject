@@ -11,7 +11,6 @@ public class InputSynchronizationMessage : MessageBase
 {
     public static readonly short MessageID = 888;
     public byte[] messageData;
-    public int messageLength;
 
     public static InputSynchronizationMessage FromUserCmd(UserCmd command)
     {
@@ -20,7 +19,6 @@ public class InputSynchronizationMessage : MessageBase
         //Fill our message fields to be send
         var newMessage = new InputSynchronizationMessage();
         newMessage.messageData = messageData;
-        newMessage.messageLength = messageLength;
 
         return newMessage;
     }
