@@ -42,10 +42,34 @@ public class Player : NetworkBehaviour
         {
             //Fire!
         }
-        if(cmd.ActionPressed(PlayerInputSynchronization.IN_ACCELERATE))
+        if (cmd.ActionPressed(PlayerInputSynchronization.IN_ACCELERATE))
         {
             //Accelerate!
             Debug.Log("Accelerate!");
+        }
+
+        bool moveLeft = cmd.ActionPressed(PlayerInputSynchronization.IN_LEFT),
+            moveRight = cmd.ActionPressed(PlayerInputSynchronization.IN_RIGHT);
+
+        if (moveLeft ^ moveRight)
+        {
+            if (moveLeft)
+            {
+                m_TargetController.HorizontalMoveDirection = -1;
+            }
+            else
+            {
+                m_TargetController.HorizontalMoveDirection = 1;
+            }
+        }
+        else
+        {
+            m_TargetController.HorizontalMoveDirection = 0;
+        }
+
+        if (cmd.ActionPressed(PlayerInputSynchronization.IN_RIGHT))
+        {
+
         }
     }
 

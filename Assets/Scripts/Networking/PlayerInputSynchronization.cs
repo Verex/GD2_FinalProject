@@ -46,7 +46,8 @@ public class PlayerInputSynchronization : NetworkBehaviour
 
     private int m_LastOutgoingSeq = 0;
     private int m_LastIncomingSeq = 0;
-
+    private UserCmd m_UserCmd;
+    private UserCmd m_LastUserCmd;
     private Queue<UserCmd> m_StoredCmds;
 
     private PlayerInputBindings m_InputBindings;
@@ -77,10 +78,47 @@ public class PlayerInputSynchronization : NetworkBehaviour
         {
             m_InputBindings = new PlayerInputBindings(); //Initialize our client-sided input bindings
             m_InputBindings.InitializeBindings();
+            m_UserCmd = CreateUserCmd();
+            m_LastUserCmd = CreateUserCmd();
         }
 
         m_StoredCmds = new Queue<UserCmd>();
         m_TargetPlayer = GetComponent<Player>();
+    }
+
+    public void Update()
+    {
+        if (isClient)
+        {
+            ClientUpdate();
+        }
+    }
+
+    public void ClientUpdate()
+    {
+        // Clear current input command.
+        m_UserCmd.Buttons = 0;
+
+        if (m_InputBindings.Accelerate.WasPressed || m_InputBindings.Accelerate.WasRepeated)
+        {
+            m_UserCmd.Buttons |= IN_ACCELERATE;
+        }
+        if (m_InputBindings.Deccelerate.WasPressed)
+        {
+            m_UserCmd.Buttons |= IN_DECCELERATE;
+        }
+        if (m_InputBindings.Left.IsPressed)
+        {
+            m_UserCmd.Buttons |= IN_LEFT;
+        }
+        if (m_InputBindings.Right.IsPressed)
+        {
+            m_UserCmd.Buttons |= IN_RIGHT;
+        }
+        if (m_InputBindings.Fire.WasPressed)
+        {
+            m_UserCmd.Buttons |= IN_FIRE;
+        }
     }
 
     public void FixedUpdate()
@@ -100,32 +138,13 @@ public class PlayerInputSynchronization : NetworkBehaviour
     */
     private void FixedUpdateClient()
     {
-        UserCmd newCmd = CreateUserCmd();
-        //Fill usercmd with user input
-        newCmd.Buttons = 0;
-        if (m_InputBindings.Accelerate.WasPressed || m_InputBindings.Accelerate.WasRepeated)
+        if (m_UserCmd.Buttons != m_LastUserCmd.Buttons)
         {
-            newCmd.Buttons |= IN_ACCELERATE;
-        }
-        if (m_InputBindings.Deccelerate.WasPressed)
-        {
-            newCmd.Buttons |= IN_DECCELERATE;
-        }
-        if (m_InputBindings.Left.WasPressed)
-        {
-            newCmd.Buttons |= IN_LEFT;
-        }
-        if (m_InputBindings.Right.WasPressed)
-        {
-            newCmd.Buttons |= IN_RIGHT;
-        }
-        if (m_InputBindings.Fire.WasPressed)
-        {
-            newCmd.Buttons |= IN_FIRE;
-        }
+            Debug.Log("piped");
+            PipeUserCommand(m_UserCmd);
 
-        if(newCmd.Buttons != 0) {
-            PipeUserCommand(newCmd);
+            // Update user buttons.
+            m_LastUserCmd.Buttons = m_UserCmd.Buttons;
         }
     }
 
@@ -135,7 +154,7 @@ public class PlayerInputSynchronization : NetworkBehaviour
     */
     private void FixedUpdateServer()
     {
-        while(m_StoredCmds.Count != 0) 
+        while (m_StoredCmds.Count != 0)
         {
             var commandToCompute = m_StoredCmds.Dequeue();
             m_TargetPlayer.ProcessUserCmd(commandToCompute);
@@ -144,7 +163,8 @@ public class PlayerInputSynchronization : NetworkBehaviour
 
     public void PipeUserCommand(UserCmd cmd)
     {
-        if(cmd.SequenceNumber - m_LastOutgoingSeq > 1) {
+        if (cmd.SequenceNumber - m_LastOutgoingSeq > 1)
+        {
             //We are missing some commands, lets look at our choked command history.
             return;
         }

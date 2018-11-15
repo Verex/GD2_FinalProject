@@ -120,6 +120,6 @@ public class NetworkHandler : NetworkManager
             Debug.Log("Player removed. (" + Players.Count + ")");
         }
 
-        base.OnServerConnect(conn);
+        base.OnServerDisconnect(conn);
     }
 }
