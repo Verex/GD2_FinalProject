@@ -5,16 +5,16 @@ using UnityEngine.Networking;
 
 public class ShipController : NetworkBehaviour
 {
-
-    // Use this for initialization
-    void Start()
+    [TargetRpc]
+    public void TargetSetupShip(NetworkConnection target)
     {
+        // Get player camera component.
+        PlayerCamera camera = Camera.main.GetComponent<PlayerCamera>();
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        // Assign camera target to ship.
+        if (camera != null)
+        {
+            camera.Target = transform;
+        }
     }
 }

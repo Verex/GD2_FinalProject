@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 
 
 [RequireComponent(typeof(PlayerInputSynchronization))]
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
 
     //This is the target ship controller, it can be set in the editor or overrided at runtime. 

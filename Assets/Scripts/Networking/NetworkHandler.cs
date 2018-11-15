@@ -8,7 +8,7 @@ public class NetworkHandler : NetworkManager
 {
     public List<Player> Players;
 
-    //Singleton Design Pattern =) 
+    [SerializeField] private GameObject m_PlayerShipPrefab;
     private static NetworkHandler s_Instance;
     public static NetworkHandler Instance
     {
@@ -51,6 +51,25 @@ public class NetworkHandler : NetworkManager
 
         // Ready the player for connection.
         NetworkServer.AddPlayerForConnection(conn, playerObject, playerControllerId);
+
+        // Instantiate ship for player.
+        GameObject shipObject = Instantiate(
+            m_PlayerShipPrefab,
+            Vector3.zero,
+            Quaternion.identity
+        );
+
+        // Get ship controller component.
+        ShipController controller = shipObject.GetComponent<ShipController>();
+
+        // Spawn ship in network.
+        NetworkServer.Spawn(shipObject);
+
+        // Assign player to ship controller.
+        player.Possess(controller);
+
+        // Posess player ship on client.
+        controller.TargetSetupShip(conn);
 
         Debug.Log("Player added. (" + Players.Count + ")");
     }

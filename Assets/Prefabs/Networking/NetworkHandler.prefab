@@ -66,7 +66,8 @@ MonoBehaviour:
   m_PlayerSpawnMethod: 0
   m_OfflineScene: Offline
   m_OnlineScene: Online
-  m_SpawnPrefabs: []
+  m_SpawnPrefabs:
+  - {fileID: 1844929861632008, guid: b768bde4934ad1a41bb2cde4d6f0c6a4, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -122,3 +123,6 @@ MonoBehaviour:
   matchSize: 4
   isNetworkActive: 0
   matchMaker: {fileID: 0}
+  Players: []
+  m_PlayerShipPrefab: {fileID: 1844929861632008, guid: b768bde4934ad1a41bb2cde4d6f0c6a4,
+    type: 2}

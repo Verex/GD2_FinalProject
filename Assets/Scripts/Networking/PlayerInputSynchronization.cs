@@ -80,7 +80,9 @@ public class PlayerInputSynchronization : NetworkBehaviour
         {
             FixedUpdateServer();
         }
-        else if (isClient)
+        
+        
+        if (isClient)
         {
             FixedUpdateClient();
         }
