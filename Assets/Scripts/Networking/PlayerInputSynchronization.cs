@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Networking;
 
 using InControl;
@@ -64,7 +65,7 @@ public class PlayerInputSynchronization : NetworkBehaviour
     public UserCmd CreateUserCmd()
     {
         UserCmd newCommand = new UserCmd(
-            m_LastOutgoingSeq++
+            m_LastOutgoingSeq + 1
         );
 
         return newCommand;
@@ -123,7 +124,9 @@ public class PlayerInputSynchronization : NetworkBehaviour
             newCmd.Buttons |= IN_FIRE;
         }
 
-        PipeUserCommand(newCmd);
+        if(newCmd.Buttons != 0) {
+            PipeUserCommand(newCmd);
+        }
     }
 
     /*
@@ -141,12 +144,18 @@ public class PlayerInputSynchronization : NetworkBehaviour
 
     public void PipeUserCommand(UserCmd cmd)
     {
+        if(cmd.SequenceNumber - m_LastOutgoingSeq > 1) {
+            //We are missing some commands, lets look at our choked command history.
+            return;
+        }
         var newMessage = InputSynchronizationMessage.FromUserCmd(cmd);
         connectionToServer.SendByChannel(
             InputSynchronizationMessage.MessageID,
             newMessage,
             Channels.DefaultUnreliable
         );
+
+        m_LastOutgoingSeq++;
     }
 
     void ServerReceiveCommand(NetworkMessage message)
