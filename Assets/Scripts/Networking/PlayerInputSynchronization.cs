@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Networking;
 
 using InControl;
@@ -46,7 +47,10 @@ public class PlayerInputSynchronization : NetworkBehaviour
     private int m_LastOutgoingSeq = 0;
     private int m_LastIncomingSeq = 0;
 
+    private Queue<UserCmd> m_StoredCmds;
+
     private PlayerInputBindings m_InputBindings;
+    private Player m_TargetPlayer;
 
     [Server]
     public void InitializeServer()
@@ -61,17 +65,22 @@ public class PlayerInputSynchronization : NetworkBehaviour
     public UserCmd CreateUserCmd()
     {
         UserCmd newCommand = new UserCmd(
-            m_LastOutgoingSeq++
+            m_LastOutgoingSeq + 1
         );
 
         return newCommand;
     }
 
-    void Start() 
+    void Start()
     {
-        if(isClient) {
+        if (isClient)
+        {
             m_InputBindings = new PlayerInputBindings(); //Initialize our client-sided input bindings
+            m_InputBindings.InitializeBindings();
         }
+
+        m_StoredCmds = new Queue<UserCmd>();
+        m_TargetPlayer = GetComponent<Player>();
     }
 
     public void FixedUpdate()
@@ -80,8 +89,6 @@ public class PlayerInputSynchronization : NetworkBehaviour
         {
             FixedUpdateServer();
         }
-        
-        
         if (isClient)
         {
             FixedUpdateClient();
@@ -96,23 +103,30 @@ public class PlayerInputSynchronization : NetworkBehaviour
         UserCmd newCmd = CreateUserCmd();
         //Fill usercmd with user input
         newCmd.Buttons = 0;
-        if(m_InputBindings.Accelerate.WasPressed) {
+        if (m_InputBindings.Accelerate.WasPressed || m_InputBindings.Accelerate.WasRepeated)
+        {
             newCmd.Buttons |= IN_ACCELERATE;
         }
-        if(m_InputBindings.Deccelerate.WasPressed) {
+        if (m_InputBindings.Deccelerate.WasPressed)
+        {
             newCmd.Buttons |= IN_DECCELERATE;
         }
-        if(m_InputBindings.Left.WasPressed) {
+        if (m_InputBindings.Left.WasPressed)
+        {
             newCmd.Buttons |= IN_LEFT;
         }
-        if(m_InputBindings.Right.WasPressed) {
+        if (m_InputBindings.Right.WasPressed)
+        {
             newCmd.Buttons |= IN_RIGHT;
         }
-        if(m_InputBindings.Fire.WasPressed) {
+        if (m_InputBindings.Fire.WasPressed)
+        {
             newCmd.Buttons |= IN_FIRE;
         }
 
-        PipeUserCommand(newCmd);
+        if(newCmd.Buttons != 0) {
+            PipeUserCommand(newCmd);
+        }
     }
 
     /*
@@ -121,25 +135,42 @@ public class PlayerInputSynchronization : NetworkBehaviour
     */
     private void FixedUpdateServer()
     {
-
+        while(m_StoredCmds.Count != 0) 
+        {
+            var commandToCompute = m_StoredCmds.Dequeue();
+            m_TargetPlayer.ProcessUserCmd(commandToCompute);
+        }
     }
 
     public void PipeUserCommand(UserCmd cmd)
     {
+        if(cmd.SequenceNumber - m_LastOutgoingSeq > 1) {
+            //We are missing some commands, lets look at our choked command history.
+            return;
+        }
         var newMessage = InputSynchronizationMessage.FromUserCmd(cmd);
         connectionToServer.SendByChannel(
             InputSynchronizationMessage.MessageID,
             newMessage,
             Channels.DefaultUnreliable
         );
+
+        m_LastOutgoingSeq++;
     }
 
     void ServerReceiveCommand(NetworkMessage message)
     {
         var inputCommandMessage = message.ReadMessage<InputSynchronizationMessage>();
         var inputCommand = UserCmd.DeSerialize(inputCommandMessage.messageData);
-        
-        //HACK HACK(Jake): Commands should definitely be stored first before trying to execute them upon receiving this is for TESTING purposes ONLY.
-        GetComponent<Player>().ProcessUserCmd(inputCommand);
+        if (inputCommand.SequenceNumber - m_LastIncomingSeq > 1)
+        {
+            //We are missing some commands lets start predicting
+            //Run prediction code
+        }
+        else
+        {
+            m_LastIncomingSeq = inputCommand.SequenceNumber;
+            m_StoredCmds.Enqueue(inputCommand);
+        }
     }
 }

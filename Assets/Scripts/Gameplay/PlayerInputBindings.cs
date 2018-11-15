@@ -16,7 +16,11 @@ public class PlayerInputBindings : PlayerActionSet
         Accelerate = CreatePlayerAction("Accelerate");
         Deccelerate = CreatePlayerAction("Deccelerate");
         Fire = CreatePlayerAction("Fire");
+    }
 
+    public void InitializeBindings() 
+    {
+        
         Left.AddDefaultBinding(Key.A);
         Right.AddDefaultBinding(Key.D);
         Accelerate.AddDefaultBinding(Key.W);

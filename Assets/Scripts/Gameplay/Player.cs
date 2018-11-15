@@ -42,6 +42,11 @@ public class Player : NetworkBehaviour
         {
             //Fire!
         }
+        if(cmd.ActionPressed(PlayerInputSynchronization.IN_ACCELERATE))
+        {
+            //Accelerate!
+            Debug.Log("Accelerate!");
+        }
     }
 
     public void Update()
