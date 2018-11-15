@@ -17,8 +17,10 @@ public class PlayerCamera : MonoBehaviour
 			// Calculate offset position from target.
 			Vector3 targetPosition = Target.TransformPoint(m_TargetOffset);
 
-			// Smooth damp to target.
-			transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref m_DampVelocity, m_SmoothTime);
+			// Lock position to target.
+			transform.position = new Vector3(transform.position.x, Target.position.y, transform.position.z);
+
+			//Vector3.SmoothDamp(transform.position, targetPosition, ref m_DampVelocity, m_SmoothTime);
 		}
 	}
 }

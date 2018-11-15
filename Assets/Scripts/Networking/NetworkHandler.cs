@@ -9,6 +9,7 @@ public class NetworkHandler : NetworkManager
     public List<Player> Players;
 
     [SerializeField] private GameObject m_PlayerShipPrefab;
+    private Dictionary<int, Transform> m_ShipSpawns;
     private static NetworkHandler s_Instance;
     public static NetworkHandler Instance
     {
@@ -23,6 +24,20 @@ public class NetworkHandler : NetworkManager
 
             return s_Instance;
         }
+    }
+
+    public void RegisterShipSpawn(int playerId, Transform spawnTransform)
+    {
+        // Add to spawns dictionary.
+        m_ShipSpawns.Add(playerId, spawnTransform);
+    }
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+
+        // Initialize spawn transform dictionary.
+        m_ShipSpawns = new Dictionary<int, Transform>();
     }
 
 
@@ -52,11 +67,29 @@ public class NetworkHandler : NetworkManager
         // Ready the player for connection.
         NetworkServer.AddPlayerForConnection(conn, playerObject, playerControllerId);
 
+        // Calculate this based on new player in list.
+        int spawnedPlayerID = Players.Count - 1;
+
+        // Define default position and rotations for ship.
+        Vector3 shipSpawnPosition = Vector3.zero;
+        Quaternion shipSpawnRotation = Quaternion.identity;
+
+        // Check if player has spawn transform set.
+        if (m_ShipSpawns.ContainsKey(spawnedPlayerID))
+        {
+            // Get spawn point transform.
+            Transform spawn = m_ShipSpawns[spawnedPlayerID];
+
+            // Apply spawn position and rotation.
+            shipSpawnPosition = spawn.position;
+            shipSpawnRotation = spawn.rotation;
+        }
+
         // Instantiate ship for player.
         GameObject shipObject = Instantiate(
             m_PlayerShipPrefab,
-            Vector3.zero,
-            Quaternion.identity
+            shipSpawnPosition,
+            shipSpawnRotation
         );
 
         // Get ship controller component.
@@ -87,6 +120,6 @@ public class NetworkHandler : NetworkManager
             Debug.Log("Player removed. (" + Players.Count + ")");
         }
 
-        base.OnServerConnect(conn);
+        base.OnServerDisconnect(conn);
     }
 }
