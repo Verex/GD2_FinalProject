@@ -30,7 +30,8 @@ public class UserCmd
 
     public bool ActionPressed(ushort field)
     {
-        return ((Buttons & field) == 1);
+        var result = (Buttons & field);
+        return result != 0;
     }
 
     public byte[] Serialize()
