@@ -140,7 +140,6 @@ public class PlayerInputSynchronization : NetworkBehaviour
     {
         if (m_UserCmd.Buttons != m_LastUserCmd.Buttons)
         {
-            Debug.Log("piped");
             PipeUserCommand(m_UserCmd);
 
             // Update user buttons.
@@ -169,6 +168,7 @@ public class PlayerInputSynchronization : NetworkBehaviour
             return;
         }
         var newMessage = InputSynchronizationMessage.FromUserCmd(cmd);
+
         connectionToServer.SendByChannel(
             InputSynchronizationMessage.MessageID,
             newMessage,
