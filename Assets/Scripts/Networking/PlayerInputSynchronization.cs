@@ -10,8 +10,8 @@ using InControl;
 
 public class InputSynchronizationMessage : MessageBase
 {
-    public uint netId;
     public static readonly short MessageID = 888;
+    public uint netId;
     public byte[] messageData;
 
     public static InputSynchronizationMessage FromUserCmd(UserCmd command)
@@ -144,6 +144,9 @@ public class PlayerInputSynchronization : NetworkBehaviour
     {
         if (m_UserCmd.Buttons != m_LastUserCmd.Buttons)
         {
+            // Handle local user cmd.
+            m_TargetPlayer.ProcessUserCmd(m_UserCmd);
+
             PipeUserCommand(m_UserCmd);
 
             // Update user buttons.

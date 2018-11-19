@@ -17,15 +17,13 @@ public class RaceManager : NetworkBehaviour
     }
 
     [SerializeField] public RaceStateChanged OnRaceStateChanged;
-
     [SyncVar(hook = "OnRaceStateReceived")] public RaceState CurrentState;
-
-    // Starting time of the race (before countdown).
     public float StartingTime;
 
-    [SerializeField] public float RaceStartDelay = 3.0f;
 
+    [SerializeField] private float m_RaceStartDelay = 3.0f;
     private static RaceManager s_Instance;
+
 
     public static RaceManager Instance
     {
@@ -39,6 +37,14 @@ public class RaceManager : NetworkBehaviour
             }
 
             return s_Instance;
+        }
+    }
+
+    public float TimeBeforeStart
+    {
+        get
+        {
+            return (StartingTime + m_RaceStartDelay) - Time.time;
         }
     }
 
