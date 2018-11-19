@@ -70,6 +70,13 @@ public class NetworkHandler : NetworkManager
         // Calculate this based on new player in list.
         int spawnedPlayerID = Players.Count - 1;
 
+        // HACK HACK - Only for 2 players...
+        if (spawnedPlayerID == 1)
+        {
+            // Start the game.
+            RaceManager.Instance.StartRace();
+        }
+
         // Define default position and rotations for ship.
         Vector3 shipSpawnPosition = Vector3.zero;
         Quaternion shipSpawnRotation = Quaternion.identity;

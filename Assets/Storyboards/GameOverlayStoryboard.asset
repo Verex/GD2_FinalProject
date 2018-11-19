@@ -1,0 +1,3394 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -569729125, guid: e7f32c7c4733b44d085a4f3649e422e3, type: 3}
+  m_Name: GameOverlayStoryboard
+  m_EditorClassIdentifier: 
+  graph: {fileID: 114658859497205460}
+  editorData: {fileID: 114356501500073864}
+--- !u!114 &114001571711379722
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1750784389, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156172
+  edgeInsets:
+    left: 4
+    bottom: 4
+    right: 4
+    top: 4
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114877751382895564}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114004330070393552
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 528345419, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorNodeManualTransitionsView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156598
+  edgeInsets:
+    left: 0
+    bottom: -72
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 1}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114521802034676544}
+  subviews:
+  - {fileID: 114190239944245814}
+  - {fileID: 114789778490104800}
+  backgroundColor: {r: 0.22, g: 0.26, b: 0.27, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  label: {fileID: 114190239944245814}
+  addTransitionHookView: {fileID: 114789778490104800}
+  buttons: []
+  hookViewListener: {fileID: 114521802034676544}
+--- !u!114 &114005908903179660
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 258146063, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156168
+  edgeInsets:
+    left: 4
+    bottom: 4
+    right: 4
+    top: 4
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114856021663265744}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114008562839541416
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1624788612, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorNodeConnectionView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142304
+  edgeInsets:
+    left: -13
+    bottom: -13
+    right: -13
+    top: -13
+  anchorMin: {x: 1, y: 0.5}
+  anchorMax: {x: 1, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114172126189791714}
+  subviews:
+  - {fileID: 114320528386543986}
+  - {fileID: 114205247560693962}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  backgroundView: {fileID: 114320528386543986}
+  foregroundView: {fileID: 114205247560693962}
+  defaultColor: {r: 0.35, g: 0.43, b: 0.44, a: 1}
+  fillColor: {r: 0.87, g: 0.39, b: 0.22, a: 1}
+  isFilled: 0
+  connectionCount: 0
+--- !u!114 &114015296830318646
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1323237038, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156608
+  edgeInsets:
+    left: 4
+    bottom: 4
+    right: 4
+    top: 4
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114789778490104800}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114030688694582586
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1508901505, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156596
+  edgeInsets:
+    left: 20
+    bottom: 90
+    right: 20
+    top: 92
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114521802034676544}
+  subviews: []
+  backgroundColor: {r: 0.22, g: 0.26, b: 0.27, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114032597681843016
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 343908022, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorEdgeView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156888
+  edgeInsets:
+    left: -50
+    bottom: -50
+    right: -50
+    top: -50
+  anchorMin: {x: 0.5, y: 0.5}
+  anchorMax: {x: 0.5, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114511825406067670}
+  subviews: []
+  backgroundColor: {r: 0, g: 0.78, b: 0.85, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  edge: {fileID: 114470309868368046}
+  sourceConnectable: {fileID: 114176182441433400}
+  destinationConnectable: {fileID: 114640021243555854}
+  sourceView: {fileID: 114912225582559858}
+  destinationView: {fileID: 114640021243555854}
+  lineThickness: 2
+--- !u!114 &114037755263821128
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -191530095, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorNodeTitleBar
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156158
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: -70
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 0}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114813355585264436}
+  subviews:
+  - {fileID: 114130942716712238}
+  - {fileID: 114155779020861484}
+  - {fileID: 114595064319224538}
+  - {fileID: 114856021663265744}
+  - {fileID: 114877751382895564}
+  - {fileID: 114891128978120580}
+  - {fileID: 114922001683965556}
+  backgroundColor: {r: 0.22, g: 0.26, b: 0.27, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  interactableIndicator: {fileID: 114130942716712238}
+  label: {fileID: 114155779020861484}
+  separator: {fileID: 114595064319224538}
+  openButton: {fileID: 114856021663265744}
+  entryButton: {fileID: 114877751382895564}
+  deleteButton: {fileID: 114891128978120580}
+  dragView: {fileID: 114922001683965556}
+  listener: {fileID: 114813355585264436}
+--- !u!114 &114040846241528288
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 363124683, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156176
+  edgeInsets:
+    left: 4
+    bottom: 4
+    right: 4
+    top: 4
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114891128978120580}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114078634483265486
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1508901505, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142290
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 1, y: 0.5}
+  anchorMax: {x: 1, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114416123743109798}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114104488781625202
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1124455358, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorButtonView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156590
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0.66, y: 0.6}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114894795385786626}
+  subviews:
+  - {fileID: 114946195215789644}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tooltip: Remove canvas from storyboard.
+  blockInputEvents: 0
+  title: 
+  fontSize: 12
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  hoveredColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  pressedColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  icon: {fileID: 114946195215789644}
+  userTag: 0
+  listener: {fileID: 114521802034676544}
+--- !u!114 &114115932075448792
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -85069073, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorLabelView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156878
+  edgeInsets:
+    left: 8
+    bottom: 0
+    right: 28
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114176182441433400}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  text: GameStarting
+  textColor: {r: 0.93, g: 1, b: 1, a: 1}
+  fontSize: 10
+  alignment: 3
+  alignmentHasUserDefinedValue: 1
+--- !u!114 &114117115287701330
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1323237038, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142288
+  edgeInsets:
+    left: 4
+    bottom: 4
+    right: 4
+    top: 4
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114416123743109798}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114121548560263958
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1508901505, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156612
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0.5}
+  anchorMax: {x: 0, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114789778490104800}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114123760997922784
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1508901505, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156180
+  edgeInsets:
+    left: 20
+    bottom: 90
+    right: 20
+    top: 128
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114813355585264436}
+  subviews: []
+  backgroundColor: {r: 0.22, g: 0.26, b: 0.27, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114129823811714598
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1508901505, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156610
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 1, y: 0.5}
+  anchorMax: {x: 1, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114789778490104800}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114130213158177380
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1508901505, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156194
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 1, y: 0.5}
+  anchorMax: {x: 1, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114975337421834930}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114130942716712238
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1523862957, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156160
+  edgeInsets:
+    left: -10
+    bottom: 4
+    right: -10
+    top: -6
+  anchorMin: {x: 0.5, y: 0}
+  anchorMax: {x: 0.5, y: 0}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114037755263821128}
+  subviews: []
+  backgroundColor: {r: 0.35, g: 0.43, b: 0.44, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 0
+--- !u!114 &114141928206822206
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 624038582, guid: e7f32c7c4733b44d085a4f3649e422e3, type: 3}
+  m_Name: UIStoryboardNode - GameUICanvasController
+  m_EditorClassIdentifier: 
+  identifier: 198d7633-2df1-4004-8475-e85638e8c782
+  graph: {fileID: 114658859497205460}
+  edges: []
+  hooks: []
+  sceneName: GameUICanvasController
+  sceneAssetObject: {fileID: 102900000, guid: 1acd39d8fe20d854bac0b59eb7e10108, type: 3}
+  canvasAspectRatio: 1.7777778
+  parent: {fileID: 0}
+--- !u!114 &114155779020861484
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -85069073, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorLabelView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156162
+  edgeInsets:
+    left: 8
+    bottom: 0
+    right: 8
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 0.6}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114037755263821128}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  text: GameWaitingCanvasController
+  textColor: {r: 0.93, g: 1, b: 1, a: 1}
+  fontSize: 12
+  alignment: 0
+  alignmentHasUserDefinedValue: 0
+--- !u!114 &114172126189791714
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1757072531, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorExitView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142294
+  edgeInsets:
+    left: 495
+    bottom: 35
+    right: -555
+    top: -115
+  anchorMin: {x: 0.5, y: 0.5}
+  anchorMax: {x: 0.5, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114265712481397370}
+  subviews:
+  - {fileID: 114728183294958702}
+  - {fileID: 114394756901653728}
+  - {fileID: 114939316659059036}
+  - {fileID: 114497922389661808}
+  - {fileID: 114008562839541416}
+  - {fileID: 114441380215376618}
+  backgroundColor: {r: 0.22, g: 0.26, b: 0.27, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  label: {fileID: 114394756901653728}
+  exitIcon: {fileID: 114939316659059036}
+  connectionView: {fileID: 114008562839541416}
+  border: {fileID: 114497922389661808}
+  dragView: {fileID: 114441380215376618}
+--- !u!114 &114176182441433400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1185879742, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorManualEdgeButtonView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156876
+  edgeInsets:
+    left: 20
+    bottom: 36
+    right: 20
+    top: -64
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 0}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114635996265497962}
+  subviews:
+  - {fileID: 114115932075448792}
+  - {fileID: 114237650197753650}
+  - {fileID: 114911099468960294}
+  - {fileID: 114912225582559858}
+  - {fileID: 114789474020515196}
+  backgroundColor: {r: 0, g: 0.78, b: 0.85, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  title: 
+  fontSize: 12
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  hoveredColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  pressedColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  icon: {fileID: 0}
+  userTag: 0
+  listener: {fileID: 114635996265497962}
+  edge: {fileID: 114470309868368046}
+  label: {fileID: 114115932075448792}
+  editIcon: {fileID: 114237650197753650}
+  border: {fileID: 114911099468960294}
+  downstreamConnectableView: {fileID: 114912225582559858}
+  upstreamConnectableView: {fileID: 114789474020515196}
+--- !u!114 &114187024450695048
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1258490235, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156202
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114606170073049624}
+  subviews: []
+  backgroundColor: {r: 0, g: 0.78, b: 0.85, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114190239944245814
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -85069073, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorLabelView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156600
+  edgeInsets:
+    left: 20
+    bottom: 8
+    right: 20
+    top: -28
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 0}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114004330070393552}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  text: Manual Transitions
+  textColor: {r: 0.93, g: 1, b: 1, a: 1}
+  fontSize: 12
+  alignment: 3
+  alignmentHasUserDefinedValue: 1
+--- !u!114 &114205247560693962
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1278932891, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142308
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114008562839541416}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 0.5}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114217172845078962
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1022549578, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorPanView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142266
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114404332552992904}
+  subviews:
+  - {fileID: 114265712481397370}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  contentView: {fileID: 114265712481397370}
+  zoomSensitivity: 0.01
+  minZoomScale: {x: 0.25, y: 0.25}
+  maxZoomScale: {x: 1.75, y: 1.75}
+--- !u!114 &114235244325914412
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -197941992, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorLineView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142324
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0.6666667, y: 0}
+  anchorMax: {x: 0.6666667, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114816942565623244}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  lineColor: {r: 0.93, g: 1, b: 1, a: 0.5}
+  lineThickness: 1
+--- !u!114 &114237650197753650
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1323237038, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156880
+  edgeInsets:
+    left: -28
+    bottom: 0
+    right: 12
+    top: 0
+  anchorMin: {x: 1, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114176182441433400}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114250327966622864
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -88617461, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorBoxBorderView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156630
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114808301262182884}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114265712481397370
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1508901505, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorPanView - Content
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142268
+  edgeInsets:
+    left: -50
+    bottom: -50
+    right: -50
+    top: -50
+  anchorMin: {x: 0.5, y: 0.5}
+  anchorMax: {x: 0.5, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114217172845078962}
+  subviews:
+  - {fileID: 114656690765377828}
+  - {fileID: 114877918730714034}
+  - {fileID: 114172126189791714}
+  - {fileID: 114521802034676544}
+  - {fileID: 114813355585264436}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114283734628604384
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1229658237, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorDraggableView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142280
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114877918730714034}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  listener: {fileID: 114877918730714034}
+--- !u!114 &114292354562249540
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1750784389, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142278
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0.05, y: 0.35}
+  anchorMax: {x: 0.6, y: 0.95}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114877918730714034}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114320528386543986
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1258490235, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142306
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114008562839541416}
+  subviews: []
+  backgroundColor: {r: 0.35, g: 0.43, b: 0.44, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114340351338782512
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 258146063, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156584
+  edgeInsets:
+    left: 4
+    bottom: 4
+    right: 4
+    top: 4
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114624168936744626}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114356501500073864
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1915631247, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: StoryboardEditorData
+  m_EditorClassIdentifier: 
+  storyboard: {fileID: 11400000}
+  graph: {fileID: 114658859497205460}
+  storyboardEditor: {fileID: 114831569063839986}
+--- !u!114 &114364670507281362
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1278932891, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156210
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114751159239878786}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114376993393780094
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -88617461, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorBoxBorderView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156604
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114789778490104800}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114392759472995898
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1508901505, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142292
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0.5}
+  anchorMax: {x: 0, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114416123743109798}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114394756901653728
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -85069073, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorLabelView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142298
+  edgeInsets:
+    left: 8
+    bottom: 0
+    right: 8
+    top: 0
+  anchorMin: {x: 0, y: 0.15}
+  anchorMax: {x: 1, y: 0.4}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114172126189791714}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  text: Exit
+  textColor: {r: 0.93, g: 1, b: 1, a: 0.5}
+  fontSize: 12
+  alignment: 0
+  alignmentHasUserDefinedValue: 0
+--- !u!114 &114404332552992904
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 555537448, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorWindow
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142262
+  edgeInsets:
+    left: -50
+    bottom: -50
+    right: -50
+    top: -50
+  anchorMin: {x: 0.5, y: 0.5}
+  anchorMax: {x: 0.5, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 0}
+  subviews:
+  - {fileID: 114217172845078962}
+  - {fileID: 114934406576333440}
+  - {fileID: 114816942565623244}
+  - {fileID: 114714021614073292}
+  - {fileID: 114442177994799226}
+  backgroundColor: {r: 0, g: 0.09, b: 0.09, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114416123743109798
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -121142151, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorHookView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142282
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0.6, y: 0.5}
+  anchorMax: {x: 0.9, y: 0.85}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114877918730714034}
+  subviews:
+  - {fileID: 114825952696290894}
+  - {fileID: 114986993745294448}
+  - {fileID: 114117115287701330}
+  - {fileID: 114078634483265486}
+  - {fileID: 114392759472995898}
+  backgroundColor: {r: 0, g: 0.78, b: 0.85, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 1
+  hook:
+    identifier: 
+    name: 
+    rect01:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+  responder: {fileID: 114877918730714034}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  hoveredColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  pressedColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  hookedBackgroundColor: {r: 0, g: 0.78, b: 0.85, a: 1}
+  border: {fileID: 114825952696290894}
+  downstreamConnectableView: {fileID: 114078634483265486}
+  upstreamConnectableView: {fileID: 114392759472995898}
+  originTexture: {fileID: 114986993745294448}
+  editIcon: {fileID: 114117115287701330}
+  hookingLineColor: {r: 0.93, g: 1, b: 1, a: 1}
+  hookingLineThickness: 2
+  isHookable: 0
+  hookingState: 2
+  connectionCount: 1
+--- !u!114 &114441380215376618
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1229658237, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorDraggableView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142310
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114172126189791714}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  listener: {fileID: 114172126189791714}
+--- !u!114 &114442177994799226
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -174367047, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorStoryboardDropView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142264
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114404332552992904}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  listener: {fileID: 114831569063839986}
+--- !u!114 &114452796179308608
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -85069073, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorLabelView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156578
+  edgeInsets:
+    left: 8
+    bottom: 0
+    right: 8
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 0.6}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114894795385786626}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  text: GameUICanvasController
+  textColor: {r: 0.93, g: 1, b: 1, a: 1}
+  fontSize: 12
+  alignment: 0
+  alignmentHasUserDefinedValue: 0
+--- !u!114 &114464198105463624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1258490235, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156624
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114922907006521910}
+  subviews: []
+  backgroundColor: {r: 0.35, g: 0.43, b: 0.44, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114470309868368046
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -472850673, guid: e7f32c7c4733b44d085a4f3649e422e3, type: 3}
+  m_Name: UIStoryboardDownstreamEdge | GameWaitingCanvasController -> GameUICanvasController
+  m_EditorClassIdentifier: 
+  identifier: 09ed4b6f-1f2d-4d2b-bc0e-07a733248fe3
+  graph: {fileID: 114658859497205460}
+  sourceNode: {fileID: 114847536104903336}
+  destinationNode: {fileID: 114141928206822206}
+  targetNode: {fileID: 114847536104903336}
+  hook:
+    identifier: 
+    name: 
+    rect01:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+  typeIdentifier: CanvasController_PresentTransitionTypeIdentifier
+  userIdentifier: GameStarting
+  animated: 1
+  customAnimator: {fileID: 0}
+  presentationMode: 0
+  loadAsynchronously: 1
+  worldPositionOverride:
+    mode: 0
+    worldPosition: {x: 0, y: 0, z: 0}
+    worldSpacingMultiplier: {x: 0, y: 0}
+--- !u!114 &114494105090695392
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -85069073, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorLabelView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156184
+  edgeInsets:
+    left: 20
+    bottom: 8
+    right: 20
+    top: -28
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 0}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114635996265497962}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  text: Manual Transitions
+  textColor: {r: 0.93, g: 1, b: 1, a: 1}
+  fontSize: 12
+  alignment: 3
+  alignmentHasUserDefinedValue: 1
+--- !u!114 &114497922389661808
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -88617461, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorBoxBorderView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142302
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114172126189791714}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114498956236796458
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -85069073, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorLabelView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142276
+  edgeInsets:
+    left: 8
+    bottom: 0
+    right: 8
+    top: 0
+  anchorMin: {x: 0, y: 0.15}
+  anchorMax: {x: 1, y: 0.4}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114877918730714034}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  text: Entry
+  textColor: {r: 0.93, g: 1, b: 1, a: 1}
+  fontSize: 12
+  alignment: 0
+  alignmentHasUserDefinedValue: 0
+--- !u!114 &114500457966557016
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1794532759, guid: e7f32c7c4733b44d085a4f3649e422e3, type: 3}
+  m_Name: UIStoryboardDownstreamEdge | Entry -> GameWaitingCanvasController
+  m_EditorClassIdentifier: 
+  identifier: 7b0ddd80-0f0b-4e25-a356-f9bc05f23622
+  graph: {fileID: 114658859497205460}
+  sourceNode: {fileID: 0}
+  destinationNode: {fileID: 114847536104903336}
+  targetNode: {fileID: 114847536104903336}
+  hook:
+    identifier: 
+    name: 
+    rect01:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+  typeIdentifier: CanvasController_PresentTransitionTypeIdentifier
+  userIdentifier: 
+  animated: 0
+  customAnimator: {fileID: 0}
+  presentationMode: 0
+  loadAsynchronously: 1
+  worldPositionOverride:
+    mode: 0
+    worldPosition: {x: 0, y: 0, z: 0}
+    worldSpacingMultiplier: {x: 0, y: 0}
+--- !u!114 &114505753826674848
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -88617461, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorBoxBorderView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156214
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114511825406067670}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114511373493234596
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1898112725, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156198
+  edgeInsets:
+    left: 0
+    bottom: 6
+    right: 0
+    top: 6
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114975337421834930}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114511825406067670
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1508901505, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156212
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114813355585264436}
+  subviews:
+  - {fileID: 114505753826674848}
+  - {fileID: 114032597681843016}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114521802034676544
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -456684987, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorNodeView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156572
+  edgeInsets:
+    left: -23.277786
+    bottom: -193
+    right: -372.27777
+    top: -189
+  anchorMin: {x: 0.5, y: 0.5}
+  anchorMax: {x: 0.5, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114265712481397370}
+  subviews:
+  - {fileID: 114004330070393552}
+  - {fileID: 114894795385786626}
+  - {fileID: 114030688694582586}
+  - {fileID: 114640021243555854}
+  - {fileID: 114922907006521910}
+  - {fileID: 114808301262182884}
+  backgroundColor: {r: 0.17, g: 0.2, b: 0.21, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  node: {fileID: 114141928206822206}
+  titleBar: {fileID: 114894795385786626}
+  canvasView: {fileID: 114030688694582586}
+  downstreamConnectionView: {fileID: 114640021243555854}
+  upstreamConnectionView: {fileID: 114922907006521910}
+  manualTransitionsView: {fileID: 114004330070393552}
+  overlayContainer: {fileID: 114808301262182884}
+  border: {fileID: 114250327966622864}
+  hookViews: []
+  edgeViews: []
+  responder: {fileID: 114831569063839986}
+--- !u!114 &114532033238311962
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -197941992, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorLineView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142320
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0.33333334, y: 0}
+  anchorMax: {x: 0.33333334, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114816942565623244}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  lineColor: {r: 0.93, g: 1, b: 1, a: 0.5}
+  lineThickness: 1
+--- !u!114 &114580923610706670
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1258490235, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156208
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114751159239878786}
+  subviews: []
+  backgroundColor: {r: 0.35, g: 0.43, b: 0.44, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114595064319224538
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -197941992, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorLineView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156164
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0.6}
+  anchorMax: {x: 1, y: 0.6}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114037755263821128}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  lineColor: {r: 0.35, g: 0.43, b: 0.44, a: 1}
+  lineThickness: 1
+--- !u!114 &114606170073049624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1624788612, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorNodeConnectionView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156200
+  edgeInsets:
+    left: -13
+    bottom: 177
+    right: -13
+    top: -203
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 0, y: 0}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114813355585264436}
+  subviews:
+  - {fileID: 114187024450695048}
+  - {fileID: 114840888993447536}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  backgroundView: {fileID: 114187024450695048}
+  foregroundView: {fileID: 114840888993447536}
+  defaultColor: {r: 0.35, g: 0.43, b: 0.44, a: 1}
+  fillColor: {r: 0, g: 0.78, b: 0.85, a: 1}
+  isFilled: 1
+  connectionCount: 1
+--- !u!114 &114616910633320152
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1508901505, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156196
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0.5}
+  anchorMax: {x: 0, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114975337421834930}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114619214838911404
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1124455358, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorButtonView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142316
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 0.33333334, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114816942565623244}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tooltip: Set zoom to 50%
+  blockInputEvents: 0
+  title: 50%
+  fontSize: 10
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  hoveredColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  pressedColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  icon: {fileID: 0}
+  userTag: 0
+  listener: {fileID: 114816942565623244}
+--- !u!114 &114624168936744626
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1124455358, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorButtonView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156582
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0.6}
+  anchorMax: {x: 0.33, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114894795385786626}
+  subviews:
+  - {fileID: 114340351338782512}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tooltip: Open canvas controller scene.
+  blockInputEvents: 0
+  title: 
+  fontSize: 12
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  hoveredColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  pressedColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  icon: {fileID: 114340351338782512}
+  userTag: 0
+  listener: {fileID: 114521802034676544}
+--- !u!114 &114635996265497962
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 528345419, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorNodeManualTransitionsView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156182
+  edgeInsets:
+    left: 0
+    bottom: -108
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 1}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114813355585264436}
+  subviews:
+  - {fileID: 114494105090695392}
+  - {fileID: 114975337421834930}
+  - {fileID: 114176182441433400}
+  backgroundColor: {r: 0.22, g: 0.26, b: 0.27, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  label: {fileID: 114494105090695392}
+  addTransitionHookView: {fileID: 114975337421834930}
+  buttons:
+  - {fileID: 114176182441433400}
+  hookViewListener: {fileID: 114813355585264436}
+--- !u!114 &114640021243555854
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1624788612, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorNodeConnectionView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156616
+  edgeInsets:
+    left: -13
+    bottom: 177
+    right: -13
+    top: -203
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 0, y: 0}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114521802034676544}
+  subviews:
+  - {fileID: 114858588818297744}
+  - {fileID: 114876293491406018}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  backgroundView: {fileID: 114858588818297744}
+  foregroundView: {fileID: 114876293491406018}
+  defaultColor: {r: 0.35, g: 0.43, b: 0.44, a: 1}
+  fillColor: {r: 0, g: 0.78, b: 0.85, a: 1}
+  isFilled: 1
+  connectionCount: 1
+--- !u!114 &114645534493946940
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -197941992, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorLineView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156580
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0.6}
+  anchorMax: {x: 1, y: 0.6}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114894795385786626}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  lineColor: {r: 0.35, g: 0.43, b: 0.44, a: 1}
+  lineThickness: 1
+--- !u!114 &114648769380012458
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1229658237, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorDraggableView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156594
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 0.6}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114894795385786626}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  listener: {fileID: 114894795385786626}
+--- !u!114 &114656690765377828
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1902957759, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorGridView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142270
+  edgeInsets:
+    left: -50
+    bottom: -50
+    right: -50
+    top: -50
+  anchorMin: {x: 0.5, y: 0.5}
+  anchorMax: {x: 0.5, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114265712481397370}
+  subviews: []
+  backgroundColor: {r: 0, g: 0.15, b: 0.16, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  targetView: {fileID: 114217172845078962}
+  cellSize: {x: 20, y: 20}
+  lineWidth: 2
+--- !u!114 &114658859497205460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 418513179, guid: e7f32c7c4733b44d085a4f3649e422e3, type: 3}
+  m_Name: UIStoryboardGraph
+  m_EditorClassIdentifier: 
+  storyboard: {fileID: 11400000}
+  inEditorResponder: {fileID: 114356501500073864}
+  nodes:
+  - {fileID: 114847536104903336}
+  - {fileID: 114141928206822206}
+  entryEdge: {fileID: 114500457966557016}
+--- !u!114 &114670848456029550
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1124455358, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorButtonView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142322
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0.6666667, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114816942565623244}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tooltip: Set zoom to 150%
+  blockInputEvents: 0
+  title: 150%
+  fontSize: 10
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  hoveredColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  pressedColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  icon: {fileID: 0}
+  userTag: 2
+  listener: {fileID: 114816942565623244}
+--- !u!114 &114685044879259812
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1523862957, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156576
+  edgeInsets:
+    left: -10
+    bottom: 4
+    right: -10
+    top: -6
+  anchorMin: {x: 0.5, y: 0}
+  anchorMax: {x: 0.5, y: 0}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114894795385786626}
+  subviews: []
+  backgroundColor: {r: 0.35, g: 0.43, b: 0.44, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 0
+--- !u!114 &114700019874075290
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1323237038, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156192
+  edgeInsets:
+    left: 4
+    bottom: 4
+    right: 4
+    top: 4
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114975337421834930}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114702431788878644
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1750784389, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156588
+  edgeInsets:
+    left: 4
+    bottom: 4
+    right: 4
+    top: 4
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114984127195496144}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114714021614073292
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1124455358, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorButtonView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142326
+  edgeInsets:
+    left: -40
+    bottom: -40
+    right: 8
+    top: 8
+  anchorMin: {x: 1, y: 1}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114404332552992904}
+  subviews:
+  - {fileID: 114867039470331182}
+  backgroundColor: {r: 0.35, g: 0.43, b: 0.44, a: 0.5}
+  tintColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tooltip: Add existing canvas controller to storyboard.
+  blockInputEvents: 0
+  title: 
+  fontSize: 12
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  hoveredColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  pressedColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  icon: {fileID: 114867039470331182}
+  userTag: 0
+  listener: {fileID: 114831569063839986}
+--- !u!114 &114728183294958702
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1523862957, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142296
+  edgeInsets:
+    left: -10
+    bottom: 4
+    right: -10
+    top: -6
+  anchorMin: {x: 0.5, y: 0}
+  anchorMax: {x: 0.5, y: 0}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114172126189791714}
+  subviews: []
+  backgroundColor: {r: 0.35, g: 0.43, b: 0.44, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 0
+--- !u!114 &114751159239878786
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1624788612, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorNodeConnectionView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156206
+  edgeInsets:
+    left: -13
+    bottom: 177
+    right: -13
+    top: -203
+  anchorMin: {x: 1, y: 0}
+  anchorMax: {x: 1, y: 0}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114813355585264436}
+  subviews:
+  - {fileID: 114580923610706670}
+  - {fileID: 114364670507281362}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  backgroundView: {fileID: 114580923610706670}
+  foregroundView: {fileID: 114364670507281362}
+  defaultColor: {r: 0.35, g: 0.43, b: 0.44, a: 1}
+  fillColor: {r: 0.87, g: 0.39, b: 0.22, a: 1}
+  isFilled: 0
+  connectionCount: 0
+--- !u!114 &114789474020515196
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1508901505, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156886
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0.5}
+  anchorMax: {x: 0, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114176182441433400}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114789778490104800
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -121142151, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorHookView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156602
+  edgeInsets:
+    left: 20
+    bottom: -36
+    right: 20
+    top: 8
+  anchorMin: {x: 0, y: 1}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114004330070393552}
+  subviews:
+  - {fileID: 114376993393780094}
+  - {fileID: 114846305928988850}
+  - {fileID: 114015296830318646}
+  - {fileID: 114129823811714598}
+  - {fileID: 114121548560263958}
+  - {fileID: 114992586743973214}
+  backgroundColor: {r: 0.35, g: 0.43, b: 0.44, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: Add a manual transition
+  blockInputEvents: 0
+  hook:
+    identifier: 
+    name: 
+    rect01:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+  responder: {fileID: 114521802034676544}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  hoveredColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  pressedColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  hookedBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  border: {fileID: 114376993393780094}
+  downstreamConnectableView: {fileID: 114129823811714598}
+  upstreamConnectableView: {fileID: 114121548560263958}
+  originTexture: {fileID: 114846305928988850}
+  editIcon: {fileID: 114015296830318646}
+  hookingLineColor: {r: 0.93, g: 1, b: 1, a: 1}
+  hookingLineThickness: 2
+  isHookable: 1
+  hookingState: 0
+  connectionCount: 0
+--- !u!114 &114808301262182884
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1508901505, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156628
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114521802034676544}
+  subviews:
+  - {fileID: 114250327966622864}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114813355585264436
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -456684987, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorNodeView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156156
+  edgeInsets:
+    left: -530.2778
+    bottom: -192
+    right: 134.72221
+    top: -226
+  anchorMin: {x: 0.5, y: 0.5}
+  anchorMax: {x: 0.5, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114265712481397370}
+  subviews:
+  - {fileID: 114037755263821128}
+  - {fileID: 114123760997922784}
+  - {fileID: 114606170073049624}
+  - {fileID: 114751159239878786}
+  - {fileID: 114635996265497962}
+  - {fileID: 114511825406067670}
+  backgroundColor: {r: 0.17, g: 0.2, b: 0.21, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  node: {fileID: 114847536104903336}
+  titleBar: {fileID: 114037755263821128}
+  canvasView: {fileID: 114123760997922784}
+  downstreamConnectionView: {fileID: 114606170073049624}
+  upstreamConnectionView: {fileID: 114751159239878786}
+  manualTransitionsView: {fileID: 114635996265497962}
+  overlayContainer: {fileID: 114511825406067670}
+  border: {fileID: 114505753826674848}
+  hookViews: []
+  edgeViews:
+  - {fileID: 114032597681843016}
+  responder: {fileID: 114831569063839986}
+--- !u!114 &114816942565623244
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1110297500, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorZoomControlBar
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142314
+  edgeInsets:
+    left: 8
+    bottom: -28
+    right: -148
+    top: 8
+  anchorMin: {x: 0, y: 1}
+  anchorMax: {x: 0, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114404332552992904}
+  subviews:
+  - {fileID: 114619214838911404}
+  - {fileID: 114950813144341808}
+  - {fileID: 114532033238311962}
+  - {fileID: 114670848456029550}
+  - {fileID: 114235244325914412}
+  backgroundColor: {r: 0.35, g: 0.43, b: 0.44, a: 0.5}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  listener: {fileID: 114831569063839986}
+--- !u!114 &114822358674038868
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1523862957, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142274
+  edgeInsets:
+    left: -10
+    bottom: 4
+    right: -10
+    top: -6
+  anchorMin: {x: 0.5, y: 0}
+  anchorMax: {x: 0.5, y: 0}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114877918730714034}
+  subviews: []
+  backgroundColor: {r: 0.35, g: 0.43, b: 0.44, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 0
+--- !u!114 &114824753822845678
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1278932891, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156626
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114922907006521910}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114825952696290894
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -88617461, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorBoxBorderView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142284
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114416123743109798}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114831569063839986
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1932673550, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIStoryboardEditor
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000}
+  window: {fileID: 114404332552992904}
+  dropView: {fileID: 114442177994799226}
+  panView: {fileID: 114217172845078962}
+  entryView: {fileID: 114877918730714034}
+  exitView: {fileID: 114172126189791714}
+  titleView: {fileID: 114934406576333440}
+  zoomControlBar: {fileID: 114816942565623244}
+  addButton: {fileID: 114714021614073292}
+  nodeViews:
+  - {fileID: 114813355585264436}
+  - {fileID: 114521802034676544}
+--- !u!114 &114840888993447536
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1879960705, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156204
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114606170073049624}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114846305928988850
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -492476345, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156606
+  edgeInsets:
+    left: -6
+    bottom: -6
+    right: -6
+    top: -6
+  anchorMin: {x: 0.5, y: 0.5}
+  anchorMax: {x: 0.5, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114789778490104800}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114847536104903336
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 624038582, guid: e7f32c7c4733b44d085a4f3649e422e3, type: 3}
+  m_Name: UIStoryboardNode - GameWaitingCanvasController
+  m_EditorClassIdentifier: 
+  identifier: 36586ece-425e-480f-b184-2deb0f27c8c9
+  graph: {fileID: 114658859497205460}
+  edges:
+  - {fileID: 114470309868368046}
+  hooks: []
+  sceneName: GameWaitingCanvasController
+  sceneAssetObject: {fileID: 102900000, guid: 3a2486f73ecbcfa4d9b929f7d1d9b047, type: 3}
+  canvasAspectRatio: 1.7777778
+  parent: {fileID: 0}
+--- !u!114 &114856021663265744
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1124455358, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorButtonView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156166
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0.6}
+  anchorMax: {x: 0.33, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114037755263821128}
+  subviews:
+  - {fileID: 114005908903179660}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tooltip: Open canvas controller scene.
+  blockInputEvents: 0
+  title: 
+  fontSize: 12
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  hoveredColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  pressedColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  icon: {fileID: 114005908903179660}
+  userTag: 0
+  listener: {fileID: 114813355585264436}
+--- !u!114 &114858588818297744
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1258490235, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156618
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114640021243555854}
+  subviews: []
+  backgroundColor: {r: 0, g: 0.78, b: 0.85, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114867039470331182
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1898112725, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142328
+  edgeInsets:
+    left: 4
+    bottom: 4
+    right: 4
+    top: 4
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114714021614073292}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114876293491406018
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1879960705, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156620
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114640021243555854}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114877751382895564
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1124455358, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorButtonView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156170
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0.33, y: 0.6}
+  anchorMax: {x: 0.66, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114037755263821128}
+  subviews:
+  - {fileID: 114001571711379722}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tooltip: Make storyboard entry point.
+  blockInputEvents: 0
+  title: 
+  fontSize: 12
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  hoveredColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  pressedColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  icon: {fileID: 114001571711379722}
+  userTag: 0
+  listener: {fileID: 114813355585264436}
+--- !u!114 &114877918730714034
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1624758535, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorEntryView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142272
+  edgeInsets:
+    left: -712
+    bottom: 68
+    right: 612
+    top: -138
+  anchorMin: {x: 0.5, y: 0.5}
+  anchorMax: {x: 0.5, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114265712481397370}
+  subviews:
+  - {fileID: 114822358674038868}
+  - {fileID: 114498956236796458}
+  - {fileID: 114292354562249540}
+  - {fileID: 114283734628604384}
+  - {fileID: 114416123743109798}
+  - {fileID: 114911804421458236}
+  backgroundColor: {r: 0.22, g: 0.26, b: 0.27, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  edge: {fileID: 114500457966557016}
+  bar: {fileID: 114822358674038868}
+  label: {fileID: 114498956236796458}
+  entryIcon: {fileID: 114292354562249540}
+  dragView: {fileID: 114283734628604384}
+  hookView: {fileID: 114416123743109798}
+  edgeView: {fileID: 114911804421458236}
+--- !u!114 &114891128978120580
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1124455358, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorButtonView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156174
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0.66, y: 0.6}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114037755263821128}
+  subviews:
+  - {fileID: 114040846241528288}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tooltip: Remove canvas from storyboard.
+  blockInputEvents: 0
+  title: 
+  fontSize: 12
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  hoveredColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  pressedColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  icon: {fileID: 114040846241528288}
+  userTag: 0
+  listener: {fileID: 114813355585264436}
+--- !u!114 &114894795385786626
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -191530095, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorNodeTitleBar
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156574
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: -70
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 0}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114521802034676544}
+  subviews:
+  - {fileID: 114685044879259812}
+  - {fileID: 114452796179308608}
+  - {fileID: 114645534493946940}
+  - {fileID: 114624168936744626}
+  - {fileID: 114984127195496144}
+  - {fileID: 114104488781625202}
+  - {fileID: 114648769380012458}
+  backgroundColor: {r: 0.22, g: 0.26, b: 0.27, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  interactableIndicator: {fileID: 114685044879259812}
+  label: {fileID: 114452796179308608}
+  separator: {fileID: 114645534493946940}
+  openButton: {fileID: 114624168936744626}
+  entryButton: {fileID: 114984127195496144}
+  deleteButton: {fileID: 114104488781625202}
+  dragView: {fileID: 114648769380012458}
+  listener: {fileID: 114521802034676544}
+--- !u!114 &114911099468960294
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -88617461, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorBoxBorderView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156882
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114176182441433400}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114911804421458236
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 343908022, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorEdgeView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156218
+  edgeInsets:
+    left: -50
+    bottom: -50
+    right: -50
+    top: -50
+  anchorMin: {x: 0.5, y: 0.5}
+  anchorMax: {x: 0.5, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114877918730714034}
+  subviews: []
+  backgroundColor: {r: 0, g: 0.78, b: 0.85, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  edge: {fileID: 114500457966557016}
+  sourceConnectable: {fileID: 114416123743109798}
+  destinationConnectable: {fileID: 114606170073049624}
+  sourceView: {fileID: 114078634483265486}
+  destinationView: {fileID: 114606170073049624}
+  lineThickness: 2
+--- !u!114 &114912225582559858
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1508901505, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156884
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 1, y: 0.5}
+  anchorMax: {x: 1, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114176182441433400}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114922001683965556
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1229658237, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorDraggableView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156178
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 0.6}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114037755263821128}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  listener: {fileID: 114037755263821128}
+--- !u!114 &114922907006521910
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1624788612, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorNodeConnectionView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156622
+  edgeInsets:
+    left: -13
+    bottom: 177
+    right: -13
+    top: -203
+  anchorMin: {x: 1, y: 0}
+  anchorMax: {x: 1, y: 0}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114521802034676544}
+  subviews:
+  - {fileID: 114464198105463624}
+  - {fileID: 114824753822845678}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  backgroundView: {fileID: 114464198105463624}
+  foregroundView: {fileID: 114824753822845678}
+  defaultColor: {r: 0.35, g: 0.43, b: 0.44, a: 1}
+  fillColor: {r: 0.87, g: 0.39, b: 0.22, a: 1}
+  isFilled: 0
+  connectionCount: 0
+--- !u!114 &114934406576333440
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -85069073, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorLabelView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142312
+  edgeInsets:
+    left: 8
+    bottom: 8
+    right: 8
+    top: -40
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 0}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114404332552992904}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  text: GameOverlayStoryboard
+  textColor: {r: 0.93, g: 1, b: 1, a: 1}
+  fontSize: 20
+  alignment: 3
+  alignmentHasUserDefinedValue: 1
+--- !u!114 &114939241357844206
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -492476345, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156190
+  edgeInsets:
+    left: 9
+    bottom: -2
+    right: -21
+    top: -10
+  anchorMin: {x: 0.5, y: 0.5}
+  anchorMax: {x: 0.5, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114975337421834930}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114939316659059036
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1157719293, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142300
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0.05, y: 0.4}
+  anchorMax: {x: 0.85, y: 0.95}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114172126189791714}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 0.5}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114946195215789644
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 363124683, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156592
+  edgeInsets:
+    left: 4
+    bottom: 4
+    right: 4
+    top: 4
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114104488781625202}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114950813144341808
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1124455358, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorButtonView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142318
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0.33333334, y: 0}
+  anchorMax: {x: 0.6666667, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114816942565623244}
+  subviews: []
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tooltip: Set zoom to 100%
+  blockInputEvents: 0
+  title: 100%
+  fontSize: 10
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  hoveredColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  pressedColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  icon: {fileID: 0}
+  userTag: 1
+  listener: {fileID: 114816942565623244}
+--- !u!114 &114975337421834930
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -121142151, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorHookView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156186
+  edgeInsets:
+    left: 20
+    bottom: -36
+    right: 20
+    top: 8
+  anchorMin: {x: 0, y: 1}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114635996265497962}
+  subviews:
+  - {fileID: 114978536709154268}
+  - {fileID: 114939241357844206}
+  - {fileID: 114700019874075290}
+  - {fileID: 114130213158177380}
+  - {fileID: 114616910633320152}
+  - {fileID: 114511373493234596}
+  backgroundColor: {r: 0.35, g: 0.43, b: 0.44, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: Add a manual transition
+  blockInputEvents: 0
+  hook:
+    identifier: 
+    name: 
+    rect01:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+  responder: {fileID: 114813355585264436}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  hoveredColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  pressedColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  hookedBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  border: {fileID: 114978536709154268}
+  downstreamConnectableView: {fileID: 114130213158177380}
+  upstreamConnectableView: {fileID: 114616910633320152}
+  originTexture: {fileID: 114939241357844206}
+  editIcon: {fileID: 114700019874075290}
+  hookingLineColor: {r: 0.93, g: 1, b: 1, a: 1}
+  hookingLineThickness: 2
+  isHookable: 1
+  hookingState: 0
+  connectionCount: 0
+--- !u!114 &114978536709154268
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -88617461, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorBoxBorderView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156188
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114975337421834930}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+--- !u!114 &114984127195496144
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1124455358, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorButtonView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156586
+  edgeInsets:
+    left: 0
+    bottom: 0
+    right: 0
+    top: 0
+  anchorMin: {x: 0.33, y: 0.6}
+  anchorMax: {x: 0.66, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114894795385786626}
+  subviews:
+  - {fileID: 114702431788878644}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  tintColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tooltip: Make storyboard entry point.
+  blockInputEvents: 0
+  title: 
+  fontSize: 12
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  hoveredColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  pressedColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  icon: {fileID: 114702431788878644}
+  userTag: 0
+  listener: {fileID: 114521802034676544}
+--- !u!114 &114986993745294448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -492476345, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -142286
+  edgeInsets:
+    left: -6
+    bottom: -6
+    right: -6
+    top: -6
+  anchorMin: {x: 0.5, y: 0.5}
+  anchorMax: {x: 0.5, y: 0.5}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114416123743109798}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2
+--- !u!114 &114992586743973214
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1898112725, guid: 2bac5def8716d4b87884c15b5c6037e4, type: 3}
+  m_Name: UIEditorTextureView
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400000}
+  identifier: -156614
+  edgeInsets:
+    left: 0
+    bottom: 6
+    right: 0
+    top: 6
+  anchorMin: {x: 0, y: 0}
+  anchorMax: {x: 1, y: 1}
+  localScale: {x: 1, y: 1}
+  parent: {fileID: 114789778490104800}
+  subviews: []
+  backgroundColor: {r: 0.93, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltip: 
+  blockInputEvents: 0
+  scaleMode: 2

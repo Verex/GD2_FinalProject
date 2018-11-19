@@ -1,5 +1,6 @@
 using P7.CanvasFlow;
 using UnityEngine;
+using System.Collections;
 
 public class GameWaitingCanvasController : CanvasController
 {
@@ -9,21 +10,29 @@ public class GameWaitingCanvasController : CanvasController
     {
         base.Start();
 
-        // Configure your canvas controller.
+        // Add race state listener.
+        RaceManager.Instance.OnRaceStateChanged.AddListener(OnRaceStateChanged);
+
+        CheckRaceState(RaceManager.Instance.CurrentState);
     }
 
     #endregion
 
-    /*
-    #region Storyboard Transition
+    #region Player waiting UI
 
-    // An opportunity to pass data between canvas controllers when using Storyboards.
-    public override void PrepareForStoryboardTransition(StoryboardTransition transition)
+    private void CheckRaceState(RaceManager.RaceState state)
     {
-        //var source = transition.SourceCanvasController<YourSourceCanvasControllerType>();
-        //var destination = transition.DestinationCanvasController<YourDestinationCanvasControllerType>();
+        // Transition to main UI overlay if starting.
+        if (state == RaceManager.RaceState.STARTING)
+        {
+            PerformTransitionWithIdentifier("GameStarting");
+        }
+    }
+
+    public void OnRaceStateChanged(RaceManager.RaceState raceState)
+    {
+        CheckRaceState(raceState);
     }
 
     #endregion
-    */
 }

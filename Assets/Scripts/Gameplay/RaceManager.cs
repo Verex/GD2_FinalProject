@@ -2,48 +2,67 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Events;
 
 public class RaceManager : NetworkBehaviour
 {
-	public enum RaceState
-	{
-		WAITING,
-		STARTING,
-		IN_PROGRESS,
-		FINISHED
-	}
+    [System.Serializable] public class RaceStateChanged : UnityEvent<RaceState> { };
 
-	[SyncVar] public RaceState CurrentState = RaceState.WAITING;
+    public enum RaceState
+    {
+        WAITING,
+        STARTING,
+        IN_PROGRESS,
+        FINISHED
+    }
 
-	// Starting time of the race (before countdown).
-	[SyncVar] public float StartingTime;
+    [SerializeField] public RaceStateChanged OnRaceStateChanged;
 
-	[SerializeField] private float m_RaceStartDelay = 3.0f;
+    [SyncVar(hook = "OnRaceStateReceived")] public RaceState CurrentState;
 
-    private static NetworkHandler s_Instance;
+    // Starting time of the race (before countdown).
+    [SyncVar] public float StartingTime;
 
-    public static NetworkHandler Instance
+    [SerializeField] private float m_RaceStartDelay = 3.0f;
+
+    private static RaceManager s_Instance;
+
+    public static RaceManager Instance
     {
         get
         {
             if (s_Instance == null)
             {
                 s_Instance = GameObject.FindObjectOfType(
-                    typeof(NetworkHandler)
-                ) as NetworkHandler; //Initialize our network handler
+                    typeof(RaceManager)
+                ) as RaceManager; //Initialize our network handler
             }
 
             return s_Instance;
         }
     }
 
-	[Server]
-	public void StartRace()
-	{
-		// Set our starting race state.
-		CurrentState = RaceState.STARTING;
+    [Server]
+    public void StartRace()
+    {
+        // Set our starting race state.
+        CurrentState = RaceState.STARTING;
 
-		// Assign the starting time.
-		StartingTime = Time.time;
+        // Assign the starting time.
+        StartingTime = Time.time;
+    }
+
+    public override void OnStartClient()
+    {
+        if (CurrentState == RaceState.STARTING)
+        {
+			// Invoke race state changed for transition.
+			OnRaceStateChanged.Invoke(CurrentState);
+        }
+    }
+
+    private void OnRaceStateReceived(RaceState raceState)
+	{
+		OnRaceStateChanged.Invoke(raceState);
 	}
 }
