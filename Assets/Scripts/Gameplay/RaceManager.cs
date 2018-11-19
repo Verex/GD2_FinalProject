@@ -23,7 +23,7 @@ public class RaceManager : NetworkBehaviour
     // Starting time of the race (before countdown).
     [SyncVar] public float StartingTime;
 
-    [SerializeField] private float m_RaceStartDelay = 3.0f;
+    [SerializeField] public float RaceStartDelay = 3.0f;
 
     private static RaceManager s_Instance;
 

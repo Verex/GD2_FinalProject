@@ -23,7 +23,10 @@ public class UIDataPass : MonoBehaviour
 		
 		if (destination is GameUICanvasController && transition.direction == StoryboardTransitionDirection.Downstream)
 		{
-			Debug.Log("Transitioning.");
+			GameUICanvasController gameUICanvasController = (GameUICanvasController)destination;
+
+			// Configure UI with race manager. 
+			gameUICanvasController.Configure(m_RaceManager);
 		}
 	}
 }
