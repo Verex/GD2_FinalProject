@@ -73,11 +73,6 @@ public class Player : NetworkBehaviour
         }
     }
 
-    public override void OnStartClient()
-    {
-        Debug.Log(isLocalPlayer);
-    }
-
     public void Update()
     {
 
