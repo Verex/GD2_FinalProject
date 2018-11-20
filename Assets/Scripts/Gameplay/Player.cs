@@ -66,11 +66,6 @@ public class Player : NetworkBehaviour
         {
             m_TargetController.HorizontalMoveDirection = 0;
         }
-
-        if (cmd.ActionPressed(PlayerInputSynchronization.IN_RIGHT))
-        {
-
-        }
     }
 
     public void Update()

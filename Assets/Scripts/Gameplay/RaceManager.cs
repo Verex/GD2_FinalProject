@@ -17,15 +17,13 @@ public class RaceManager : NetworkBehaviour
     }
 
     [SerializeField] public RaceStateChanged OnRaceStateChanged;
-
     [SyncVar(hook = "OnRaceStateReceived")] public RaceState CurrentState;
+    public float StartingTime;
 
-    // Starting time of the race (before countdown).
-    [SyncVar] public float StartingTime;
 
     [SerializeField] private float m_RaceStartDelay = 3.0f;
-
     private static RaceManager s_Instance;
+
 
     public static RaceManager Instance
     {
@@ -42,6 +40,14 @@ public class RaceManager : NetworkBehaviour
         }
     }
 
+    public float TimeBeforeStart
+    {
+        get
+        {
+            return (StartingTime + m_RaceStartDelay) - Time.time;
+        }
+    }
+
     [Server]
     public void StartRace()
     {
@@ -52,17 +58,31 @@ public class RaceManager : NetworkBehaviour
         StartingTime = Time.time;
     }
 
-    public override void OnStartClient()
+    private void HandleRaceState(RaceState newState)
     {
-        if (CurrentState == RaceState.STARTING)
+        switch (newState)
         {
-			// Invoke race state changed for transition.
-			OnRaceStateChanged.Invoke(CurrentState);
+            case RaceState.STARTING:
+                // Assign the starting time.
+                StartingTime = Time.time;
+
+                break;
+            case RaceState.IN_PROGRESS:
+
+                break;
+
         }
     }
 
+    public override void OnStartClient()
+    {
+        HandleRaceState(CurrentState);
+    }
+
     private void OnRaceStateReceived(RaceState raceState)
-	{
-		OnRaceStateChanged.Invoke(raceState);
-	}
+    {
+        HandleRaceState(raceState);
+
+        OnRaceStateChanged.Invoke(raceState);
+    }
 }

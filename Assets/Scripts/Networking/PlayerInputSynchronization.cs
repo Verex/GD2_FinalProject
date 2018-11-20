@@ -11,17 +11,31 @@ using InControl;
 public class InputSynchronizationMessage : MessageBase
 {
     public static readonly short MessageID = 888;
+    public uint netId;
     public byte[] messageData;
 
     public static InputSynchronizationMessage FromUserCmd(UserCmd command)
     {
         var messageData = command.Serialize();
         var messageLength = messageData.Length;
+
         //Fill our message fields to be send
         var newMessage = new InputSynchronizationMessage();
         newMessage.messageData = messageData;
 
         return newMessage;
+    }
+
+    public override void Deserialize(NetworkReader reader)
+    {
+        netId = reader.ReadPackedUInt32();
+        messageData = reader.ReadBytesAndSize();
+    }
+
+    public override void Serialize(NetworkWriter writer)
+    {
+        writer.WritePackedUInt32(netId);
+        writer.WriteBytesFull(messageData);
     }
 }
 
@@ -53,16 +67,6 @@ public class PlayerInputSynchronization : NetworkBehaviour
     private PlayerInputBindings m_InputBindings;
     private Player m_TargetPlayer;
 
-    [Server]
-    public void InitializeServer()
-    {
-        //Set server command receive delegate
-        NetworkServer.RegisterHandler(
-            InputSynchronizationMessage.MessageID,
-            ServerReceiveCommand
-        );
-    }
-
     public UserCmd CreateUserCmd()
     {
         UserCmd newCommand = new UserCmd(
@@ -74,7 +78,7 @@ public class PlayerInputSynchronization : NetworkBehaviour
 
     void Start()
     {
-        if (isClient)
+        if (isLocalPlayer)
         {
             m_InputBindings = new PlayerInputBindings(); //Initialize our client-sided input bindings
             m_InputBindings.InitializeBindings();
@@ -88,13 +92,13 @@ public class PlayerInputSynchronization : NetworkBehaviour
 
     public void Update()
     {
-        if (isClient)
+        if (isLocalPlayer)
         {
-            ClientUpdate();
+            LocalPlayerUpdate();
         }
     }
 
-    public void ClientUpdate()
+    public void LocalPlayerUpdate()
     {
         // Clear current input command.
         m_UserCmd.Buttons = 0;
@@ -127,20 +131,22 @@ public class PlayerInputSynchronization : NetworkBehaviour
         {
             FixedUpdateServer();
         }
-        if (isClient)
+        if (isLocalPlayer)
         {
-            FixedUpdateClient();
+            LocalPlayerFixedUpdate();
         }
     }
 
     /*
         The client will record player input from InControl and then pipe it to the server as a UserCmd
     */
-    private void FixedUpdateClient()
+    private void LocalPlayerFixedUpdate()
     {
         if (m_UserCmd.Buttons != m_LastUserCmd.Buttons)
         {
-            Debug.Log("piped");
+            // Handle local user cmd.
+            m_TargetPlayer.ProcessUserCmd(m_UserCmd);
+
             PipeUserCommand(m_UserCmd);
 
             // Update user buttons.
@@ -168,29 +174,35 @@ public class PlayerInputSynchronization : NetworkBehaviour
             //We are missing some commands, lets look at our choked command history.
             return;
         }
-        var newMessage = InputSynchronizationMessage.FromUserCmd(cmd);
+
+        // Create input message.
+        InputSynchronizationMessage msg = new InputSynchronizationMessage();
+
+        // Assign message values.
+        msg.netId = netId.Value;
+        msg.messageData = cmd.Serialize();
+
+        // Send message to server.
         connectionToServer.SendByChannel(
             InputSynchronizationMessage.MessageID,
-            newMessage,
+            msg,
             Channels.DefaultUnreliable
         );
 
         m_LastOutgoingSeq++;
     }
 
-    void ServerReceiveCommand(NetworkMessage message)
+    public void HandleUserCommand(UserCmd cmd)
     {
-        var inputCommandMessage = message.ReadMessage<InputSynchronizationMessage>();
-        var inputCommand = UserCmd.DeSerialize(inputCommandMessage.messageData);
-        if (inputCommand.SequenceNumber - m_LastIncomingSeq > 1)
+        if (cmd.SequenceNumber - m_LastIncomingSeq > 1)
         {
             //We are missing some commands lets start predicting
             //Run prediction code
         }
         else
         {
-            m_LastIncomingSeq = inputCommand.SequenceNumber;
-            m_StoredCmds.Enqueue(inputCommand);
+            m_LastIncomingSeq = cmd.SequenceNumber;
+            m_StoredCmds.Enqueue(cmd);
         }
     }
 }

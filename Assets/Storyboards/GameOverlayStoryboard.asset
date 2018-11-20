@@ -1628,7 +1628,7 @@ MonoBehaviour:
   owner: {fileID: 11400000}
   identifier: -156572
   edgeInsets:
-    left: -23.277786
+    left: -23.277802
     bottom: -193
     right: -372.27777
     top: -189

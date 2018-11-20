@@ -38,6 +38,12 @@ public class NetworkHandler : NetworkManager
 
         // Initialize spawn transform dictionary.
         m_ShipSpawns = new Dictionary<int, Transform>();
+
+        // Listen for input sync commands.
+        NetworkServer.RegisterHandler(
+            InputSynchronizationMessage.MessageID,
+            ServerReceiveCommand
+        );
     }
 
 
@@ -54,9 +60,6 @@ public class NetworkHandler : NetworkManager
 
         // Get sync component.
         PlayerInputSynchronization input = playerObject.GetComponent<PlayerInputSynchronization>();
-
-        // Set up message handler.
-        input.InitializeServer();
 
         // Get player gameobject.
         Player player = playerObject.GetComponent<Player>();
@@ -128,5 +131,32 @@ public class NetworkHandler : NetworkManager
         }
 
         base.OnServerDisconnect(conn);
+    }
+
+    void ServerReceiveCommand(NetworkMessage message)
+    {
+        InputSynchronizationMessage inputMessage = message.ReadMessage<InputSynchronizationMessage>();
+
+        // Get network ID from sent object.
+        NetworkInstanceId netId = new NetworkInstanceId(inputMessage.netId);
+
+        // Find instance of local object.
+        GameObject foundObj = NetworkServer.FindLocalObject(netId);
+
+        // Verify object existance.
+        if (foundObj == null) return;
+
+        // Confirm ownership (only works for single player on one machine).
+        if (message.conn.playerControllers[0].unetView.netId == netId)
+        {
+            // Deserialize user command.
+            UserCmd inputCommand = UserCmd.DeSerialize(inputMessage.messageData);
+
+            // Get reference to player input.
+            PlayerInputSynchronization input = foundObj.GetComponent<PlayerInputSynchronization>();
+
+            // Send user command to object.
+            input.HandleUserCommand(inputCommand);
+        }
     }
 }

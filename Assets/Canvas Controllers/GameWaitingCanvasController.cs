@@ -9,16 +9,19 @@ public class GameWaitingCanvasController : CanvasController
     protected override void Start()
     {
         base.Start();
-
-        // Add race state listener.
-        RaceManager.Instance.OnRaceStateChanged.AddListener(OnRaceStateChanged);
-
-        CheckRaceState(RaceManager.Instance.CurrentState);
     }
 
     #endregion
 
     #region Player waiting UI
+
+    public void Configure(RaceManager raceManager)
+    {
+        // Add race state listener.
+        raceManager.OnRaceStateChanged.AddListener(OnRaceStateChanged);
+
+        CheckRaceState(raceManager.CurrentState);
+    }
 
     private void CheckRaceState(RaceManager.RaceState state)
     {

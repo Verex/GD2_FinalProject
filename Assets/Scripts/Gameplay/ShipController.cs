@@ -23,6 +23,16 @@ public class ShipController : NetworkBehaviour
         {
             camera.Target = transform;
         }
+
+        // Possess ship if not server.
+        if (!isServer)
+        {
+            // MIGHT BE HACK-HACK: Get player component reference....
+            Player playerComponent = NetworkHandler.Instance.client.connection.playerControllers[0].gameObject.GetComponent<Player>();
+
+            // Possess the ship.
+            playerComponent.Possess(this);
+        }
     }
 
     private IEnumerator MoveForward()
@@ -81,10 +91,7 @@ public class ShipController : NetworkBehaviour
 
     void Start()
     {
-        if (isServer)
-        {
-            StartCoroutine(MoveForward());
-            StartCoroutine(MoveHorizontal());
-        }
+        StartCoroutine(MoveForward());
+        StartCoroutine(MoveHorizontal());
     }
 }
