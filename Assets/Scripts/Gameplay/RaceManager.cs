@@ -56,6 +56,20 @@ public class RaceManager : NetworkBehaviour
 
         // Assign the starting time.
         StartingTime = Time.time;
+
+        // Start race waiting coroutine.
+        StartCoroutine(WaitForStart());
+    }
+
+    private IEnumerator WaitForStart()
+    {
+        // Wait until the race can start.
+        yield return new WaitUntil(() => TimeBeforeStart <= 0f);
+
+        // Assign new race state.
+        CurrentState = RaceState.IN_PROGRESS;
+
+        yield break;
     }
 
     private void HandleRaceState(RaceState newState)

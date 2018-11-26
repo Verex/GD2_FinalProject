@@ -65,6 +65,9 @@ public class ShipController : NetworkBehaviour
 
     private IEnumerator MoveForward()
     {
+        // Wait for race to start.
+        yield return new WaitUntil(() => RaceManager.Instance.CurrentState == RaceManager.RaceState.IN_PROGRESS);
+
         while (true)
         {
 
@@ -90,6 +93,9 @@ public class ShipController : NetworkBehaviour
 
     private IEnumerator MoveHorizontal()
     {
+        // Wait for race to start.
+        yield return new WaitUntil(() => RaceManager.Instance.CurrentState == RaceManager.RaceState.IN_PROGRESS);
+
         while (true)
         {
             if (HorizontalMoveDirection != 0)
