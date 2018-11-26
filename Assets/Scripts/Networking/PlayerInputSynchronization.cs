@@ -64,7 +64,6 @@ public class PlayerInputSynchronization : NetworkBehaviour
     private UserCmd m_LastUserCmd;
     public Queue<UserCmd> StoredCommands; //These are the commands saved on the server
     public CircularBuffer<UserCmd> CommandHistory; // These are the commands already processed.
-    public Queue<UserCmd> LocalCommands; //These are the commands saved on the client
 
     private PlayerInputBindings m_InputBindings;
     private Player m_TargetPlayer;
@@ -154,6 +153,12 @@ public class PlayerInputSynchronization : NetworkBehaviour
         {
             PipeUserCommand(m_UserCmd);
 
+            
+            if (isServer)
+            {
+                HandleUserCommand(m_UserCmd);
+            }
+
             // Update user buttons.
             m_LastUserCmd.Buttons = m_UserCmd.Buttons;
         }
@@ -209,29 +214,14 @@ public class PlayerInputSynchronization : NetworkBehaviour
 
     public bool NextUserCommand(out UserCmd cmd)
     {
-        if (isServer)
+        // Check for queued user cmds.
+        if (StoredCommands.Count > 0)
         {
-            // Check for queued user cmds.
-            if (StoredCommands.Count > 0)
-            {
-                // Get next command.
-                cmd = StoredCommands.Dequeue();
+            // Get next command.
+            cmd = StoredCommands.Dequeue();
 
-                // Push old command to history.
-                CommandHistory.PushFront(cmd);
-            }
-        }
-        else if (isLocalPlayer)
-        {
-            // Check for queued local user cmds.
-            if (LocalCommands.Count > 0)
-            {
-                // Get next local command.
-                cmd = LocalCommands.Dequeue();
-
-                // Push old command to local history.
-                CommandHistory.PushFront(cmd);
-            }
+            // Push old command to history.
+            CommandHistory.PushFront(cmd);
         }
 
         // Assign null val.
