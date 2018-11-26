@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public struct PlayerState
+public class PlayerState
 {
     public Vector3 Origin;
 };
@@ -60,7 +60,7 @@ public class PlayerNetworkTransform : NetworkBehaviour
     {
 
         PlayerState finalState = null;
-        while(m_PlayerInput.StoredCommands.Count) 
+        while(m_PlayerInput.StoredCommands.Count > 0) 
         {
             //Process received commands on the server
             var command = m_PlayerInput.StoredCommands.Dequeue();
@@ -68,7 +68,7 @@ public class PlayerNetworkTransform : NetworkBehaviour
         }
 
         ServerStateUpdate update = new ServerStateUpdate();
-        update.netId = m_TargetPlayer.netIdl
+        update.netId = m_TargetPlayer.netId.Value;
         update.Origin = finalState.Origin;
 
         connectionToClient.SendByChannel(
