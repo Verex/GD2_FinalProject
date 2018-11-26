@@ -18,14 +18,20 @@ public class Player : NetworkBehaviour
 
     private PlayerInputSynchronization m_Input;
 
+    public PlayerInputSynchronization Input
+    {
+        get 
+        {
+            if (m_Input == null)
+            {
+                m_Input = GetComponent<PlayerInputSynchronization>();
+            }
 
+            return m_Input;
+        }
+    }
 
     public readonly float CONVERGENCE_RATE = 0.05f;
-
-    public void Awake()
-    {
-        m_Input = GetComponent<PlayerInputSynchronization>();
-    }
 
     public void Possess(ShipController sc)
     {
@@ -45,13 +51,19 @@ public class Player : NetworkBehaviour
      */
     public PlayerState ProcessUserCmd(UserCmd cmd, PlayerState playerState)
     {
-        if (cmd.ActionPressed(PlayerInputSynchronization.IN_FIRE))
+        // Check if we're trying to fire.
+        if (cmd.ActionWasReleased(PlayerInputSynchronization.IN_FIRE, Input.LastUserCommand))
         {
-            //Fire!
+            Debug.Log("Fired!");
         }
+        else
+        {
+            Debug.Log("NOt fired");
+        }
+
         if(m_TargetController)
         {
-            return m_TargetController.Update(cmd, playerState); //Move our ship
+            return m_TargetController.StateUpdate(cmd, playerState); //Move our ship
         }
         
         return null;

@@ -46,6 +46,17 @@ public class NetworkHandler : NetworkManager
         );
     }
 
+    public override void OnStartClient(NetworkClient client)
+    {
+        base.OnStartClient(client);
+
+        // Listen for client update.
+        NetworkServer.RegisterHandler(
+            ServerStateUpdate.MessageID,
+            ClientReceiveUpdate
+        );
+    }
+
 
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
@@ -168,9 +179,9 @@ public class NetworkHandler : NetworkManager
 
         GameObject foundObj = NetworkServer.FindLocalObject(netId);
 
-        if(foundObj == null) return;
+        if (foundObj == null) return;
 
-        if(message.conn.playerControllers[0].unetView.netId == netId)
+        if (message.conn.playerControllers[0].unetView.netId == netId)
         {
             PlayerNetworkTransform networkTransform = foundObj.GetComponent<PlayerNetworkTransform>();
             PlayerState serverState = new PlayerState();

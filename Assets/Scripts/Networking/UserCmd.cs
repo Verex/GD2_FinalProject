@@ -8,7 +8,6 @@ using UnityEngine.Networking;
 [System.Serializable]
 public class UserCmd
 {
-
     private readonly int m_SequenceNumber;
 
     public byte Buttons;
@@ -28,10 +27,19 @@ public class UserCmd
         m_SequenceNumber = sequenceNumber;
     }
 
-    public bool ActionPressed(ushort field)
+    public bool ActionIsPressed(ushort field)
     {
-        var result = (Buttons & field);
-        return result != 0;
+        return (Buttons & field) != 0;
+    }
+
+    public bool ActionWasReleased(ushort field, UserCmd lastCmd = null)
+    {
+        if (lastCmd != null)
+        {
+            return lastCmd.ActionIsPressed(field) && !ActionIsPressed(field);
+        }
+        
+        return false;
     }
 
     public byte[] Serialize()

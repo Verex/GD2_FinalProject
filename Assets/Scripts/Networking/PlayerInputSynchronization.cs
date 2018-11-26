@@ -63,6 +63,7 @@ public class PlayerInputSynchronization : NetworkBehaviour
     private UserCmd m_UserCmd;
     private UserCmd m_LastUserCmd;
     public Queue<UserCmd> StoredCommands; //These are the commands saved on the server
+    public CircularBuffer<UserCmd> CommandHistory; // These are the commands already processed.
     public Queue<UserCmd> LocalCommands; //These are the commands saved on the client
 
     private PlayerInputBindings m_InputBindings;
@@ -87,7 +88,13 @@ public class PlayerInputSynchronization : NetworkBehaviour
             m_LastUserCmd = CreateUserCmd();
         }
 
-        StoredCommands = new Queue<UserCmd>();
+        if (isServer)
+        {
+            StoredCommands = new Queue<UserCmd>();
+            CommandHistory = new CircularBuffer<UserCmd>(25);
+        }
+
+
         m_TargetPlayer = GetComponent<Player>();
     }
 
@@ -104,11 +111,11 @@ public class PlayerInputSynchronization : NetworkBehaviour
         // Clear current input command.
         m_UserCmd.Buttons = 0;
 
-        if (m_InputBindings.Accelerate.WasPressed || m_InputBindings.Accelerate.WasRepeated)
+        if (m_InputBindings.Accelerate.IsPressed)
         {
             m_UserCmd.Buttons |= IN_ACCELERATE;
         }
-        if (m_InputBindings.Deccelerate.WasPressed)
+        if (m_InputBindings.Deccelerate.IsPressed)
         {
             m_UserCmd.Buttons |= IN_DECCELERATE;
         }
@@ -120,7 +127,7 @@ public class PlayerInputSynchronization : NetworkBehaviour
         {
             m_UserCmd.Buttons |= IN_RIGHT;
         }
-        if (m_InputBindings.Fire.WasPressed)
+        if (m_InputBindings.Fire.IsPressed)
         {
             m_UserCmd.Buttons |= IN_FIRE;
         }
@@ -145,9 +152,6 @@ public class PlayerInputSynchronization : NetworkBehaviour
     {
         if (m_UserCmd.Buttons != m_LastUserCmd.Buttons)
         {
-            // Handle local user cmd.
-            m_TargetPlayer.ProcessUserCmd(m_UserCmd);
-
             PipeUserCommand(m_UserCmd);
 
             // Update user buttons.
@@ -161,7 +165,7 @@ public class PlayerInputSynchronization : NetworkBehaviour
     */
     private void FixedUpdateServer()
     {
-        
+
     }
 
     public void PipeUserCommand(UserCmd cmd)
@@ -200,7 +204,39 @@ public class PlayerInputSynchronization : NetworkBehaviour
         {
             m_LastIncomingSeq = cmd.SequenceNumber;
             StoredCommands.Enqueue(cmd);
+        }
+    }
 
+    public bool NextUserCommand(out UserCmd cmd)
+    {
+        // Check for queued user cmds.
+        if (StoredCommands.Count > 0)
+        {
+            // Get next command.
+            cmd = StoredCommands.Dequeue();
+
+            // Push old command
+            CommandHistory.PushFront(cmd);
+        }
+
+        // Assign null val.
+        cmd = null;
+
+        return false;
+    }
+
+    public UserCmd LastUserCommand
+    {
+        get
+        {
+            // Ensure not empty.
+            if (!CommandHistory.IsEmpty)
+            {
+                // Return last processed command.
+                return CommandHistory.Front();
+            }
+
+            return null;
         }
     }
 }

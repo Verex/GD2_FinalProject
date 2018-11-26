@@ -35,14 +35,14 @@ public class ShipController : NetworkBehaviour
         }
     }
 
-    public PlayerState Update(UserCmd cmd, PlayerState predictedState)
+    public PlayerState StateUpdate(UserCmd cmd, PlayerState predictedState)
     {
 
         PlayerState newState = new PlayerState();
         Vector3 startingOrigin = predictedState.Origin;
 
-        bool moveLeft = cmd.ActionPressed(PlayerInputSynchronization.IN_LEFT),
-            moveRight = cmd.ActionPressed(PlayerInputSynchronization.IN_RIGHT);
+        bool moveLeft = cmd.ActionIsPressed(PlayerInputSynchronization.IN_LEFT),
+            moveRight = cmd.ActionIsPressed(PlayerInputSynchronization.IN_RIGHT);
 
         Vector3 startingPosition = predictedState.Origin;
         if (moveLeft ^ moveRight)

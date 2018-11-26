@@ -61,6 +61,7 @@ public class PlayerNetworkTransform : NetworkBehaviour
         PlayerState finalState = LastPredictedState;
         while(m_PlayerInput.StoredCommands.Count > 0)
         {
+            Debug.Log("WWAA");
             //Process received commands on the server
             var command = m_PlayerInput.StoredCommands.Dequeue();
             finalState = m_TargetPlayer.ProcessUserCmd(command, finalState);
