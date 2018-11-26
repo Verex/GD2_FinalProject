@@ -11,6 +11,19 @@ public class PlayerState
 
 public struct Frame {
 
+    public Frame(float deltaTime) 
+    {
+        DeltaTime = deltaTime;
+    }
+
+    public Vector3 DeltaPosition;
+    public float DeltaTime;
+}
+
+public class LagRecord 
+{
+    public List<Frame> FrameHistory;
+    public float HistoryDuration; 
 }
 
 public class ServerStateUpdate : MessageBase
@@ -42,6 +55,8 @@ public class PlayerNetworkTransform : NetworkBehaviour
     private Player m_TargetPlayer;
     private PlayerInputSynchronization m_PlayerInput;
 
+    private LagRecord m_LagRecord;
+
     public void Awake()
     {
         m_TargetPlayer = GetComponent<Player>();
@@ -53,6 +68,23 @@ public class PlayerNetworkTransform : NetworkBehaviour
         if(isServer)
         {
             FixedUpdateServer();
+        }
+        if(isLocalPlayer)
+        {
+            FixedUpdateLocalPlayer();
+        }
+    }
+
+    private void FixedUpdateLocalPlayer()
+    {
+        while(m_PlayerInput.LocalCommands.Count)
+        {
+            var command = m_PlayerInput.LocalCommands.Dequeue();
+            NewState = m_TargetPlayer.ProcessUserCmd(command, LastPredictedState);
+            var frame = new Frame(Time.fixedDeltaTime);
+            frame.DeltaPosition = NewState.Origin - LastPredictedState.Origin;
+
+            m_LagRecord
         }
     }
 
