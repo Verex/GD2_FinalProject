@@ -35,6 +35,34 @@ public class ShipController : NetworkBehaviour
         }
     }
 
+    public PlayerState Update(UserCmd cmd, PlayerState predictedState)
+    {
+
+        PlayerState newState = new PlayerState();
+        Vector3 startingOrigin = predictedState.Origin;
+
+        bool moveLeft = cmd.ActionPressed(PlayerInputSynchronization.IN_LEFT),
+            moveRight = cmd.ActionPressed(PlayerInputSynchronization.IN_RIGHT);
+
+        Vector3 startingPosition = predictedState.Origin;
+        if (moveLeft ^ moveRight)
+        {
+            HorizontalMoveDirection = (moveLeft) ? -1 : 1;
+        }
+        else
+        {
+            HorizontalMoveDirection = 0;
+        }
+
+        newState.Origin = new Vector3(
+            startingPosition.x + (m_BaseHorizontalDistance * HorizontalMoveDirection),
+            startingPosition.y,
+            startingPosition.z
+        );
+
+        return newState;
+    }
+
     private IEnumerator MoveForward()
     {
         while (true)
@@ -91,7 +119,7 @@ public class ShipController : NetworkBehaviour
 
     void Start()
     {
-        StartCoroutine(MoveForward());
-        StartCoroutine(MoveHorizontal());
+        //StartCoroutine(MoveForward());
+        //StartCoroutine(MoveHorizontal());
     }
 }

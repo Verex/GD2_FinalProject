@@ -62,7 +62,8 @@ public class PlayerInputSynchronization : NetworkBehaviour
     private int m_LastIncomingSeq = 0;
     private UserCmd m_UserCmd;
     private UserCmd m_LastUserCmd;
-    private Queue<UserCmd> m_StoredCmds;
+    public Queue<UserCmd> StoredCommands; //These are the commands saved on the server
+    public Queue<UserCmd> LocalCommands; //These are the commands saved on the client
 
     private PlayerInputBindings m_InputBindings;
     private Player m_TargetPlayer;
@@ -86,7 +87,7 @@ public class PlayerInputSynchronization : NetworkBehaviour
             m_LastUserCmd = CreateUserCmd();
         }
 
-        m_StoredCmds = new Queue<UserCmd>();
+        StoredCommands = new Queue<UserCmd>();
         m_TargetPlayer = GetComponent<Player>();
     }
 
@@ -160,11 +161,7 @@ public class PlayerInputSynchronization : NetworkBehaviour
     */
     private void FixedUpdateServer()
     {
-        while (m_StoredCmds.Count != 0)
-        {
-            var commandToCompute = m_StoredCmds.Dequeue();
-            m_TargetPlayer.ProcessUserCmd(commandToCompute);
-        }
+        
     }
 
     public void PipeUserCommand(UserCmd cmd)
@@ -202,7 +199,8 @@ public class PlayerInputSynchronization : NetworkBehaviour
         else
         {
             m_LastIncomingSeq = cmd.SequenceNumber;
-            m_StoredCmds.Enqueue(cmd);
+            StoredCommands.Enqueue(cmd);
+
         }
     }
 }

@@ -159,4 +159,23 @@ public class NetworkHandler : NetworkManager
             input.HandleUserCommand(inputCommand);
         }
     }
+
+    void ClientReceiveUpdate(NetworkMessage message)
+    {
+        ServerStateUpdate updateMessage = message.ReadMessage<ServerStateUpdate>();
+
+        NetworkInstanceId netId = new NetworkInstanceId(updateMessage.netId);
+
+        GameObject foundObj = NetworkServer.FindLocalObject(netId);
+
+        if(foundObj == null) return;
+
+        if(message.conn.playerControllers[0].unetView.netId == netId)
+        {
+            PlayerNetworkTransform networkTransform = foundObj.GetComponent<PlayerNetworkTransform>();
+            PlayerState serverState = new PlayerState();
+            serverState.Origin = updateMessage.Origin;
+            networkTransform.OnServerFrame(serverState);
+        }
+    }
 }

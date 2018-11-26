@@ -6,7 +6,10 @@ using UnityEngine.Networking;
 using UnityEngine.Assertions;
 
 
+
+
 [RequireComponent(typeof(PlayerInputSynchronization))]
+[RequireComponent(typeof(PlayerNetworkTransform))]
 public class Player : NetworkBehaviour
 {
 
@@ -14,6 +17,10 @@ public class Player : NetworkBehaviour
     [SerializeField] private ShipController m_TargetController;
 
     private PlayerInputSynchronization m_Input;
+
+
+
+    public readonly float CONVERGENCE_RATE = 0.05f;
 
     public void Awake()
     {
@@ -36,41 +43,23 @@ public class Player : NetworkBehaviour
         TODO(Jake): Allow the local player to process their own usercmd upon creation AKA Client-Sided Prediction 
         https://en.wikipedia.org/wiki/Client-side_prediction
      */
-    public void ProcessUserCmd(UserCmd cmd)
+    public PlayerState ProcessUserCmd(UserCmd cmd, PlayerState playerState)
     {
         if (cmd.ActionPressed(PlayerInputSynchronization.IN_FIRE))
         {
             //Fire!
         }
-        if (cmd.ActionPressed(PlayerInputSynchronization.IN_ACCELERATE))
+        if(m_TargetController)
         {
-            //Accelerate!
-            Debug.Log("Accelerate!");
+            return m_TargetController.Update(cmd, playerState); //Move our ship
         }
-
-        bool moveLeft = cmd.ActionPressed(PlayerInputSynchronization.IN_LEFT),
-            moveRight = cmd.ActionPressed(PlayerInputSynchronization.IN_RIGHT);
-
-        if (moveLeft ^ moveRight)
-        {
-            if (moveLeft)
-            {
-                m_TargetController.HorizontalMoveDirection = -1;
-            }
-            else
-            {
-                m_TargetController.HorizontalMoveDirection = 1;
-            }
-        }
-        else
-        {
-            m_TargetController.HorizontalMoveDirection = 0;
-        }
+        
+        return null;
     }
 
     public void Update()
     {
-
+        
     }
 
 }
