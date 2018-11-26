@@ -10,7 +10,7 @@ public class PlayerState
 };
 
 public struct Frame {
-    
+
 }
 
 public class ServerStateUpdate : MessageBase
@@ -58,13 +58,12 @@ public class PlayerNetworkTransform : NetworkBehaviour
 
     private void FixedUpdateServer()
     {
-
-        PlayerState finalState = null;
-        while(m_PlayerInput.StoredCommands.Count > 0) 
+        PlayerState finalState = LastPredictedState;
+        while(m_PlayerInput.StoredCommands.Count > 0)
         {
             //Process received commands on the server
             var command = m_PlayerInput.StoredCommands.Dequeue();
-            finalState = m_TargetPlayer.ProcessUserCmd(command);
+            finalState = m_TargetPlayer.ProcessUserCmd(command, finalState);
         }
 
         ServerStateUpdate update = new ServerStateUpdate();
