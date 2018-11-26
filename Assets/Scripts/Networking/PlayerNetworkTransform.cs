@@ -14,6 +14,7 @@ public struct Frame {
     public Frame(float deltaTime) 
     {
         DeltaTime = deltaTime;
+        DeltaPosition = Vector3.zero;
     }
 
     public Vector3 DeltaPosition;
@@ -69,7 +70,7 @@ public class PlayerNetworkTransform : NetworkBehaviour
         {
             FixedUpdateServer();
         }
-        if(isLocalPlayer)
+        else if(isLocalPlayer)
         {
             FixedUpdateLocalPlayer();
         }
@@ -77,26 +78,28 @@ public class PlayerNetworkTransform : NetworkBehaviour
 
     private void FixedUpdateLocalPlayer()
     {
-        while(m_PlayerInput.LocalCommands.Count)
+        UserCmd nextCmd = null;
+
+        while(m_PlayerInput.NextUserCommand(out nextCmd))
         {
-            var command = m_PlayerInput.LocalCommands.Dequeue();
-            NewState = m_TargetPlayer.ProcessUserCmd(command, LastPredictedState);
+            NewState = m_TargetPlayer.ProcessUserCmd(nextCmd, LastPredictedState);
+
             var frame = new Frame(Time.fixedDeltaTime);
+
             frame.DeltaPosition = NewState.Origin - LastPredictedState.Origin;
 
-            m_LagRecord
+            //m_LagRecord
         }
     }
 
     private void FixedUpdateServer()
     {
         PlayerState finalState = LastPredictedState;
-        while(m_PlayerInput.StoredCommands.Count > 0)
+        UserCmd nextCmd = null;
+
+        while(m_PlayerInput.NextUserCommand(out nextCmd))
         {
-            Debug.Log("WWAA");
-            //Process received commands on the server
-            var command = m_PlayerInput.StoredCommands.Dequeue();
-            finalState = m_TargetPlayer.ProcessUserCmd(command, finalState);
+            finalState = m_TargetPlayer.ProcessUserCmd(nextCmd, finalState);
         }
 
         ServerStateUpdate update = new ServerStateUpdate();

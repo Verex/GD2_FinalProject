@@ -6,8 +6,6 @@ using UnityEngine.Networking;
 using UnityEngine.Assertions;
 
 
-
-
 [RequireComponent(typeof(PlayerInputSynchronization))]
 [RequireComponent(typeof(PlayerNetworkTransform))]
 public class Player : NetworkBehaviour

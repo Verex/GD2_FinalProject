@@ -91,9 +91,9 @@ public class PlayerInputSynchronization : NetworkBehaviour
         if (isServer)
         {
             StoredCommands = new Queue<UserCmd>();
-            CommandHistory = new CircularBuffer<UserCmd>(25);
         }
 
+        CommandHistory = new CircularBuffer<UserCmd>(25);
 
         m_TargetPlayer = GetComponent<Player>();
     }
@@ -209,14 +209,29 @@ public class PlayerInputSynchronization : NetworkBehaviour
 
     public bool NextUserCommand(out UserCmd cmd)
     {
-        // Check for queued user cmds.
-        if (StoredCommands.Count > 0)
+        if (isServer)
         {
-            // Get next command.
-            cmd = StoredCommands.Dequeue();
+            // Check for queued user cmds.
+            if (StoredCommands.Count > 0)
+            {
+                // Get next command.
+                cmd = StoredCommands.Dequeue();
 
-            // Push old command
-            CommandHistory.PushFront(cmd);
+                // Push old command to history.
+                CommandHistory.PushFront(cmd);
+            }
+        }
+        else if (isLocalPlayer)
+        {
+            // Check for queued local user cmds.
+            if (LocalCommands.Count > 0)
+            {
+                // Get next local command.
+                cmd = LocalCommands.Dequeue();
+
+                // Push old command to local history.
+                CommandHistory.PushFront(cmd);
+            }
         }
 
         // Assign null val.
