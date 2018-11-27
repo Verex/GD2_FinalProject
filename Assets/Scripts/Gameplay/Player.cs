@@ -40,6 +40,8 @@ public class Player : NetworkBehaviour
         // Assign reference to this player.
         sc.Owner = this;
 
+        GetComponent<PlayerNetworkTransform>().TargetTransform = sc.transform;
+
         //TODO(Any): Maybe create an OnShipPossessed event or something
     }
 

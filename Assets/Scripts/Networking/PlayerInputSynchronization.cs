@@ -86,12 +86,8 @@ public class PlayerInputSynchronization : NetworkBehaviour
             m_UserCmd = CreateUserCmd();
             m_LastUserCmd = CreateUserCmd();
         }
-
-        if (isServer)
-        {
-            StoredCommands = new Queue<UserCmd>();
-        }
-
+        
+        StoredCommands = new Queue<UserCmd>();
         CommandHistory = new CircularBuffer<UserCmd>(25);
 
         m_TargetPlayer = GetComponent<Player>();
@@ -200,6 +196,8 @@ public class PlayerInputSynchronization : NetworkBehaviour
 
     public void HandleUserCommand(UserCmd cmd)
     {
+        m_LastIncomingSeq = cmd.SequenceNumber;
+        StoredCommands.Enqueue(cmd);
         if (cmd.SequenceNumber - m_LastIncomingSeq > 1)
         {
             //We are missing some commands lets start predicting
@@ -207,8 +205,6 @@ public class PlayerInputSynchronization : NetworkBehaviour
         }
         else
         {
-            m_LastIncomingSeq = cmd.SequenceNumber;
-            StoredCommands.Enqueue(cmd);
         }
     }
 
@@ -222,6 +218,8 @@ public class PlayerInputSynchronization : NetworkBehaviour
 
             // Push old command to history.
             CommandHistory.PushFront(cmd);
+            
+            return true;
         }
 
         // Assign null val.
