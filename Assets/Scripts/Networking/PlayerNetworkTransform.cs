@@ -75,7 +75,7 @@ public class PlayerNetworkTransform : NetworkBehaviour
         {
             FixedUpdateServer();
         }
-        else if(isClient)
+        if(isClient)
         {
             FixedUpdateClient();
         }
@@ -85,22 +85,19 @@ public class PlayerNetworkTransform : NetworkBehaviour
     {
         UserCmd nextCmd = null;
 
-        var tmpState = new PlayerState();
-        tmpState.Origin = LastPredictedState.Origin;
-
         while(m_PlayerInput.NextUserCommand(out nextCmd))
         {
             //Temporary state for client prediction
-            tmpState = m_TargetPlayer.ProcessUserCmd(nextCmd, LastPredictedState);
+            NewState = m_TargetPlayer.ProcessUserCmd(nextCmd, LastPredictedState);
 
             //Client frame for this duration
             var frame = new Frame(Time.fixedDeltaTime);
-            frame.DeltaPosition = tmpState.Origin - LastPredictedState.Origin; //Displacement
+            frame.DeltaPosition = NewState.Origin - LastPredictedState.Origin; //Displacement
 
             m_LagRecord.FrameHistory.Add(frame);
             m_LagRecord.HistoryDuration += Time.fixedDeltaTime; //Duration of frame
 
-            LastPredictedState = tmpState;
+            LastPredictedState = NewState;
         }
     }
 

@@ -60,7 +60,7 @@ public class NetworkHandler : NetworkManager
         base.OnStartClient(client);
 
         // Listen for client update.
-        NetworkServer.RegisterHandler(
+        client.RegisterHandler(
             ServerStateUpdate.MessageID,
             ClientReceiveUpdate
         );
