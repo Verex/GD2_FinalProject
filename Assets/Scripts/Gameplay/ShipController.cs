@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 
 public class ShipController : NetworkBehaviour
 {
+    [SerializeField] private GameObject m_ProjectilePrefab;
     [SerializeField] private float m_BaseForwardSpeed = 1.0f;
     [SerializeField] private float m_BaseForwardDistance = 1.0f;
     [SerializeField] private float m_BaseHorizontalSpeed = 1.0f;
