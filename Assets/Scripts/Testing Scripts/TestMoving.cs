@@ -13,7 +13,6 @@ public class TestMoving : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Translate(Vector2.up * 0.04f);
         if (Input.GetKey(KeyCode.D))
         {
             transform.Translate(Vector2.right * speed);
