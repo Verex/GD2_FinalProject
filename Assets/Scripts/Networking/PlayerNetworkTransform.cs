@@ -52,6 +52,7 @@ public class PlayerNetworkTransform : NetworkBehaviour
 {
     public PlayerState LastPredictedState;
     public PlayerState NewState;
+    public PlayerState ServerState;
 
     private Player m_TargetPlayer;
     private PlayerInputSynchronization m_PlayerInput;
@@ -62,6 +63,10 @@ public class PlayerNetworkTransform : NetworkBehaviour
     {
         m_TargetPlayer = GetComponent<Player>();
         m_PlayerInput = GetComponent<PlayerInputSynchronization>();
+        LastPredictedState = new PlayerState();
+        LastPredictedState.Origin = transform.position;
+        NewState = new PlayerState();
+        NewState.Origin = transform.position;
     }
 
     void FixedUpdate()
@@ -70,25 +75,32 @@ public class PlayerNetworkTransform : NetworkBehaviour
         {
             FixedUpdateServer();
         }
-        else if(isLocalPlayer)
+        else if(isClient)
         {
-            FixedUpdateLocalPlayer();
+            FixedUpdateClient();
         }
     }
 
-    private void FixedUpdateLocalPlayer()
+    private void FixedUpdateClient()
     {
         UserCmd nextCmd = null;
 
+        var tmpState = new PlayerState();
+        tmpState.Origin = LastPredictedState.Origin;
+
         while(m_PlayerInput.NextUserCommand(out nextCmd))
         {
-            NewState = m_TargetPlayer.ProcessUserCmd(nextCmd, LastPredictedState);
+            //Temporary state for client prediction
+            tmpState = m_TargetPlayer.ProcessUserCmd(nextCmd, LastPredictedState);
 
+            //Client frame for this duration
             var frame = new Frame(Time.fixedDeltaTime);
+            frame.DeltaPosition = tmpState.Origin - LastPredictedState.Origin; //Displacement
 
-            frame.DeltaPosition = NewState.Origin - LastPredictedState.Origin;
+            m_LagRecord.FrameHistory.Add(frame);
+            m_LagRecord.HistoryDuration += Time.fixedDeltaTime; //Duration of frame
 
-            //m_LagRecord
+            LastPredictedState = tmpState;
         }
     }
 
@@ -113,8 +125,29 @@ public class PlayerNetworkTransform : NetworkBehaviour
         );
     }
 
-    public void OnServerFrame(PlayerState severState)
+    public void OnServerFrame(PlayerState serverUpdate)
     {
+        float latency = NetworkHandler.Instance.RoundTr ipTime;
+        float simulationTime = Mathf.Max(0, m_LagRecord.HistoryDuration - latency);
+        m_LagRecord.HistoryDuration -= simulationTime;
+        while(m_LagRecord.FrameHistory.Count > 0 && simulationTime > 0)
+        {
+            if(simulationTime >= m_LagRecord.FrameHistory[0].DeltaTime)
+            {
+                simulationTime -= m_LagRecord.FrameHistory[0].DeltaTime;
+                m_LagRecord.FrameHistory.RemoveAt(0);
+            }
+            else
+            {
+                //Move back linear fraction
+            }
+        }
+        ServerState = serverUpdate;
+        LastPredictedState.Origin = serverUpdate.Origin;
+        foreach(var frame in m_LagRecord.FrameHistory)
+        {
+            LastPredictedState.Origin += frame.DeltaPosition;
+        }
 
     }
 }

@@ -26,6 +26,15 @@ public class NetworkHandler : NetworkManager
         }
     }
 
+    public float RoundTripTime
+    {
+        //HACK-HACK:conversion from int32 to float is no bueno
+        get
+        {
+            return (float)Instance.client.GetRTT()
+        }
+    }
+
     public void RegisterShipSpawn(int playerId, Transform spawnTransform)
     {
         // Add to spawns dictionary.
