@@ -86,11 +86,7 @@ public class PlayerInputSynchronization : NetworkBehaviour
             m_UserCmd = CreateUserCmd();
             m_LastUserCmd = CreateUserCmd();
         }
-
-        if (isServer)
-        {
-            StoredCommands = new Queue<UserCmd>();
-        }
+        StoredCommands = new Queue<UserCmd>();
 
         CommandHistory = new CircularBuffer<UserCmd>(25);
 
@@ -157,10 +153,15 @@ public class PlayerInputSynchronization : NetworkBehaviour
             if (isServer)
             {
                 HandleUserCommand(m_UserCmd);
+            } 
+            else 
+            {
+                StoredCommands.Enqueue(m_UserCmd);
             }
 
             // Update user buttons.
             m_LastUserCmd.Buttons = m_UserCmd.Buttons;
+            m_UserCmd = CreateUserCmd();
         }
     }
 
@@ -222,6 +223,8 @@ public class PlayerInputSynchronization : NetworkBehaviour
 
             // Push old command to history.
             CommandHistory.PushFront(cmd);
+
+            return true;
         }
 
         // Assign null val.
