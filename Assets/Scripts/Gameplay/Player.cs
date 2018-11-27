@@ -40,7 +40,30 @@ public class Player : NetworkBehaviour
         // Assign reference to this player.
         sc.Owner = this;
 
+        //Initialize Player Network Transform with the ship controller's position
+        var pnt = GetComponent<PlayerNetworkTransform>();
+        pnt.Initialize(sc.transform.position);
         //TODO(Any): Maybe create an OnShipPossessed event or something
+
+        //sc.GetComponent<DynamicNetworkTransform>().enabled = false; //Disable client's dynamic network transform
+
+    }
+
+    public void MoveShip(Vector3 position) //Move our ship here
+    {
+        if(m_TargetController == null)
+        {
+            return;
+        }
+        m_TargetController.transform.position = position;
+    }
+
+    public Vector3 CurrentShipPosition
+    {
+        get
+        {
+            return m_TargetController.transform.position;
+        }
     }
 
     /*
