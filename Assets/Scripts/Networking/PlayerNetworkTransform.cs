@@ -91,7 +91,7 @@ public class PlayerNetworkTransform : NetworkBehaviour
         while(m_PlayerInput.NextUserCommand(out nextCmd))
         {
             //Temporary state for client prediction
-            tmpState = m_TargetPlayer.ProcessUserCmd(nextCmd, LastPredictedState);
+            tmpState = m_TargetPlayer.ProcessUserCmd(nextCmd, LastPredictedState, false);
 
             //Client frame for this duration
             var frame = new Frame(Time.fixedDeltaTime);
@@ -111,7 +111,7 @@ public class PlayerNetworkTransform : NetworkBehaviour
 
         while(m_PlayerInput.NextUserCommand(out nextCmd))
         {
-            finalState = m_TargetPlayer.ProcessUserCmd(nextCmd, finalState);
+            finalState = m_TargetPlayer.ProcessUserCmd(nextCmd, finalState, true);
         }
 
         ServerStateUpdate update = new ServerStateUpdate();
@@ -127,7 +127,7 @@ public class PlayerNetworkTransform : NetworkBehaviour
 
     public void OnServerFrame(PlayerState serverUpdate)
     {
-        float latency = NetworkHandler.Instance.RoundTr ipTime;
+        float latency = NetworkHandler.Instance.RoundTripTime;
         float simulationTime = Mathf.Max(0, m_LagRecord.HistoryDuration - latency);
         m_LagRecord.HistoryDuration -= simulationTime;
         while(m_LagRecord.FrameHistory.Count > 0 && simulationTime > 0)
