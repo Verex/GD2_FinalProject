@@ -43,6 +43,7 @@ public class DynamicNetworkTransform : NetworkBehaviour {
 		}
 	}
 
+
 	void Awake() {
 		m_PreviousPosition = transform.position;
 

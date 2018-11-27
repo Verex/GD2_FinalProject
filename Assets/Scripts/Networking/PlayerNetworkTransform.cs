@@ -64,7 +64,7 @@ public class PlayerNetworkTransform : NetworkBehaviour
 
     private LagRecord m_LagRecord;
 
-    public Transform TargetTransform;
+    private bool m_Initialized = false;
 
     public void Start()
     {
@@ -76,24 +76,35 @@ public class PlayerNetworkTransform : NetworkBehaviour
         m_TargetPlayer = GetComponent<Player>();
         m_PlayerInput = GetComponent<PlayerInputSynchronization>();
         //Initialize predicted state
+
+
+    }
+
+    public void Initialize(Vector3 position)
+    {
         LastPredictedState = new PlayerState();
-        LastPredictedState.Origin = transform.position;
+        LastPredictedState.Origin = position;
         //Intialize new state
         NewState = new PlayerState();
-        NewState.Origin = transform.position;
+        NewState.Origin = position;
         //Initialize server state
         ServerState = new PlayerState();
-        ServerState.Origin = transform.position;
+        ServerState.Origin = position;
 
+        m_Initialized = true;
     }
 
     void FixedUpdate()
     {
+        if(!m_Initialized)
+        {
+            return;
+        }
         if(isServer)
         {
             FixedUpdateServer();
         }
-        if(isClient)
+        if(isLocalPlayer)
         {
             FixedUpdateClient();
         }
@@ -121,11 +132,7 @@ public class PlayerNetworkTransform : NetworkBehaviour
         float latency = NetworkHandler.Instance.RoundTripTime;
         float lerpFraction = Time.fixedDeltaTime / (latency * (1 + 0.05f));
         //Extrapolate position here
-        TargetTransform.position = Vector3.Lerp(
-            LastPredictedState.Origin, 
-            TargetTransform.position, 
-            lerpFraction
-        );
+        m_TargetPlayer.MoveShip(LastPredictedState.Origin);
     }
 
     private void FixedUpdateServer()
@@ -141,6 +148,8 @@ public class PlayerNetworkTransform : NetworkBehaviour
         ServerStateUpdate update = new ServerStateUpdate();
         update.netId = m_TargetPlayer.netId.Value;
         update.Origin = finalState.Origin;
+
+        m_TargetPlayer.MoveShip(finalState.Origin);
 
         connectionToClient.SendByChannel(
             ServerStateUpdate.MessageID,

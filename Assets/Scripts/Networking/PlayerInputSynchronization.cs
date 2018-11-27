@@ -153,10 +153,15 @@ public class PlayerInputSynchronization : NetworkBehaviour
             if (isServer)
             {
                 HandleUserCommand(m_UserCmd);
+            } 
+            else 
+            {
+                StoredCommands.Enqueue(m_UserCmd);
             }
 
             // Update user buttons.
             m_LastUserCmd.Buttons = m_UserCmd.Buttons;
+            m_UserCmd = CreateUserCmd();
         }
     }
 

@@ -64,6 +64,16 @@ public class ShipController : NetworkBehaviour
         return newState;
     }
 
+    void Awake()
+    {
+
+    }
+
+    void Update()
+    {
+
+    }
+
     private IEnumerator MoveForward()
     {
         // Wait for race to start.
