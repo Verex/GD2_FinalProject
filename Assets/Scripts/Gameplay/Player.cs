@@ -34,7 +34,11 @@ public class Player : NetworkBehaviour
     public void Possess(ShipController sc)
     {
         Assert.IsNotNull(sc, "Cannot possess a null ship controller, stupid");
+        
         m_TargetController = sc; //Possess target ship controller
+
+        // Assign reference to this player.
+        sc.Owner = this;
 
         //TODO(Any): Maybe create an OnShipPossessed event or something
     }
@@ -47,7 +51,7 @@ public class Player : NetworkBehaviour
         TODO(Jake): Allow the local player to process their own usercmd upon creation AKA Client-Sided Prediction 
         https://en.wikipedia.org/wiki/Client-side_prediction
      */
-    public PlayerState ProcessUserCmd(UserCmd cmd, PlayerState playerState, bool isServer)
+    public PlayerState ProcessUserCmd(UserCmd cmd, PlayerState playerState)
     {
         // Check if we're trying to fire.
         if (cmd.ActionWasReleased(PlayerInputSynchronization.IN_FIRE, Input.LastUserCommand))

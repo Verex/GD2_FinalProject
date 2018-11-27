@@ -11,6 +11,7 @@ public class ShipController : NetworkBehaviour
     [SerializeField] private float m_BaseHorizontalDistance = 1.0f;
 
     public int HorizontalMoveDirection = 0;
+    public Player Owner;
 
     [TargetRpc]
     public void TargetSetupShip(NetworkConnection target)
