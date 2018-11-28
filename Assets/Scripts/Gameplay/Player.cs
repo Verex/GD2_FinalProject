@@ -83,7 +83,7 @@ public class Player : NetworkBehaviour
         }
         else
         {
-            Debug.Log("NOt fired");
+            //Debug.Log("NOt fired");
         }
 
         if(m_TargetController)
