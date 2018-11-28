@@ -96,10 +96,7 @@ public class PlayerNetworkTransform : NetworkBehaviour
 
     void Update()
     {
-        if(isLocalPlayer)
-        {
-            UpdateClient();
-        }
+
     }
     void FixedUpdate()
     {
@@ -111,6 +108,10 @@ public class PlayerNetworkTransform : NetworkBehaviour
         {
             FixedUpdateServer();
         }
+        if(isLocalPlayer)
+        {
+            UpdateClient();
+        }
     }
 
     private void UpdateClient()
@@ -120,14 +121,14 @@ public class PlayerNetworkTransform : NetworkBehaviour
         while(m_PlayerInput.NextUserCommand(out nextCmd))
         {
             //Temporary state for client prediction
-            NewState = m_TargetPlayer.ProcessUserCmd(nextCmd, LastPredictedState, Time.deltaTime);
+            NewState = m_TargetPlayer.ProcessUserCmd(nextCmd, LastPredictedState, Time.fixedDeltaTime);
 
             //Client frame for this duration
             var frame = new Frame(Time.fixedDeltaTime);
             frame.DeltaPosition = NewState.Origin - LastPredictedState.Origin; //Displacement
 
             m_LagRecord.FrameHistory.Add(frame);
-            m_LagRecord.HistoryDuration += Time.deltaTime; //Duration of frame
+            m_LagRecord.HistoryDuration += Time.fixedDeltaTime; //Duration of frame
 
             LastPredictedState = NewState;
         }
@@ -200,7 +201,7 @@ public class PlayerNetworkTransform : NetworkBehaviour
         //Add any unaccounted deltas
         foreach(var frame in m_LagRecord.FrameHistory)
         {
-            LastPredictedState.Origin += frame.DeltaPosition;
+            //LastPredictedState.Origin += frame.DeltaPosition;
         }
     }
 }

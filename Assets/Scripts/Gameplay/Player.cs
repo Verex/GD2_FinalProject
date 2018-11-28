@@ -45,7 +45,10 @@ public class Player : NetworkBehaviour
         pnt.Initialize(sc.transform.position);
         //TODO(Any): Maybe create an OnShipPossessed event or something
 
-        //sc.GetComponent<DynamicNetworkTransform>().enabled = false; //Disable client's dynamic network transform
+        if(!isServer)
+        {
+            sc.GetComponent<DynamicNetworkTransform>().enabled = false; //Disable client's dynamic network transform
+        }
 
     }
 
