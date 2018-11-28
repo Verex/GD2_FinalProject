@@ -94,6 +94,13 @@ public class PlayerNetworkTransform : NetworkBehaviour
         m_Initialized = true;
     }
 
+    void Update()
+    {
+        if(isLocalPlayer)
+        {
+            UpdateClient();
+        }
+    }
     void FixedUpdate()
     {
         if(!m_Initialized)
@@ -104,27 +111,23 @@ public class PlayerNetworkTransform : NetworkBehaviour
         {
             FixedUpdateServer();
         }
-        if(isLocalPlayer)
-        {
-            FixedUpdateClient();
-        }
     }
 
-    private void FixedUpdateClient()
+    private void UpdateClient()
     {
         UserCmd nextCmd = null;
 
         while(m_PlayerInput.NextUserCommand(out nextCmd))
         {
             //Temporary state for client prediction
-            NewState = m_TargetPlayer.ProcessUserCmd(nextCmd, LastPredictedState);
+            NewState = m_TargetPlayer.ProcessUserCmd(nextCmd, LastPredictedState, Time.deltaTime);
 
             //Client frame for this duration
             var frame = new Frame(Time.fixedDeltaTime);
             frame.DeltaPosition = NewState.Origin - LastPredictedState.Origin; //Displacement
 
             m_LagRecord.FrameHistory.Add(frame);
-            m_LagRecord.HistoryDuration += Time.fixedDeltaTime; //Duration of frame
+            m_LagRecord.HistoryDuration += Time.deltaTime; //Duration of frame
 
             LastPredictedState = NewState;
         }
@@ -142,7 +145,7 @@ public class PlayerNetworkTransform : NetworkBehaviour
 
         while(m_PlayerInput.NextUserCommand(out nextCmd))
         {
-            finalState = m_TargetPlayer.ProcessUserCmd(nextCmd, finalState);
+            finalState = m_TargetPlayer.ProcessUserCmd(nextCmd, finalState, Time.fixedDeltaTime);
         }
 
         ServerStateUpdate update = new ServerStateUpdate();
@@ -157,10 +160,17 @@ public class PlayerNetworkTransform : NetworkBehaviour
             Channels.DefaultReliable
         );
 
+        ServerState = finalState;
+
     }
 
     public void OnServerFrame(PlayerState serverUpdate)
     {
+        if(isServer)
+        {
+            LastPredictedState = serverUpdate;
+            return;
+        }
         float latency = NetworkHandler.Instance.RoundTripTime;
         float simulationTime = Mathf.Max(0, m_LagRecord.HistoryDuration - latency);
         m_LagRecord.HistoryDuration = m_LagRecord.HistoryDuration - simulationTime;
@@ -192,6 +202,5 @@ public class PlayerNetworkTransform : NetworkBehaviour
         {
             LastPredictedState.Origin += frame.DeltaPosition;
         }
-
     }
 }

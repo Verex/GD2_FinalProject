@@ -36,7 +36,7 @@ public class ShipController : NetworkBehaviour
         }
     }
 
-    public PlayerState StateUpdate(UserCmd cmd, PlayerState predictedState)
+    public PlayerState StateUpdate(UserCmd cmd, PlayerState predictedState, float dt)
     {
 
         PlayerState newState = new PlayerState();
@@ -56,7 +56,7 @@ public class ShipController : NetworkBehaviour
         }
 
         newState.Origin = new Vector3(
-            startingPosition.x + (m_BaseHorizontalDistance * HorizontalMoveDirection),
+            startingPosition.x + (m_BaseHorizontalSpeed * HorizontalMoveDirection * dt),
             startingPosition.y,
             startingPosition.z
         );

@@ -74,7 +74,7 @@ public class Player : NetworkBehaviour
         TODO(Jake): Allow the local player to process their own usercmd upon creation AKA Client-Sided Prediction 
         https://en.wikipedia.org/wiki/Client-side_prediction
      */
-    public PlayerState ProcessUserCmd(UserCmd cmd, PlayerState playerState)
+    public PlayerState ProcessUserCmd(UserCmd cmd, PlayerState playerState, float dt)
     {
         // Check if we're trying to fire.
         if (cmd.ActionWasReleased(PlayerInputSynchronization.IN_FIRE, Input.LastUserCommand))
@@ -88,7 +88,7 @@ public class Player : NetworkBehaviour
 
         if(m_TargetController)
         {
-            return m_TargetController.StateUpdate(cmd, playerState); //Move our ship
+            return m_TargetController.StateUpdate(cmd, playerState, dt); //Move our ship
         }
         
         return null;

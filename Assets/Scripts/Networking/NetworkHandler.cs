@@ -31,7 +31,7 @@ public class NetworkHandler : NetworkManager
         //HACK-HACK:conversion from int32 to float is no bueno
         get
         {
-            return 0.01f;
+            return (float)(client.GetRTT() / 1000.0);
         }
     }
 

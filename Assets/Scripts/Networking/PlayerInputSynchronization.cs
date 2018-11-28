@@ -145,24 +145,14 @@ public class PlayerInputSynchronization : NetworkBehaviour
     */
     private void LocalPlayerFixedUpdate()
     {
-        if (m_UserCmd.Buttons != m_LastUserCmd.Buttons)
+        PipeUserCommand(m_UserCmd);    
+        if (!isServer)
         {
-            PipeUserCommand(m_UserCmd);
-
-            
-            if (isServer)
-            {
-                HandleUserCommand(m_UserCmd);
-            } 
-            else 
-            {
-                StoredCommands.Enqueue(m_UserCmd);
-            }
-
-            // Update user buttons.
-            m_LastUserCmd.Buttons = m_UserCmd.Buttons;
-            m_UserCmd = CreateUserCmd();
-        }
+            StoredCommands.Enqueue(m_UserCmd);
+        } 
+        // Update user buttons.
+        m_LastUserCmd.Buttons = m_UserCmd.Buttons;
+        m_UserCmd = CreateUserCmd();
     }
 
     /*
