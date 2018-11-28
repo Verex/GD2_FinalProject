@@ -182,6 +182,21 @@ Prefab:
       propertyPath: m_StretchFill
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114564931342217730, guid: 61ed6418a466c9d4690f10ae8f17e68a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114651720244864978, guid: 61ed6418a466c9d4690f10ae8f17e68a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114870191699515474, guid: 61ed6418a466c9d4690f10ae8f17e68a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61ed6418a466c9d4690f10ae8f17e68a, type: 2}
   m_IsPrefabAsset: 0

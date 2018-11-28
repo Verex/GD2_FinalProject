@@ -62,7 +62,8 @@ public class PlayerInputSynchronization : NetworkBehaviour
     private int m_LastIncomingSeq = 0;
     private UserCmd m_UserCmd;
     private UserCmd m_LastUserCmd;
-    private Queue<UserCmd> m_StoredCmds;
+    public Queue<UserCmd> StoredCommands; //These are the commands saved on the server
+    public CircularBuffer<UserCmd> CommandHistory; // These are the commands already processed.
 
     private PlayerInputBindings m_InputBindings;
     private Player m_TargetPlayer;
@@ -85,8 +86,10 @@ public class PlayerInputSynchronization : NetworkBehaviour
             m_UserCmd = CreateUserCmd();
             m_LastUserCmd = CreateUserCmd();
         }
+        
+        StoredCommands = new Queue<UserCmd>();
+        CommandHistory = new CircularBuffer<UserCmd>(25);
 
-        m_StoredCmds = new Queue<UserCmd>();
         m_TargetPlayer = GetComponent<Player>();
     }
 
@@ -103,11 +106,11 @@ public class PlayerInputSynchronization : NetworkBehaviour
         // Clear current input command.
         m_UserCmd.Buttons = 0;
 
-        if (m_InputBindings.Accelerate.WasPressed || m_InputBindings.Accelerate.WasRepeated)
+        if (m_InputBindings.Accelerate.IsPressed)
         {
             m_UserCmd.Buttons |= IN_ACCELERATE;
         }
-        if (m_InputBindings.Deccelerate.WasPressed)
+        if (m_InputBindings.Deccelerate.IsPressed)
         {
             m_UserCmd.Buttons |= IN_DECCELERATE;
         }
@@ -119,7 +122,7 @@ public class PlayerInputSynchronization : NetworkBehaviour
         {
             m_UserCmd.Buttons |= IN_RIGHT;
         }
-        if (m_InputBindings.Fire.WasPressed)
+        if (m_InputBindings.Fire.IsPressed)
         {
             m_UserCmd.Buttons |= IN_FIRE;
         }
@@ -142,16 +145,14 @@ public class PlayerInputSynchronization : NetworkBehaviour
     */
     private void LocalPlayerFixedUpdate()
     {
-        if (m_UserCmd.Buttons != m_LastUserCmd.Buttons)
+        PipeUserCommand(m_UserCmd);    
+        if (!isServer)
         {
-            // Handle local user cmd.
-            m_TargetPlayer.ProcessUserCmd(m_UserCmd);
-
-            PipeUserCommand(m_UserCmd);
-
-            // Update user buttons.
-            m_LastUserCmd.Buttons = m_UserCmd.Buttons;
-        }
+            StoredCommands.Enqueue(m_UserCmd);
+        } 
+        // Update user buttons.
+        m_LastUserCmd.Buttons = m_UserCmd.Buttons;
+        m_UserCmd = CreateUserCmd();
     }
 
     /*
@@ -160,11 +161,7 @@ public class PlayerInputSynchronization : NetworkBehaviour
     */
     private void FixedUpdateServer()
     {
-        while (m_StoredCmds.Count != 0)
-        {
-            var commandToCompute = m_StoredCmds.Dequeue();
-            m_TargetPlayer.ProcessUserCmd(commandToCompute);
-        }
+
     }
 
     public void PipeUserCommand(UserCmd cmd)
@@ -194,6 +191,8 @@ public class PlayerInputSynchronization : NetworkBehaviour
 
     public void HandleUserCommand(UserCmd cmd)
     {
+        m_LastIncomingSeq = cmd.SequenceNumber;
+        StoredCommands.Enqueue(cmd);
         if (cmd.SequenceNumber - m_LastIncomingSeq > 1)
         {
             //We are missing some commands lets start predicting
@@ -201,8 +200,41 @@ public class PlayerInputSynchronization : NetworkBehaviour
         }
         else
         {
-            m_LastIncomingSeq = cmd.SequenceNumber;
-            m_StoredCmds.Enqueue(cmd);
+        }
+    }
+
+    public bool NextUserCommand(out UserCmd cmd)
+    {
+        // Check for queued user cmds.
+        if (StoredCommands.Count > 0)
+        {
+            // Get next command.
+            cmd = StoredCommands.Dequeue();
+
+            // Push old command to history.
+            CommandHistory.PushFront(cmd);
+            
+            return true;
+        }
+
+        // Assign null val.
+        cmd = null;
+
+        return false;
+    }
+
+    public UserCmd LastUserCommand
+    {
+        get
+        {
+            // Ensure not empty.
+            if (!CommandHistory.IsEmpty)
+            {
+                // Return last processed command.
+                return CommandHistory.Front();
+            }
+
+            return null;
         }
     }
 }

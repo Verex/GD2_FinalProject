@@ -26,6 +26,15 @@ public class NetworkHandler : NetworkManager
         }
     }
 
+    public float RoundTripTime
+    {
+        //HACK-HACK:conversion from int32 to float is no bueno
+        get
+        {
+            return (float)(client.GetRTT() / 1000.0);
+        }
+    }
+
     public void RegisterShipSpawn(int playerId, Transform spawnTransform)
     {
         // Add to spawns dictionary.
@@ -43,6 +52,17 @@ public class NetworkHandler : NetworkManager
         NetworkServer.RegisterHandler(
             InputSynchronizationMessage.MessageID,
             ServerReceiveCommand
+        );
+    }
+
+    public override void OnStartClient(NetworkClient client)
+    {
+        base.OnStartClient(client);
+
+        // Listen for client update.
+        client.RegisterHandler(
+            ServerStateUpdate.MessageID,
+            ClientReceiveUpdate
         );
     }
 
@@ -157,6 +177,25 @@ public class NetworkHandler : NetworkManager
 
             // Send user command to object.
             input.HandleUserCommand(inputCommand);
+        }
+    }
+
+    void ClientReceiveUpdate(NetworkMessage message)
+    {
+        ServerStateUpdate updateMessage = message.ReadMessage<ServerStateUpdate>();
+
+        NetworkInstanceId netId = new NetworkInstanceId(updateMessage.netId);
+
+        GameObject foundObj = NetworkServer.FindLocalObject(netId);
+
+        if (foundObj == null) return;
+
+        if (message.conn.playerControllers[0].unetView.netId == netId)
+        {
+            PlayerNetworkTransform networkTransform = foundObj.GetComponent<PlayerNetworkTransform>();
+            PlayerState serverState = new PlayerState();
+            serverState.Origin = updateMessage.Origin;
+            networkTransform.OnServerFrame(serverState);
         }
     }
 }

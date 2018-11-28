@@ -5,12 +5,14 @@ using UnityEngine.Networking;
 
 public class ShipController : NetworkBehaviour
 {
+    [SerializeField] private GameObject m_ProjectilePrefab;
     [SerializeField] private float m_BaseForwardSpeed = 1.0f;
     [SerializeField] private float m_BaseForwardDistance = 1.0f;
     [SerializeField] private float m_BaseHorizontalSpeed = 1.0f;
     [SerializeField] private float m_BaseHorizontalDistance = 1.0f;
 
     public int HorizontalMoveDirection = 0;
+    public Player Owner;
 
     [TargetRpc]
     public void TargetSetupShip(NetworkConnection target)
@@ -35,8 +37,49 @@ public class ShipController : NetworkBehaviour
         }
     }
 
+    public PlayerState StateUpdate(UserCmd cmd, PlayerState predictedState, float dt)
+    {
+
+        PlayerState newState = new PlayerState();
+        Vector3 startingOrigin = predictedState.Origin;
+
+        bool moveLeft = cmd.ActionIsPressed(PlayerInputSynchronization.IN_LEFT),
+            moveRight = cmd.ActionIsPressed(PlayerInputSynchronization.IN_RIGHT);
+
+        Vector3 startingPosition = predictedState.Origin;
+        if (moveLeft ^ moveRight)
+        {
+            HorizontalMoveDirection = (moveLeft) ? -1 : 1;
+        }
+        else
+        {
+            HorizontalMoveDirection = 0;
+        }
+
+        newState.Origin = new Vector3(
+            startingPosition.x + (m_BaseHorizontalSpeed * HorizontalMoveDirection * dt),
+            startingPosition.y,
+            startingPosition.z
+        );
+
+        return newState;
+    }
+
+    void Awake()
+    {
+
+    }
+
+    void Update()
+    {
+
+    }
+
     private IEnumerator MoveForward()
     {
+        // Wait for race to start.
+        yield return new WaitUntil(() => RaceManager.Instance.CurrentState == RaceManager.RaceState.IN_PROGRESS);
+
         while (true)
         {
 
@@ -62,6 +105,9 @@ public class ShipController : NetworkBehaviour
 
     private IEnumerator MoveHorizontal()
     {
+        // Wait for race to start.
+        yield return new WaitUntil(() => RaceManager.Instance.CurrentState == RaceManager.RaceState.IN_PROGRESS);
+
         while (true)
         {
             if (HorizontalMoveDirection != 0)
@@ -91,7 +137,7 @@ public class ShipController : NetworkBehaviour
 
     void Start()
     {
-        StartCoroutine(MoveForward());
-        StartCoroutine(MoveHorizontal());
+        //StartCoroutine(MoveForward());
+        //StartCoroutine(MoveHorizontal());
     }
 }

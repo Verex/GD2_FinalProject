@@ -7,6 +7,7 @@ using UnityEngine.Assertions;
 
 
 [RequireComponent(typeof(PlayerInputSynchronization))]
+[RequireComponent(typeof(PlayerNetworkTransform))]
 public class Player : NetworkBehaviour
 {
 
@@ -15,17 +16,57 @@ public class Player : NetworkBehaviour
 
     private PlayerInputSynchronization m_Input;
 
-    public void Awake()
+    public PlayerInputSynchronization Input
     {
-        m_Input = GetComponent<PlayerInputSynchronization>();
+        get 
+        {
+            if (m_Input == null)
+            {
+                m_Input = GetComponent<PlayerInputSynchronization>();
+            }
+
+            return m_Input;
+        }
     }
+
+    public readonly float CONVERGENCE_RATE = 0.05f;
 
     public void Possess(ShipController sc)
     {
         Assert.IsNotNull(sc, "Cannot possess a null ship controller, stupid");
+        
         m_TargetController = sc; //Possess target ship controller
 
+        // Assign reference to this player.
+        sc.Owner = this;
+
+        //Initialize Player Network Transform with the ship controller's position
+        var pnt = GetComponent<PlayerNetworkTransform>();
+        pnt.Initialize(sc.transform.position);
         //TODO(Any): Maybe create an OnShipPossessed event or something
+
+        if(!isServer)
+        {
+            sc.GetComponent<DynamicNetworkTransform>().enabled = false; //Disable client's dynamic network transform
+        }
+
+    }
+
+    public void MoveShip(Vector3 position) //Move our ship here
+    {
+        if(m_TargetController == null)
+        {
+            return;
+        }
+        m_TargetController.transform.position = position;
+    }
+
+    public Vector3 CurrentShipPosition
+    {
+        get
+        {
+            return m_TargetController.transform.position;
+        }
     }
 
     /*
@@ -36,41 +77,29 @@ public class Player : NetworkBehaviour
         TODO(Jake): Allow the local player to process their own usercmd upon creation AKA Client-Sided Prediction 
         https://en.wikipedia.org/wiki/Client-side_prediction
      */
-    public void ProcessUserCmd(UserCmd cmd)
+    public PlayerState ProcessUserCmd(UserCmd cmd, PlayerState playerState, float dt)
     {
-        if (cmd.ActionPressed(PlayerInputSynchronization.IN_FIRE))
+        // Check if we're trying to fire.
+        if (cmd.ActionWasReleased(PlayerInputSynchronization.IN_FIRE, Input.LastUserCommand))
         {
-            //Fire!
-        }
-        if (cmd.ActionPressed(PlayerInputSynchronization.IN_ACCELERATE))
-        {
-            //Accelerate!
-            Debug.Log("Accelerate!");
-        }
-
-        bool moveLeft = cmd.ActionPressed(PlayerInputSynchronization.IN_LEFT),
-            moveRight = cmd.ActionPressed(PlayerInputSynchronization.IN_RIGHT);
-
-        if (moveLeft ^ moveRight)
-        {
-            if (moveLeft)
-            {
-                m_TargetController.HorizontalMoveDirection = -1;
-            }
-            else
-            {
-                m_TargetController.HorizontalMoveDirection = 1;
-            }
+            Debug.Log("Fired!");
         }
         else
         {
-            m_TargetController.HorizontalMoveDirection = 0;
+            //Debug.Log("NOt fired");
         }
+
+        if(m_TargetController)
+        {
+            return m_TargetController.StateUpdate(cmd, playerState, dt); //Move our ship
+        }
+        
+        return null;
     }
 
     public void Update()
     {
-
+        
     }
 
 }
