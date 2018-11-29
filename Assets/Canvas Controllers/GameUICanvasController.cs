@@ -74,7 +74,12 @@ public class GameUICanvasController : CanvasController
 
     public void OnRaceStateChanged(RaceManager.RaceState raceState)
     {
-        
+        // Check if game has finished.
+        if (raceState == RaceManager.RaceState.FINISHED)
+        {
+            // Transition to ending game scene.
+            PerformTransitionWithIdentifier("GameEnd");
+        }
     }
 
     #endregion

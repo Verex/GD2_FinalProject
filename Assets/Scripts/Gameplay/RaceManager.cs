@@ -69,6 +69,8 @@ public class RaceManager : NetworkBehaviour
         // Assign new race state.
         CurrentState = RaceState.IN_PROGRESS;
 
+        CurrentState = RaceState.FINISHED;
+
         yield break;
     }
 
