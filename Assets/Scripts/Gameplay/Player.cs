@@ -60,7 +60,7 @@ public class Player : NetworkBehaviour
         {
             return;
         }
-        m_TargetController.transform.position = position;
+        m_TargetController.TargetPosition = position;
     }
 
     public Vector3 CurrentShipPosition

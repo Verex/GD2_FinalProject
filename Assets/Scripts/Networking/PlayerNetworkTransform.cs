@@ -81,9 +81,11 @@ public class PlayerNetworkTransform : NetworkBehaviour
 
     public readonly float CONVERGENCE_MULTIPLIER = 0.05f;
 
+    private Vector3 m_ServerPosition;
+
     public void Start()
     {
-        m_LagRecord = new LagRecord();
+
     }
 
     public void Awake()
@@ -102,6 +104,8 @@ public class PlayerNetworkTransform : NetworkBehaviour
         NewState = new PlayerState(position, Vector3.zero);
         //Initialize server state
         ServerState = new PlayerState(position, Vector3.zero);
+
+        m_LagRecord = new LagRecord();
 
         m_Initialized = true;
     }
@@ -153,15 +157,13 @@ public class PlayerNetworkTransform : NetworkBehaviour
         else
         {
             float latency = NetworkHandler.Instance.RoundTripTime;
-            var extrapolatedPosition = LastPredictedState.Origin + NewState.Velocity *  latency * CONVERGENCE_MULTIPLIER;
-            var interpolationFraction = Time.fixedDeltaTime / (latency * (1 + CONVERGENCE_MULTIPLIER));
-            var clientStatePosition = m_TargetPlayer.CurrentShipPosition;
+            var extrapolatedPosition = LastPredictedState.Origin + NewState.Velocity *  latency * (1 + CONVERGENCE_MULTIPLIER);
+            var dt = Time.fixedDeltaTime;
+            var interpolationFraction = dt / (latency * (1 + CONVERGENCE_MULTIPLIER));
+            var clientStatePosition = LastPredictedState.Origin;
             clientStatePosition += (extrapolatedPosition - clientStatePosition) * interpolationFraction;
             m_TargetPlayer.MoveShip(clientStatePosition);
         }
-
-        //Extrapolate position here
-        m_TargetPlayer.MoveShip(LastPredictedState.Origin);
     }
 
     private void FixedUpdateServer()
@@ -177,6 +179,7 @@ public class PlayerNetworkTransform : NetworkBehaviour
         ServerStateUpdate update = new ServerStateUpdate();
         update.netId = m_TargetPlayer.netId.Value;
         update.Origin = finalState.Origin;
+        update.Velocity = finalState.Velocity;
 
         m_TargetPlayer.MoveShip(finalState.Origin);
 
@@ -219,11 +222,11 @@ public class PlayerNetworkTransform : NetworkBehaviour
             }
         }
         ServerState = serverUpdate;
+        m_ServerPosition = serverUpdate.Origin;
 
         //If we're teleporting, go ahead and replay inputs from server position
-        if((ServerState.Velocity - m_LagRecord.FrameHistory[0].Velocity).magnitude > 0.3f)
-        {
-            Debug.Log("REPLAYING INPUTS FROM SERVER STATE");
+        if((ServerState.Velocity - m_LagRecord.FrameHistory[0].Velocity).magnitude > 1f)
+        {            
             LastPredictedState = ServerState;
             foreach(var frame in m_LagRecord.FrameHistory)
             {

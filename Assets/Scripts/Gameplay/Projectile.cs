@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 
 public class Projectile : NetworkBehaviour
 {
+    [SerializeField] private LayerMask m_InitialRayLayerMask;
     [SerializeField] private ContactFilter2D m_ContactFilter;
     [SerializeField] private Collider2D[] m_ContactColliders;
     [SerializeField] private float m_MaxDistance = 1.0f;
@@ -32,7 +33,8 @@ public class Projectile : NetworkBehaviour
             Vector2 targetPosition = (transform.position + (transform.right * m_MaxDistance));
             float distance = m_MaxDistance;
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, m_MaxDistance);
+            // Cast ray.
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, m_MaxDistance, m_InitialRayLayerMask);
 
             // Check for collision.
             if (hit.collider != null)

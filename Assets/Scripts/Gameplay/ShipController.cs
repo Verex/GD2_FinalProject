@@ -6,27 +6,52 @@ using UnityEngine.Networking;
 public class ShipController : NetworkBehaviour
 {
     [SerializeField] private GameObject m_ProjectilePrefab;
-    [SerializeField] private float m_BaseForwardSpeed = 1.0f;
-    [SerializeField] private float m_BaseForwardDistance = 1.0f;
-    [SerializeField] private float m_BaseHorizontalSpeed = 1.0f;
-    [SerializeField] private float m_BaseHorizontalDistance = 1.0f;
-
     [SerializeField] private float m_BaseAcceleration = 5.0f;
-    [SerializeField] private float m_MaxHorizontalVelocity = 3.0f;
+    [SerializeField] private float m_VerticalAcceleration = 1.5f;
+    [SerializeField] private float m_MaxHorizontalVelocity = 8.0f;
+    [SerializeField] private float m_MinimumHorizontalVelocity = 3f;
+    [SerializeField] private float m_MaxVerticalVelocity = 3f;
     [SerializeField] private float m_FrictionCoefficient = 0.3f;
     [SerializeField] private float m_HorizontalDecceleration = 0.1f;
-    [SerializeField] private LayerMask m_ShipLayer;
+    [SerializeField] private float m_BrakingDecceleration = 1.5f;
+    [SerializeField] private float m_AcceleratorMaxAcceleration = 5f;
+    private float m_AcceleratorAcceleration = 0f;
+    [SyncVar]private bool m_RaceBegun = false;
+    [SerializeField] private LayerMask m_CollisionLayer;
     private Vector3 m_CurrentAcceleration = Vector3.zero;
     private float m_NewSpeed = 0f;
     private float m_SpeedDrop = 0f;
     private float m_CurrentSpeed = 0f;
     private Vector3 m_CurrentVelocity;
+    private Vector3 m_CurrentPosition;
+    private bool m_OverrideVelocity = false;
+
+    public Vector3 Velocity
+    {
+        get
+        {
+            return m_CurrentVelocity;
+        }
+    }
+
+    public Vector3 Position
+    {
+        get
+        {
+            return m_CurrentPosition;
+        }
+    }
     
 
     public int HorizontalMoveDirection = 0;
     public Player Owner;
 
     private BoxCollider2D m_BoxCollider;
+    public Vector3 TargetPosition;
+    private float m_MovementSharpness = 15f;
+
+    private float m_CollisionInvincibility = 1f;
+    private bool m_CollisionImmunity = false;
 
     [TargetRpc]
     public void TargetSetupShip(NetworkConnection target)
@@ -54,6 +79,7 @@ public class ShipController : NetworkBehaviour
     private Vector3 ApplyFriction(float dt, Vector3 velocity)
     {
         float currentSpeed = velocity.magnitude;
+        float savedY = velocity.y;
         m_CurrentSpeed = currentSpeed;
         float speedDrop = m_HorizontalDecceleration * m_FrictionCoefficient * dt;
         m_SpeedDrop = speedDrop;
@@ -64,12 +90,33 @@ public class ShipController : NetworkBehaviour
         if(currentSpeed > 0f)
             newSpeed /= currentSpeed;
 
-        return velocity * newSpeed;
+        var newVelocity = velocity * newSpeed;
+        newVelocity.y = savedY;
+
+        return newVelocity;
     }
 
     void Awake()
     {
         m_BoxCollider = GetComponent<BoxCollider2D>();
+        RaceManager.Instance.OnRaceStateChanged.AddListener(
+            newState => {
+                m_AcceleratorAcceleration = m_AcceleratorMaxAcceleration;
+                m_RaceBegun = true;
+            }
+        );
+    }
+
+    void Update()
+    {
+        if(isServer)
+        {
+            transform.position = TargetPosition;
+        }
+        if(isClient && !isServer)
+        {
+            transform.position = Vector3.Lerp(transform.position, TargetPosition, 1 - Mathf.Exp(-m_MovementSharpness * Time.deltaTime));
+        }
     }
 
     public PlayerState StateUpdate(UserCmd cmd, PlayerState predictedState, float dt)
@@ -78,9 +125,17 @@ public class ShipController : NetworkBehaviour
         PlayerState newState = new PlayerState(Vector3.zero, Vector3.zero);
         Vector3 startingOrigin = predictedState.Origin;
         Vector3 startingVelocity = predictedState.Velocity;
+        if(m_OverrideVelocity == true)
+        {
+            m_OverrideVelocity = false;
+            startingVelocity = m_CurrentVelocity;
+        }
 
         bool moveLeft = cmd.ActionIsPressed(PlayerInputSynchronization.IN_LEFT),
             moveRight = cmd.ActionIsPressed(PlayerInputSynchronization.IN_RIGHT);
+
+        bool accel = cmd.ActionIsPressed(PlayerInputSynchronization.IN_ACCELERATE),
+            deccel = cmd.ActionIsPressed(PlayerInputSynchronization.IN_DECCELERATE);
 
         Vector3 startingPosition = predictedState.Origin;
         if (moveLeft ^ moveRight)
@@ -95,9 +150,32 @@ public class ShipController : NetworkBehaviour
         {
             startingVelocity = ApplyFriction(dt, startingVelocity);
         }
+
+        if (accel ^ deccel)
+        {
+            if(accel)
+            {
+                m_AcceleratorAcceleration = Mathf.Clamp(m_AcceleratorAcceleration + (3 * dt), 0f, m_AcceleratorMaxAcceleration);
+                m_CurrentAcceleration.y = m_AcceleratorAcceleration;
+            }
+            if(deccel)
+            {
+                m_AcceleratorAcceleration = 0f;
+                if(m_CurrentVelocity.y > m_MinimumHorizontalVelocity)
+                {
+                    m_CurrentAcceleration.y = -m_BrakingDecceleration;
+                }
+            }
+        }
+
+        if(!m_RaceBegun)
+        {
+            m_CurrentAcceleration = Vector3.zero;
+        }
+
         newState.Velocity = startingVelocity + m_CurrentAcceleration * dt;
-        m_CurrentVelocity = newState.Velocity;
         newState.Velocity.x = Mathf.Clamp(newState.Velocity.x, -m_MaxHorizontalVelocity, m_MaxHorizontalVelocity);
+        newState.Velocity.y = Mathf.Clamp(newState.Velocity.y, 0f, m_MaxVerticalVelocity);
         newState.Origin = startingOrigin + newState.Velocity * dt;
 
         if(isServer)
@@ -105,7 +183,7 @@ public class ShipController : NetworkBehaviour
             //Is there a collider where we're trying to move
             var overlappingColliders = Physics2D.OverlapBoxAll(
                 new Vector2(newState.Origin.x, newState.Origin.y),
-                m_BoxCollider.size, m_ShipLayer
+                m_BoxCollider.size, m_CollisionLayer
             );
             foreach(var collider in overlappingColliders)
             {
@@ -117,79 +195,73 @@ public class ShipController : NetworkBehaviour
                         colliderOrigin,
                         colliderDisplacement.normalized,
                         colliderDisplacement.magnitude,
-                        m_ShipLayer 
+                        m_CollisionLayer
                     );
-                    newState = predictedState;
-                    newState.Velocity = Vector3.zero;
-                    m_CurrentAcceleration = Vector3.zero;
+                    if(collider.tag == "Ship")
+                    {
+                        //Do our bounce
+                        var otherShip = collider.GetComponent<ShipController>();
+                        Vector3 p1 = startingPosition;
+                        Vector3 p2 = otherShip.Position;
+                        Vector3 v1 = startingVelocity;
+                        Vector3 v2 = otherShip.Velocity;
+
+                        Vector3 collisionVelocity1 = v1 - (Vector3.Dot(v1 - v2, p1 - p2) / ((p1-p2).magnitude * (p1-p2).magnitude)) * (p1 - p2);
+                        Vector3 collisionVelocity2 = v2 - (Vector3.Dot(v2 - v1, p2 - p1) / ((p2-p1).magnitude * (p2-p1).magnitude)) * (p2 - p1);
+
+                        collisionVelocity1.y = v1.y;
+                        collisionVelocity2.y = v2.y;
+                        otherShip.OverrideNextVelocity(collisionVelocity2);
+
+                        newState = predictedState;
+                        newState.Velocity = collisionVelocity1;
+                    }
+                    if(!m_CollisionImmunity && collider.tag == "Obstacle")
+                    {
+                        newState = predictedState;
+                        newState.Velocity.y *= 0.3f; //Slow down
+                        StartCoroutine(CollisionImmunity());
+
+                    }
+                    if(!m_CollisionImmunity && collider.tag == "Speed")
+                    {
+                        newState = predictedState;
+                        newState.Velocity.y *= 1.3f; //Speed up
+                        StartCoroutine(CollisionImmunity());
+                    }
+                    if(collider.tag == "Border")
+                    {
+                        newState = predictedState;
+                        newState.Velocity.x = 0f;
+                        m_CurrentAcceleration.x = 0;
+                    }
                 }
             }
         }
+        m_CurrentVelocity = newState.Velocity;
+        m_CurrentPosition = newState.Origin;
         return newState;
     }
-    private IEnumerator MoveForward()
+
+    private IEnumerator CollisionImmunity()
     {
-        // Wait for race to start.
-        yield return new WaitUntil(() => RaceManager.Instance.CurrentState == RaceManager.RaceState.IN_PROGRESS);
-
-        while (true)
+        if(!isServer)
         {
-
-            float time = m_BaseForwardDistance / m_BaseForwardSpeed,
-                elapsedTime = 0f,
-                startingY = transform.position.y,
-                targetY = startingY + m_BaseForwardDistance;
-
-            while (elapsedTime < time)
-            {
-                float yComponent = Mathf.Lerp(startingY, targetY, (elapsedTime / time));
-
-                transform.position = new Vector3(transform.position.x, yComponent, transform.position.z);
-
-                elapsedTime += Time.deltaTime;
-
-                yield return null;
-            }
-
             yield return null;
         }
+        m_CollisionImmunity = true;
+        yield return new WaitForSeconds(m_CollisionInvincibility);
+        m_CollisionImmunity = false;
+        yield return null;
     }
 
-    private IEnumerator MoveHorizontal()
+    public void OverrideNextVelocity(Vector3 velocity)
     {
-        // Wait for race to start.
-        yield return new WaitUntil(() => RaceManager.Instance.CurrentState == RaceManager.RaceState.IN_PROGRESS);
-
-        while (true)
+        if(!isServer)
         {
-            if (HorizontalMoveDirection != 0)
-            {
-                float time = m_BaseHorizontalDistance / m_BaseHorizontalSpeed,
-                    elapsedTime = 0f,
-                    startingX = transform.position.x,
-                    targetX = startingX + (m_BaseHorizontalDistance * HorizontalMoveDirection);
-
-                int currentMoveDirection = HorizontalMoveDirection;
-
-                while (elapsedTime < time && currentMoveDirection == HorizontalMoveDirection)
-                {
-                    float xComponent = Mathf.Lerp(startingX, targetX, (elapsedTime / time));
-
-                    transform.position = new Vector3(xComponent, transform.position.y, transform.position.z);
-
-                    elapsedTime += Time.deltaTime;
-
-                    yield return null;
-                }
-            }
-
-            yield return null;
+            return;
         }
-    }
-
-    void Start()
-    {
-        //StartCoroutine(MoveForward());
-        //StartCoroutine(MoveHorizontal());
+        m_CurrentVelocity = velocity;
+        m_OverrideVelocity = true;
     }
 }

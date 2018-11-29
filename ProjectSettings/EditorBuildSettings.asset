@@ -8,64 +8,67 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Testing/Offline.unity
     guid: 0464abef223bad342af548ba6ce7182c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 6d0163c463f662a4ab30b4956ccd53b5
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Offline.unity
     guid: 4720bc92740a4f045a599be93bc40d34
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Online.unity
     guid: 68146b13a5d315d41b04c6289a835a72
   - enabled: 0
     path: Assets/Scenes/TestScene.unity
     guid: 17ea522eefc6e4347bbb640179032317
-  - enabled: 0
+  - enabled: 1
     path: Assets/Canvas Flow/Examples/1. Game Example - Floaty Cube/Scenes/FCMenuScene.unity
     guid: bd5f90fd0537f4ca4b0c7174041ff171
-  - enabled: 0
+  - enabled: 1
     path: Assets/Canvas Flow/Examples/1. Game Example - Floaty Cube/Canvas Controllers/FCMenuCanvasController.unity
     guid: d22dc60fe124d4636bb22f6b71ea9a22
-  - enabled: 0
+  - enabled: 1
     path: Assets/Canvas Flow/Examples/1. Game Example - Floaty Cube/Canvas Controllers/FCLoadingCanvasController.unity
     guid: 21335105cbe3449658ded83b94331958
-  - enabled: 0
+  - enabled: 1
     path: Assets/Canvas Flow/Examples/1. Game Example - Floaty Cube/Scenes/FCGameScene.unity
     guid: 6e067cb5e2f8c4a23a3c6f8a17693485
-  - enabled: 0
+  - enabled: 1
     path: Assets/Canvas Flow/Examples/1. Game Example - Floaty Cube/Canvas Controllers/FCGameOverlayCanvasController.unity
     guid: 6e6a9f1501971456d9b25867772348c2
-  - enabled: 0
+  - enabled: 1
     path: Assets/Canvas Flow/Examples/1. Game Example - Floaty Cube/Canvas Controllers/FCGamePausedCanvasController.unity
     guid: 221e30684d3894e7aa9e1c3a14bc984e
-  - enabled: 0
+  - enabled: 1
     path: Assets/Canvas Flow/Examples/1. Game Example - Floaty Cube/Canvas Controllers/FCGameCompleteCanvasController.unity
     guid: cfc01f9a1e8e2465c99ed69ba37fac3c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Canvas Controllers/MainMenuCanvasController.unity
     guid: 3cedcc93924be73428db437021f71b66
-  - enabled: 0
+  - enabled: 1
     path: Assets/Canvas Controllers/HostGameCanvasController.unity
     guid: 6f443059a2b3ae64a936a693e7d270fa
-  - enabled: 0
+  - enabled: 1
     path: Assets/Canvas Controllers/JoinGameCanvasController.unity
     guid: efb8c9eee1833c74594df5b236a7d497
-  - enabled: 0
+  - enabled: 1
     path: Assets/Canvas Controllers/LoadingCanvasController.unity
     guid: db0b7fda90738c54ab18fdaa2b4273a6
-  - enabled: 0
+  - enabled: 1
     path: Assets/Canvas Controllers/GameUICanvasController.unity
     guid: 1acd39d8fe20d854bac0b59eb7e10108
-  - enabled: 0
+  - enabled: 1
     path: Assets/Canvas Controllers/GameWaitingCanvasController.unity
     guid: 3a2486f73ecbcfa4d9b929f7d1d9b047
+  - enabled: 1
+    path: Assets/Canvas Controllers/GameEndCanvasController.unity
+    guid: a10a4acd646bae148a7289a1fb3826dd
   - enabled: 0
     path: Assets/Scenes/TestScene.unity
     guid: 17ea522eefc6e4347bbb640179032317
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Testing/Online.unity
     guid: 7079a7db02c77c74db13762a2d1be010
   m_configObjects: {}

@@ -6,27 +6,38 @@ using P7.CanvasFlow;
 
 public class UIDataPass : MonoBehaviour
 {
-	[SerializeField] private RaceManager m_RaceManager;
+    [SerializeField] private RaceManager m_RaceManager;
 
     public void OnGameStoryboardWillPresentInitialCanvasController(StoryboardTransition transition)
     {
-		// Get our canvas controller.
+        // Get our canvas controller.
         GameWaitingCanvasController gameOverlayCanvasController =
             transition.DestinationCanvasController<GameWaitingCanvasController>();
 
-		gameOverlayCanvasController.Configure(m_RaceManager);
+        gameOverlayCanvasController.Configure(m_RaceManager);
     }
 
-	public void OnGameStoryboardWillPerformTransition(StoryboardTransition transition)
-	{
-		CanvasController destination = transition.DestinationCanvasController();
-		
-		if (destination is GameUICanvasController && transition.direction == StoryboardTransitionDirection.Downstream)
-		{
-			GameUICanvasController gameUICanvasController = (GameUICanvasController)destination;
+    public void OnGameStoryboardWillPerformTransition(StoryboardTransition transition)
+    {
+        CanvasController destination = transition.DestinationCanvasController();
 
-			// Configure UI with race manager. 
-			gameUICanvasController.Configure(m_RaceManager);
-		}
-	}
+        if (transition.direction == StoryboardTransitionDirection.Downstream)
+        {
+            if (destination is GameUICanvasController)
+            {
+                GameUICanvasController gameUICanvasController = (GameUICanvasController)destination;
+
+                // Configure UI with race manager. 
+                gameUICanvasController.Configure(m_RaceManager);
+            }
+
+            if (destination is GameEndCanvasController)
+            {
+                GameEndCanvasController gameEndCanvasController = (GameEndCanvasController)destination;
+
+                // Configure UI with race manager. 
+                gameEndCanvasController.Configure(m_RaceManager);
+            }
+        }
+    }
 }
