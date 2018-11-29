@@ -824,8 +824,8 @@ MonoBehaviour:
     bottom: 0
     right: 0
     top: 0
-  anchorMin: {x: 0.19999999, y: 0.6000001}
-  anchorMax: {x: 0.8, y: 0.80000013}
+  anchorMin: {x: 0.20000002, y: 0.6500001}
+  anchorMax: {x: 0.8000001, y: 0.7500001}
   localScale: {x: 1, y: 1}
   parent: {fileID: 114703236243168096}
   subviews:
@@ -5402,8 +5402,8 @@ MonoBehaviour:
     bottom: 0
     right: 0
     top: 0
-  anchorMin: {x: 0.19999999, y: 0.39999992}
-  anchorMax: {x: 0.8, y: 0.6}
+  anchorMin: {x: 0.20000002, y: 0.55}
+  anchorMax: {x: 0.8000001, y: 0.65000004}
   localScale: {x: 1, y: 1}
   parent: {fileID: 114703236243168096}
   subviews:
@@ -5770,18 +5770,18 @@ MonoBehaviour:
     name: HostButton
     rect01:
       serializedVersion: 2
-      x: 0.19999999
-      y: 0.39999992
+      x: 0.20000002
+      y: 0.55
       width: 0.6
-      height: 0.2000001
+      height: 0.100000046
   - identifier: cf3732c6-a55b-4f2e-b524-35a6c823669f
     name: JoinButton
     rect01:
       serializedVersion: 2
-      x: 0.19999999
-      y: 0.6000001
+      x: 0.20000002
+      y: 0.6500001
       width: 0.6
-      height: 0.20000003
+      height: 0.10000004
   sceneName: MainMenuCanvasController
   sceneAssetObject: {fileID: 102900000, guid: 3cedcc93924be73428db437021f71b66, type: 3}
   canvasAspectRatio: 1.7777778
