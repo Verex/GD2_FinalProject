@@ -1369,8 +1369,8 @@ MonoBehaviour:
     bottom: 0
     right: 0
     top: 0
-  anchorMin: {x: 0.5766518, y: 0.79999876}
-  anchorMax: {x: 0.7263801, y: 1.0000017}
+  anchorMin: {x: 0.5771563, y: 0.7999988}
+  anchorMax: {x: 0.7261638, y: 1.0000017}
   localScale: {x: 1, y: 1}
   parent: {fileID: 114645896788920956}
   subviews:
@@ -1582,8 +1582,8 @@ MonoBehaviour:
     bottom: 0
     right: 0
     top: 0
-  anchorMin: {x: 0.5752913, y: 0.7999987}
-  anchorMax: {x: 0.72588944, y: 1.0000015}
+  anchorMin: {x: 0.5752144, y: 0.79999876}
+  anchorMax: {x: 0.725678, y: 1.0000017}
   localScale: {x: 1, y: 1}
   parent: {fileID: 114681677557513964}
   subviews:
@@ -1826,8 +1826,8 @@ MonoBehaviour:
     bottom: 0
     right: 0
     top: 0
-  anchorMin: {x: 0.27473673, y: 0.80000013}
-  anchorMax: {x: 0.44173676, y: 1.0000002}
+  anchorMin: {x: 0.2747848, y: 0.80000013}
+  anchorMax: {x: 0.4414965, y: 1.0000002}
   localScale: {x: 1, y: 1}
   parent: {fileID: 114681677557513964}
   subviews:
@@ -2246,18 +2246,18 @@ MonoBehaviour:
     name: BackButton
     rect01:
       serializedVersion: 2
-      x: 0.27473673
+      x: 0.2747848
       y: 0.80000013
-      width: 0.16700001
-      height: 0.20000008
+      width: 0.1667117
+      height: 0.20000009
   - identifier: 493ad722-a903-4adf-a758-82c81f9abca9
     name: StartButton
     rect01:
       serializedVersion: 2
-      x: 0.5752913
-      y: 0.7999987
-      width: 0.1505982
-      height: 0.20000288
+      x: 0.5752144
+      y: 0.79999876
+      width: 0.15046364
+      height: 0.2000029
   sceneName: HostGameCanvasController
   sceneAssetObject: {fileID: 102900000, guid: 6f443059a2b3ae64a936a693e7d270fa, type: 3}
   canvasAspectRatio: 1.7777778
@@ -3476,18 +3476,18 @@ MonoBehaviour:
     name: BackButton
     rect01:
       serializedVersion: 2
-      x: 0.2704682
-      y: 0.79999876
-      width: 0.17107423
-      height: 0.20000288
+      x: 0.2703673
+      y: 0.7999988
+      width: 0.17117994
+      height: 0.2000029
   - identifier: 3d6baa93-ffbc-45a1-a6e6-6b6690366252
     name: JoinButton
     rect01:
       serializedVersion: 2
-      x: 0.5766518
-      y: 0.79999876
-      width: 0.14972827
-      height: 0.20000288
+      x: 0.5771563
+      y: 0.7999988
+      width: 0.14900751
+      height: 0.2000029
   sceneName: JoinGameCanvasController
   sceneAssetObject: {fileID: 102900000, guid: efb8c9eee1833c74594df5b236a7d497, type: 3}
   canvasAspectRatio: 1.7777778
@@ -6044,8 +6044,8 @@ MonoBehaviour:
     bottom: 0
     right: 0
     top: 0
-  anchorMin: {x: 0.2704682, y: 0.79999876}
-  anchorMax: {x: 0.44154245, y: 1.0000017}
+  anchorMin: {x: 0.2703673, y: 0.7999988}
+  anchorMax: {x: 0.44154721, y: 1.0000017}
   localScale: {x: 1, y: 1}
   parent: {fileID: 114645896788920956}
   subviews:

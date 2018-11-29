@@ -3,6 +3,7 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
+		[Toggle(USE_COMPOSITE)] _isCompositeEnabled("Use Composite Signal", Float) = 0
 	}
 	SubShader
 	{
@@ -15,6 +16,8 @@
 
 			#pragma vertex vert
 			#pragma fragment frag
+
+			#pragma shader_feature USE_COMPOSITE
 			
 			#include "UnityCG.cginc"
 
@@ -40,6 +43,18 @@
 				o.uv = v.uv;
 				return o;
 			}
+
+			uniform float signalResolution;
+			uniform float signalResolutionI;
+			uniform float signalResolutionQ;
+
+			uniform float2 videoSize;
+			uniform float2 textureSize;
+			uniform float2 outputSize;
+
+			uniform float blackLevel;
+			uniform float contrast;
+			uniform float tvVerticalResolution;
 			
 			sampler2D _MainTex;
 
@@ -61,27 +76,40 @@
 
 			fixed4 frag (v2f i) : SV_Target
 			{
-				float signalResolution=256.0;
-				float signalResolutionI=83.0;
-				float signalResolutionQ=25.0;
+				signalResolution=256.0;
+				signalResolutionI=100.0;
+				signalResolutionQ=80.0;
 
-				float2 videoSize = float2(256.0, 240.0);
-				float2 textureSize = float2(256.0, 240.0);
+				videoSize = float2(256.0, 240.0);
+				textureSize = float2(256.0, 240.0);
+				outputSize = float2(256.0, 240.0);
+
+				blackLevel = 0.0875;
+				contrast=1.0;
+				tvVerticalResolution=240.0;
+				
 				float offset = frac((i.uv.x * textureSize.x) - 0.5);
 				float3 tempColor = float3(0, 0, 0);
 				float X;
 				float3 c;
+				#ifdef USE_COMPOSITE
 				float range=ceil(0.5+videoSize.x/min(min(signalResolution,signalResolutionI),signalResolutionQ));
-				
 				for(float itr=-range;itr<range+2.0;itr++) {
 					X = (offset-(itr));
 					c = tex2D(_MainTex, float2(i.uv.x - X/textureSize.x, i.uv.y)).rgb;
 					tempColor += float3((c.x*STU(X,(signalResolution/videoSize.x))),(c.y*STU(X,(signalResolutionI/videoSize.x))),(c.z*STU(X,(signalResolutionQ/videoSize.x))));
 				}
-
-
 				tempColor=clamp(mul(YIQ_to_RGB, tempColor), 0.0, 1.0);
-				// just invert the colors
+				#else
+				float range=ceil(0.5+videoSize.x/signalResolution);
+				for(float itr=-range;itr<range+2.0;itr++) {
+					X = (offset-(itr));
+					c = tex2D(_MainTex, float2(i.uv.x - X/textureSize.x, i.uv.y)).rgb;
+					tempColor+=float3(c*STU(X,(signalResolution/videoSize.x)));
+				}
+				tempColor=clamp(tempColor,0.0,1.0);
+				#endif
+
 				return float4(tempColor, 1.0);
 			}
 			ENDCG

@@ -6489,6 +6489,7 @@ GameObject:
   - component: {fileID: 244851693}
   - component: {fileID: 244851692}
   - component: {fileID: 244851698}
+  - component: {fileID: 244851699}
   m_Layer: 0
   m_Name: TestEnemy (No Fire)
   m_TagString: Untagged
@@ -6654,6 +6655,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &244851699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 244851691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3503169a8ebc7bc4295bb67c9b255e2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rayDistance: 0
+  maxHP: 0
+  healthbar: {fileID: 0}
+  canvasgroup: {fileID: 0}
 --- !u!1 &312711342
 GameObject:
   m_ObjectHideFlags: 0

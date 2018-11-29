@@ -82,7 +82,11 @@ public class Projectile : NetworkBehaviour
     {
         if (BoxCollider.OverlapCollider(m_ContactFilter, m_ContactColliders) != 0)
         {
-            Debug.Log(m_ContactColliders[0].gameObject.name);
+            var collidedObject = m_ContactColliders[0].gameObject;
+            if(collidedObject.tag == "Enemy")
+            {
+                collidedObject.GetComponent<Enemy>().TakeDamage(1);
+            }
             NetworkServer.Destroy(gameObject);
         }
     }
