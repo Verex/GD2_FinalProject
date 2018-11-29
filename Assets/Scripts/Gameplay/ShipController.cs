@@ -15,6 +15,7 @@ public class ShipController : NetworkBehaviour
     [SerializeField] private float m_MaxHorizontalVelocity = 3.0f;
     [SerializeField] private float m_FrictionCoefficient = 0.3f;
     [SerializeField] private float m_HorizontalDecceleration = 0.1f;
+    [SerializeField] private LayerMask m_ShipLayer;
     private Vector3 m_CurrentAcceleration = Vector3.zero;
     private float m_NewSpeed = 0f;
     private float m_SpeedDrop = 0f;
@@ -24,6 +25,8 @@ public class ShipController : NetworkBehaviour
 
     public int HorizontalMoveDirection = 0;
     public Player Owner;
+
+    private BoxCollider2D m_BoxCollider;
 
     [TargetRpc]
     public void TargetSetupShip(NetworkConnection target)
@@ -64,6 +67,11 @@ public class ShipController : NetworkBehaviour
         return velocity * newSpeed;
     }
 
+    void Awake()
+    {
+        m_BoxCollider = GetComponent<BoxCollider2D>();
+    }
+
     public PlayerState StateUpdate(UserCmd cmd, PlayerState predictedState, float dt)
     {
 
@@ -92,20 +100,33 @@ public class ShipController : NetworkBehaviour
         newState.Velocity.x = Mathf.Clamp(newState.Velocity.x, -m_MaxHorizontalVelocity, m_MaxHorizontalVelocity);
         newState.Origin = startingOrigin + newState.Velocity * dt;
 
-
+        if(isServer)
+        {
+            //Is there a collider where we're trying to move
+            var overlappingColliders = Physics2D.OverlapBoxAll(
+                new Vector2(newState.Origin.x, newState.Origin.y),
+                m_BoxCollider.size, m_ShipLayer
+            );
+            foreach(var collider in overlappingColliders)
+            {
+                if(collider.gameObject != this.gameObject)
+                {
+                    var colliderOrigin = new Vector2(startingOrigin.x, startingOrigin.y);
+                    var colliderDisplacement = (new Vector2(newState.Origin.x, newState.Origin.y) - colliderOrigin);
+                    var colliderHit = Physics2D.Raycast(
+                        colliderOrigin,
+                        colliderDisplacement.normalized,
+                        colliderDisplacement.magnitude,
+                        m_ShipLayer 
+                    );
+                    newState = predictedState;
+                    newState.Velocity = Vector3.zero;
+                    m_CurrentAcceleration = Vector3.zero;
+                }
+            }
+        }
         return newState;
     }
-
-    void Awake()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
-
     private IEnumerator MoveForward()
     {
         // Wait for race to start.
