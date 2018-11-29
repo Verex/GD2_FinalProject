@@ -8,10 +8,15 @@ public class ShipController : NetworkBehaviour
     [SerializeField] private GameObject m_ProjectilePrefab;
     [SerializeField] private float m_BaseAcceleration = 5.0f;
     [SerializeField] private float m_VerticalAcceleration = 1.5f;
-    [SerializeField] private float m_MaxHorizontalVelocity = 3.0f;
+    [SerializeField] private float m_MaxHorizontalVelocity = 8.0f;
+    [SerializeField] private float m_MinimumHorizontalVelocity = 3f;
     [SerializeField] private float m_MaxVerticalVelocity = 3f;
     [SerializeField] private float m_FrictionCoefficient = 0.3f;
     [SerializeField] private float m_HorizontalDecceleration = 0.1f;
+    [SerializeField] private float m_BrakingDecceleration = 1.5f;
+    [SerializeField] private float m_AcceleratorMaxAcceleration = 5f;
+    private float m_AcceleratorAcceleration = 0f;
+    [SyncVar]private bool m_RaceBegun = false;
     [SerializeField] private LayerMask m_CollisionLayer;
     private Vector3 m_CurrentAcceleration = Vector3.zero;
     private float m_NewSpeed = 0f;
@@ -94,6 +99,12 @@ public class ShipController : NetworkBehaviour
     void Awake()
     {
         m_BoxCollider = GetComponent<BoxCollider2D>();
+        RaceManager.Instance.OnRaceStateChanged.AddListener(
+            newState => {
+                m_AcceleratorAcceleration = m_AcceleratorMaxAcceleration;
+                m_RaceBegun = true;
+            }
+        );
     }
 
     void Update()
@@ -123,6 +134,9 @@ public class ShipController : NetworkBehaviour
         bool moveLeft = cmd.ActionIsPressed(PlayerInputSynchronization.IN_LEFT),
             moveRight = cmd.ActionIsPressed(PlayerInputSynchronization.IN_RIGHT);
 
+        bool accel = cmd.ActionIsPressed(PlayerInputSynchronization.IN_ACCELERATE),
+            deccel = cmd.ActionIsPressed(PlayerInputSynchronization.IN_DECCELERATE);
+
         Vector3 startingPosition = predictedState.Origin;
         if (moveLeft ^ moveRight)
         {
@@ -137,10 +151,28 @@ public class ShipController : NetworkBehaviour
             startingVelocity = ApplyFriction(dt, startingVelocity);
         }
 
-        if(RaceManager.Instance.IsRacing)
+        if (accel ^ deccel)
         {
-            m_CurrentAcceleration.y = 1.5f;
+            if(accel)
+            {
+                m_AcceleratorAcceleration = Mathf.Clamp(m_AcceleratorAcceleration + (3 * dt), 0f, m_AcceleratorMaxAcceleration);
+                m_CurrentAcceleration.y = m_AcceleratorAcceleration;
+            }
+            if(deccel)
+            {
+                m_AcceleratorAcceleration = 0f;
+                if(m_CurrentVelocity.y > m_MinimumHorizontalVelocity)
+                {
+                    m_CurrentAcceleration.y = -m_BrakingDecceleration;
+                }
+            }
         }
+
+        if(!m_RaceBegun)
+        {
+            m_CurrentAcceleration = Vector3.zero;
+        }
+
         newState.Velocity = startingVelocity + m_CurrentAcceleration * dt;
         newState.Velocity.x = Mathf.Clamp(newState.Velocity.x, -m_MaxHorizontalVelocity, m_MaxHorizontalVelocity);
         newState.Velocity.y = Mathf.Clamp(newState.Velocity.y, 0f, m_MaxVerticalVelocity);
