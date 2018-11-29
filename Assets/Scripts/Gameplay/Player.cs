@@ -15,6 +15,8 @@ public class Player : NetworkBehaviour
     [SerializeField] private ShipController m_TargetController;
     [SerializeField] private GameObject m_ProjectilePrefab;
     [SerializeField] private Vector3 m_ProjectileOffset;
+    [SerializeField] private AudioSource audiosource;
+    [SerializeField] private AudioClip sound_shoot;
 
     private PlayerInputSynchronization m_Input;
 
@@ -92,6 +94,7 @@ public class Player : NetworkBehaviour
                     m_ProjectilePrefab.transform.rotation);
 
                 NetworkServer.Spawn(projectile);
+                audiosource.PlayOneShot(sound_shoot, 0.3f);
             }
             else
             {

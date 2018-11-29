@@ -26,6 +26,13 @@ public class ShipController : NetworkBehaviour
     private Vector3 m_CurrentPosition;
     private bool m_OverrideVelocity = false;
     private bool m_ControlThresholdHit = false;
+    [SerializeField] private float maxHP = 3;
+    [SerializeField] private Animator animator;
+    [SerializeField] private AudioSource audiosource;
+    [SerializeField] private AudioClip sound_explode;
+    [SerializeField] private AudioClip sound_boost;
+    [SerializeField] private AudioClip sound_hit;
+    [SyncVar] private float currentHP = 1;
 
     public Vector3 Velocity
     {
@@ -97,6 +104,11 @@ public class ShipController : NetworkBehaviour
         return newVelocity;
     }
 
+    void Start()
+    {
+        currentHP = maxHP;
+    }
+
     void Awake()
     {
         m_BoxCollider = GetComponent<BoxCollider2D>();
@@ -104,7 +116,7 @@ public class ShipController : NetworkBehaviour
             newState => {
                 if(newState == RaceManager.RaceState.IN_PROGRESS)
                 {
-                    m_CurrentAcceleration.y = 10f;
+                    m_CurrentAcceleration.y = 5f;
                     m_RaceBegun = true;
                 }
             }
@@ -235,6 +247,8 @@ public class ShipController : NetworkBehaviour
                     }
                     if(!m_CollisionImmunity && collider.tag == "Obstacle")
                     {
+                        audiosource.PlayOneShot(sound_hit, 0.7f);
+                        TakeDamage(1);
                         newState = predictedState;
                         newState.Velocity.y *= 0.3f; //Slow down
                         StartCoroutine(CollisionImmunity());
@@ -242,6 +256,7 @@ public class ShipController : NetworkBehaviour
                     }
                     if(!m_CollisionImmunity && collider.tag == "Speed")
                     {
+                        audiosource.PlayOneShot(sound_boost, 0.7f);
                         newState = predictedState;
                         newState.Velocity.y *= 1.3f; //Speed up
                         StartCoroutine(CollisionImmunity());
@@ -283,5 +298,34 @@ public class ShipController : NetworkBehaviour
         }
         m_CurrentVelocity = velocity;
         m_OverrideVelocity = true;
+    }
+
+    public void TakeDamage(int amount)
+    {
+        //Add a check for “isServer” to the TakeDamage function, so that damage will only be applied on the Server.
+        if (!isServer)
+        {
+            return;
+        }
+
+        currentHP -= amount;
+        if (currentHP <= 0)
+        {
+            StartCoroutine(Death());
+        }
+
+    }
+
+    private IEnumerator Death()
+    {
+        animator.Play("explosion");
+        audiosource.PlayOneShot(sound_explode, 0.7f);
+        yield return new WaitForSeconds(2f);
+        animator.Play("ship2", -1, 0f);
+        m_CurrentAcceleration.y = 0f;
+        Debug.Log("died");
+        yield return new WaitForSeconds(3f);
+        currentHP = maxHP;
+        m_CurrentAcceleration.y = 10f;
     }
 }

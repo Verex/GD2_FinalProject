@@ -8,6 +8,7 @@ TagManager:
   - Speed
   - Obstacle
   - Border
+  - Bullet
   layers:
   - Default
   - TransparentFX
