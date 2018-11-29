@@ -16,7 +16,7 @@ public class ShipController : NetworkBehaviour
     [SerializeField] private float m_BrakingDecceleration = 1.5f;
     [SerializeField] private float m_AcceleratorMaxAcceleration = 5f;
     private float m_AcceleratorAcceleration = 0f;
-    [SyncVar]private bool m_RaceBegun = false;
+    [SyncVar] private bool m_RaceBegun = false;
     [SerializeField] private LayerMask m_CollisionLayer;
     private Vector3 m_CurrentAcceleration = Vector3.zero;
     private float m_NewSpeed = 0f;
@@ -42,7 +42,7 @@ public class ShipController : NetworkBehaviour
             return m_CurrentPosition;
         }
     }
-    
+
 
     public int HorizontalMoveDirection = 0;
     public Player Owner;
@@ -86,9 +86,9 @@ public class ShipController : NetworkBehaviour
         m_SpeedDrop = speedDrop;
         float newSpeed = currentSpeed - speedDrop;
         m_NewSpeed = newSpeed;
-        if(newSpeed < 0.0f)
+        if (newSpeed < 0.0f)
             newSpeed = 0.0f;
-        if(currentSpeed > 0f)
+        if (currentSpeed > 0f)
             newSpeed /= currentSpeed;
 
         var newVelocity = velocity * newSpeed;
@@ -101,8 +101,9 @@ public class ShipController : NetworkBehaviour
     {
         m_BoxCollider = GetComponent<BoxCollider2D>();
         RaceManager.Instance.OnRaceStateChanged.AddListener(
-            newState => {
-                if(newState == RaceManager.RaceState.IN_PROGRESS)
+            newState =>
+            {
+                if (newState == RaceManager.RaceState.IN_PROGRESS)
                 {
                     m_CurrentAcceleration.y = 10f;
                     m_RaceBegun = true;
@@ -113,13 +114,21 @@ public class ShipController : NetworkBehaviour
 
     void Update()
     {
-        if(isServer)
+        if (isServer)
         {
             transform.position = TargetPosition;
         }
-        if(isClient && !isServer)
+        if (isClient && !isServer)
         {
-            transform.position = Vector3.Lerp(transform.position, TargetPosition, 1 - Mathf.Exp(-m_MovementSharpness * Time.deltaTime));
+            Vector3 newPos = Vector3.Lerp(transform.position, TargetPosition, 1 - Mathf.Exp(-m_MovementSharpness * Time.deltaTime));
+            if (!float.IsNaN(newPos.x) && !float.IsNaN(newPos.y) && !float.IsNaN(newPos.z))
+            {
+                transform.position = newPos;
+            }
+            else
+            {
+                Debug.Log("We almost assigned position to NaN.");
+            }
         }
     }
 
@@ -129,7 +138,7 @@ public class ShipController : NetworkBehaviour
         PlayerState newState = new PlayerState(Vector3.zero, Vector3.zero);
         Vector3 startingOrigin = predictedState.Origin;
         Vector3 startingVelocity = predictedState.Velocity;
-        if(m_OverrideVelocity == true)
+        if (m_OverrideVelocity == true)
         {
             m_OverrideVelocity = false;
             startingVelocity = m_CurrentVelocity;
@@ -150,16 +159,16 @@ public class ShipController : NetworkBehaviour
         {
             m_CurrentAcceleration.x = 0;
         }
-        if(m_CurrentAcceleration.x == 0)
+        if (m_CurrentAcceleration.x == 0)
         {
             startingVelocity = ApplyFriction(dt, startingVelocity);
         }
 
-        if(m_ControlThresholdHit)
+        if (m_ControlThresholdHit)
         {
             if (accel ^ deccel)
             {
-                if(accel)
+                if (accel)
                 {
                     m_AcceleratorAcceleration = Mathf.Clamp(m_AcceleratorAcceleration + (3 * dt), 0f, m_AcceleratorMaxAcceleration);
                     m_CurrentAcceleration.y = m_AcceleratorAcceleration;
@@ -168,10 +177,10 @@ public class ShipController : NetworkBehaviour
                 {
                     m_AcceleratorAcceleration = Mathf.Clamp(m_AcceleratorAcceleration - (3 * dt), 0f, m_AcceleratorMaxAcceleration);
                 }
-                if(deccel)
+                if (deccel)
                 {
                     m_AcceleratorAcceleration = 0f;
-                    if(m_CurrentVelocity.y > m_MinimumVerticalVelocity)
+                    if (m_CurrentVelocity.y > m_MinimumVerticalVelocity)
                     {
                         m_CurrentAcceleration.y = -m_BrakingDecceleration;
                     }
@@ -180,12 +189,12 @@ public class ShipController : NetworkBehaviour
         }
         else
         {
-            if(startingVelocity.y > m_MinimumVerticalVelocity)
+            if (startingVelocity.y > m_MinimumVerticalVelocity)
             {
                 m_ControlThresholdHit = true;
             }
         }
-        if(!m_RaceBegun)
+        if (!m_RaceBegun)
         {
             m_CurrentAcceleration = Vector3.zero;
         }
@@ -195,16 +204,16 @@ public class ShipController : NetworkBehaviour
         newState.Velocity.y = Mathf.Clamp(newState.Velocity.y, (m_ControlThresholdHit) ? m_MinimumVerticalVelocity : 0f, m_MaxVerticalVelocity);
         newState.Origin = startingOrigin + newState.Velocity * dt;
 
-        if(isServer)
+        if (isServer)
         {
             //Is there a collider where we're trying to move
             var overlappingColliders = Physics2D.OverlapBoxAll(
                 new Vector2(newState.Origin.x, newState.Origin.y),
                 m_BoxCollider.size, m_CollisionLayer
             );
-            foreach(var collider in overlappingColliders)
+            foreach (var collider in overlappingColliders)
             {
-                if(collider.gameObject != this.gameObject)
+                if (collider.gameObject != this.gameObject)
                 {
                     var colliderOrigin = new Vector2(startingOrigin.x, startingOrigin.y);
                     var colliderDisplacement = (new Vector2(newState.Origin.x, newState.Origin.y) - colliderOrigin);
@@ -214,7 +223,7 @@ public class ShipController : NetworkBehaviour
                         colliderDisplacement.magnitude,
                         m_CollisionLayer
                     );
-                    if(collider.tag == "Ship")
+                    if (collider.tag == "Ship")
                     {
                         //Do our bounce
                         var otherShip = collider.GetComponent<ShipController>();
@@ -223,8 +232,8 @@ public class ShipController : NetworkBehaviour
                         Vector3 v1 = startingVelocity;
                         Vector3 v2 = otherShip.Velocity;
 
-                        Vector3 collisionVelocity1 = v1 - (Vector3.Dot(v1 - v2, p1 - p2) / ((p1-p2).magnitude * (p1-p2).magnitude)) * (p1 - p2);
-                        Vector3 collisionVelocity2 = v2 - (Vector3.Dot(v2 - v1, p2 - p1) / ((p2-p1).magnitude * (p2-p1).magnitude)) * (p2 - p1);
+                        Vector3 collisionVelocity1 = v1 - (Vector3.Dot(v1 - v2, p1 - p2) / ((p1 - p2).magnitude * (p1 - p2).magnitude)) * (p1 - p2);
+                        Vector3 collisionVelocity2 = v2 - (Vector3.Dot(v2 - v1, p2 - p1) / ((p2 - p1).magnitude * (p2 - p1).magnitude)) * (p2 - p1);
 
                         collisionVelocity1.y = v1.y;
                         collisionVelocity2.y = v2.y;
@@ -233,20 +242,20 @@ public class ShipController : NetworkBehaviour
                         newState = predictedState;
                         newState.Velocity = collisionVelocity1;
                     }
-                    if(!m_CollisionImmunity && collider.tag == "Obstacle")
+                    if (!m_CollisionImmunity && collider.tag == "Obstacle")
                     {
                         newState = predictedState;
                         newState.Velocity.y *= 0.3f; //Slow down
                         StartCoroutine(CollisionImmunity());
 
                     }
-                    if(!m_CollisionImmunity && collider.tag == "Speed")
+                    if (!m_CollisionImmunity && collider.tag == "Speed")
                     {
                         newState = predictedState;
                         newState.Velocity.y *= 1.3f; //Speed up
                         StartCoroutine(CollisionImmunity());
                     }
-                    if(collider.tag == "Border")
+                    if (collider.tag == "Border")
                     {
                         newState = predictedState;
                         newState.Velocity.x = 0f;
@@ -265,7 +274,7 @@ public class ShipController : NetworkBehaviour
 
     private IEnumerator CollisionImmunity()
     {
-        if(!isServer)
+        if (!isServer)
         {
             yield return null;
         }
@@ -277,7 +286,7 @@ public class ShipController : NetworkBehaviour
 
     public void OverrideNextVelocity(Vector3 velocity)
     {
-        if(!isServer)
+        if (!isServer)
         {
             return;
         }

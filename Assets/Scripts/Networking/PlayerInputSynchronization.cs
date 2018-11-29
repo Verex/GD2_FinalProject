@@ -110,7 +110,7 @@ public class PlayerInputSynchronization : NetworkBehaviour
         {
             m_UserCmd.Buttons |= IN_ACCELERATE;
         }
-        if (m_InputBindings.Deccelerate.IsPressed)
+        if (m_InputBindings.Decelerate.IsPressed)
         {
             m_UserCmd.Buttons |= IN_DECCELERATE;
         }

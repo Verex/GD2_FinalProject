@@ -6,7 +6,7 @@ public class PlayerInputBindings : PlayerActionSet
     public PlayerAction Left;
     public PlayerAction Right;
     public PlayerAction Accelerate;
-    public PlayerAction Deccelerate;
+    public PlayerAction Decelerate;
     public PlayerAction Fire;
 
     public PlayerInputBindings()
@@ -14,7 +14,7 @@ public class PlayerInputBindings : PlayerActionSet
         Left = CreatePlayerAction("Strafe Left");
         Right = CreatePlayerAction("Strafe Right");
         Accelerate = CreatePlayerAction("Accelerate");
-        Deccelerate = CreatePlayerAction("Deccelerate");
+        Decelerate = CreatePlayerAction("Decelerate");
         Fire = CreatePlayerAction("Fire");
     }
 
@@ -22,10 +22,18 @@ public class PlayerInputBindings : PlayerActionSet
     {
         
         Left.AddDefaultBinding(Key.A);
+        Left.AddDefaultBinding(InputControlType.LeftStickLeft);
+
         Right.AddDefaultBinding(Key.D);
+        Right.AddDefaultBinding(InputControlType.LeftStickRight);
+
         Accelerate.AddDefaultBinding(Key.W);
-        Deccelerate.AddDefaultBinding(Key.S);
+        Accelerate.AddDefaultBinding(InputControlType.LeftStickUp);
+
+        Decelerate.AddDefaultBinding(Key.S);
+        Decelerate.AddDefaultBinding(InputControlType.LeftStickDown);
 
         Fire.AddDefaultBinding(Key.Space);
+        Fire.AddDefaultBinding(InputControlType.Action1);
     }
 }
