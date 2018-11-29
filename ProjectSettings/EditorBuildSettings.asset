@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/Scenes/Testing/Offline.unity
+    guid: 0464abef223bad342af548ba6ce7182c
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 6d0163c463f662a4ab30b4956ccd53b5
@@ -17,7 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Online.unity
     guid: 68146b13a5d315d41b04c6289a835a72
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TestScene.unity
     guid: 17ea522eefc6e4347bbb640179032317
   - enabled: 1
@@ -62,4 +65,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TestScene.unity
     guid: 17ea522eefc6e4347bbb640179032317
+  - enabled: 0
+    path: Assets/Scenes/Testing/Online.unity
+    guid: 7079a7db02c77c74db13762a2d1be010
   m_configObjects: {}
