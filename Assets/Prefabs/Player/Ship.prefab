@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c315c261ffae1145874e07dba879ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ProjectilePrefab: {fileID: 0}
   m_BaseForwardSpeed: 10
   m_BaseForwardDistance: 1
   m_BaseHorizontalSpeed: 10

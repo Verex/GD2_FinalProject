@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
+using UnityEngine;
 using UnityEngine.Networking;
 
 
@@ -36,7 +37,7 @@ public class UserCmd
     {
         if (lastCmd != null)
         {
-            return lastCmd.ActionIsPressed(field) && !ActionIsPressed(field);
+            return lastCmd.ActionIsPressed(field) && !this.ActionIsPressed(field);
         }
         
         return false;

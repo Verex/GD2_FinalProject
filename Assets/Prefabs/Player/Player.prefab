@@ -98,6 +98,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TargetController: {fileID: 0}
+  m_ProjectilePrefab: {fileID: 1915223599601744, guid: 7aec111981eabb24e8fdcee7085a3cea,
+    type: 2}
+  m_ProjectileOffset: {x: 0, y: 1, z: 0}
 --- !u!114 &114900883739720114
 MonoBehaviour:
   m_ObjectHideFlags: 1

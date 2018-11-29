@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnlineScene: Online
   m_SpawnPrefabs:
   - {fileID: 1844929861632008, guid: b768bde4934ad1a41bb2cde4d6f0c6a4, type: 2}
-  - {fileID: 1410707391131766, guid: fc24d6d49b2ef3e44a3d6d1b79a22264, type: 2}
+  - {fileID: 1915223599601744, guid: 7aec111981eabb24e8fdcee7085a3cea, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -126,4 +126,6 @@ MonoBehaviour:
   matchMaker: {fileID: 0}
   Players: []
   m_PlayerShipPrefab: {fileID: 1844929861632008, guid: b768bde4934ad1a41bb2cde4d6f0c6a4,
+    type: 2}
+  m_PlayerProjectilePrefab: {fileID: 1915223599601744, guid: 7aec111981eabb24e8fdcee7085a3cea,
     type: 2}

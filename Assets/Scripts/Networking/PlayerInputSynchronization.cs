@@ -228,10 +228,10 @@ public class PlayerInputSynchronization : NetworkBehaviour
         get
         {
             // Ensure not empty.
-            if (!CommandHistory.IsEmpty)
+            if (!CommandHistory.IsEmpty && CommandHistory.Size > 1)
             {
-                // Return last processed command.
-                return CommandHistory.Front();
+                // Return last processed command (before newly processed one).
+                return CommandHistory[1];
             }
 
             return null;

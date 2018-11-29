@@ -110,11 +110,11 @@ public class PlayerNetworkTransform : NetworkBehaviour
         }
         if(isLocalPlayer)
         {
-            UpdateClient();
+            FixedUpdateClient();
         }
     }
 
-    private void UpdateClient()
+    private void FixedUpdateClient()
     {
         UserCmd nextCmd = null;
 
