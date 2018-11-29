@@ -15,7 +15,7 @@ public class ShipController : NetworkBehaviour
     [SerializeField] private float m_MaxHorizontalVelocity = 3.0f;
     [SerializeField] private float m_FrictionCoefficient = 0.3f;
     [SerializeField] private float m_HorizontalDecceleration = 0.1f;
-    [SerializeField] private LayerMask m_ShipLayer;
+    [SerializeField] private LayerMask m_CollisionLayer;
     private Vector3 m_CurrentAcceleration = Vector3.zero;
     private float m_NewSpeed = 0f;
     private float m_SpeedDrop = 0f;
@@ -27,6 +27,8 @@ public class ShipController : NetworkBehaviour
     public Player Owner;
 
     private BoxCollider2D m_BoxCollider;
+    public Vector3 TargetPosition;
+    private float m_MovementSharpness = 15f;
 
     [TargetRpc]
     public void TargetSetupShip(NetworkConnection target)
@@ -72,6 +74,18 @@ public class ShipController : NetworkBehaviour
         m_BoxCollider = GetComponent<BoxCollider2D>();
     }
 
+    void Update()
+    {
+        if(isServer)
+        {
+            transform.position = TargetPosition;
+        }
+        if(isClient && !isServer)
+        {
+            transform.position = Vector3.Lerp(transform.position, TargetPosition, 1 - Mathf.Exp(-m_MovementSharpness * Time.deltaTime));
+        }
+    }
+
     public PlayerState StateUpdate(UserCmd cmd, PlayerState predictedState, float dt)
     {
 
@@ -105,7 +119,7 @@ public class ShipController : NetworkBehaviour
             //Is there a collider where we're trying to move
             var overlappingColliders = Physics2D.OverlapBoxAll(
                 new Vector2(newState.Origin.x, newState.Origin.y),
-                m_BoxCollider.size, m_ShipLayer
+                m_BoxCollider.size, m_CollisionLayer
             );
             foreach(var collider in overlappingColliders)
             {
@@ -117,7 +131,7 @@ public class ShipController : NetworkBehaviour
                         colliderOrigin,
                         colliderDisplacement.normalized,
                         colliderDisplacement.magnitude,
-                        m_ShipLayer 
+                        m_CollisionLayer
                     );
                     newState = predictedState;
                     newState.Velocity = Vector3.zero;

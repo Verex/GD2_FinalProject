@@ -185,8 +185,7 @@ public class NetworkHandler : NetworkManager
         ServerStateUpdate updateMessage = message.ReadMessage<ServerStateUpdate>();
 
         NetworkInstanceId netId = new NetworkInstanceId(updateMessage.netId);
-
-        GameObject foundObj = NetworkServer.FindLocalObject(netId);
+        GameObject foundObj = ClientScene.FindLocalObject(netId);
 
         if (foundObj == null) return;
 
