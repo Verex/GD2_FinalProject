@@ -15,9 +15,10 @@ public class PlayerState
     public Vector3 Velocity;
 };
 
-public class Frame {
+public class Frame
+{
 
-    public Frame(float deltaTime) 
+    public Frame(float deltaTime)
     {
         DeltaTime = deltaTime;
         DeltaPosition = Vector3.zero;
@@ -31,7 +32,7 @@ public class Frame {
     public UserCmd input;
 }
 
-public class LagRecord 
+public class LagRecord
 {
     public List<Frame> FrameHistory;
     public float HistoryDuration;
@@ -39,14 +40,14 @@ public class LagRecord
     public LagRecord()
     {
         FrameHistory = new List<Frame>();
-    } 
+    }
 }
 
 public class ServerStateUpdate : MessageBase
 {
     public static readonly short MessageID = 889;
     public uint netId;
-    
+
     public Vector3 Origin;
     public Vector3 Velocity;
 
@@ -116,15 +117,15 @@ public class PlayerNetworkTransform : NetworkBehaviour
     }
     void FixedUpdate()
     {
-        if(!m_Initialized)
+        if (!m_Initialized)
         {
             return;
         }
-        if(isServer)
+        if (isServer)
         {
             FixedUpdateServer();
         }
-        if(isLocalPlayer)
+        if (isLocalPlayer)
         {
             FixedUpdateClient();
         }
@@ -134,7 +135,7 @@ public class PlayerNetworkTransform : NetworkBehaviour
     {
         UserCmd nextCmd = null;
 
-        while(m_PlayerInput.NextUserCommand(out nextCmd))
+        while (m_PlayerInput.NextUserCommand(out nextCmd))
         {
             //Temporary state for client prediction
             NewState = m_TargetPlayer.ProcessUserCmd(nextCmd, LastPredictedState, Time.fixedDeltaTime);
@@ -150,14 +151,14 @@ public class PlayerNetworkTransform : NetworkBehaviour
 
             LastPredictedState = NewState;
         }
-        if(isServer)
+        if (isServer)
         {
             m_TargetPlayer.MoveShip(LastPredictedState.Origin);
         }
         else
         {
             float latency = NetworkHandler.Instance.RoundTripTime;
-            var extrapolatedPosition = LastPredictedState.Origin + NewState.Velocity *  latency * (1 + CONVERGENCE_MULTIPLIER);
+            var extrapolatedPosition = LastPredictedState.Origin + NewState.Velocity * latency * (1 + CONVERGENCE_MULTIPLIER);
             var dt = Time.fixedDeltaTime;
             var interpolationFraction = dt / (latency * (1 + CONVERGENCE_MULTIPLIER));
             var clientStatePosition = LastPredictedState.Origin;
@@ -171,7 +172,7 @@ public class PlayerNetworkTransform : NetworkBehaviour
         PlayerState finalState = ServerState;
         UserCmd nextCmd = null;
 
-        while(m_PlayerInput.NextUserCommand(out nextCmd))
+        while (m_PlayerInput.NextUserCommand(out nextCmd))
         {
             finalState = m_TargetPlayer.ProcessUserCmd(nextCmd, finalState, Time.fixedDeltaTime);
         }
@@ -195,7 +196,7 @@ public class PlayerNetworkTransform : NetworkBehaviour
 
     public void OnServerFrame(PlayerState serverUpdate)
     {
-        if(isServer)
+        if (isServer)
         {
             LastPredictedState = serverUpdate;
             return;
@@ -203,10 +204,10 @@ public class PlayerNetworkTransform : NetworkBehaviour
         float latency = NetworkHandler.Instance.RoundTripTime;
         float simulationTime = Mathf.Max(0, m_LagRecord.HistoryDuration - latency);
         m_LagRecord.HistoryDuration = m_LagRecord.HistoryDuration - simulationTime;
-    
-        while(m_LagRecord.FrameHistory.Count > 0 && simulationTime > 0)
+
+        while (m_LagRecord.FrameHistory.Count > 0 && simulationTime > 0)
         {
-            if(simulationTime >= m_LagRecord.FrameHistory[0].DeltaTime)
+            if (simulationTime >= m_LagRecord.FrameHistory[0].DeltaTime)
             {
                 simulationTime -= m_LagRecord.FrameHistory[0].DeltaTime;
                 m_LagRecord.FrameHistory.RemoveAt(0);
@@ -225,26 +226,28 @@ public class PlayerNetworkTransform : NetworkBehaviour
         m_ServerPosition = serverUpdate.Origin;
 
         //If we're teleporting, go ahead and replay inputs from server position
-        if((ServerState.Velocity - m_LagRecord.FrameHistory[0].Velocity).magnitude > 1f)
-        {            
-            LastPredictedState = ServerState;
-            foreach(var frame in m_LagRecord.FrameHistory)
-            {
-                NewState = m_TargetPlayer.ProcessUserCmd(frame.input, LastPredictedState, frame.DeltaTime);
-                frame.DeltaPosition = NewState.Origin - LastPredictedState.Origin;
-                frame.Velocity = NewState.Velocity;
-                LastPredictedState = NewState;
-            }
-        }
-        else
+        if (m_LagRecord.FrameHistory.Count > 0)
         {
-            LastPredictedState.Origin = serverUpdate.Origin;
-            //Add any unaccounted deltas
-            foreach(var frame in m_LagRecord.FrameHistory)
+            if ((ServerState.Velocity - m_LagRecord.FrameHistory[0].Velocity).magnitude > 1f)
             {
-                LastPredictedState.Origin += frame.DeltaPosition;
+                LastPredictedState = ServerState;
+                foreach (var frame in m_LagRecord.FrameHistory)
+                {
+                    NewState = m_TargetPlayer.ProcessUserCmd(frame.input, LastPredictedState, frame.DeltaTime);
+                    frame.DeltaPosition = NewState.Origin - LastPredictedState.Origin;
+                    frame.Velocity = NewState.Velocity;
+                    LastPredictedState = NewState;
+                }
+            }
+            else
+            {
+                LastPredictedState.Origin = serverUpdate.Origin;
+                //Add any unaccounted deltas
+                foreach (var frame in m_LagRecord.FrameHistory)
+                {
+                    LastPredictedState.Origin += frame.DeltaPosition;
+                }
             }
         }
-
     }
 }
