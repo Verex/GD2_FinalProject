@@ -20,6 +20,14 @@ public class RaceManager : NetworkBehaviour
     [SyncVar(hook = "OnRaceStateReceived")] public RaceState CurrentState;
     public float StartingTime;
 
+    public bool IsRacing
+    {
+        get 
+        {
+            return CurrentState == RaceState.IN_PROGRESS;
+        }
+    }
+
 
     [SerializeField] private float m_RaceStartDelay = 3.0f;
     private static RaceManager s_Instance;

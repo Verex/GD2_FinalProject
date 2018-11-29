@@ -36202,7 +36202,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: 21300000, guid: 7a925920b704d624bbe85712f6e127cf, type: 3}
       - {fileID: 21300002, guid: 7a925920b704d624bbe85712f6e127cf, type: 3}
-      m_AnimationSpeed: 6
+      m_AnimationSpeed: 6.0000005
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 2, y: 61, z: 0}
@@ -36210,7 +36210,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: 21300000, guid: 7a925920b704d624bbe85712f6e127cf, type: 3}
       - {fileID: 21300002, guid: 7a925920b704d624bbe85712f6e127cf, type: 3}
-      m_AnimationSpeed: 6
+      m_AnimationSpeed: 6.0000005
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: -4, y: 84, z: 0}
@@ -36471,7 +36471,7 @@ GameObject:
   - component: {fileID: 732542074}
   m_Layer: 9
   m_Name: Borders
-  m_TagString: Untagged
+  m_TagString: Border
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45445,9 +45445,9 @@ GameObject:
   - component: {fileID: 1626803630}
   - component: {fileID: 1626803629}
   - component: {fileID: 1626803628}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Fence Colliders
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54081,9 +54081,9 @@ GameObject:
   - component: {fileID: 1876245001}
   - component: {fileID: 1876245000}
   - component: {fileID: 1876244999}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Spikes
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55492,9 +55492,9 @@ GameObject:
   - component: {fileID: 2031349520}
   - component: {fileID: 2031349519}
   - component: {fileID: 2031349518}
-  m_Layer: 13
+  m_Layer: 9
   m_Name: Speed Colliders
-  m_TagString: Untagged
+  m_TagString: Speed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
