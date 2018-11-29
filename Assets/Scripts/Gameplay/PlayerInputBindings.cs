@@ -23,17 +23,22 @@ public class PlayerInputBindings : PlayerActionSet
         
         Left.AddDefaultBinding(Key.A);
         Left.AddDefaultBinding(InputControlType.LeftStickLeft);
+        Left.AddDefaultBinding(InputControlType.DPadLeft);
 
         Right.AddDefaultBinding(Key.D);
         Right.AddDefaultBinding(InputControlType.LeftStickRight);
+        Right.AddDefaultBinding(InputControlType.DPadRight);
 
         Accelerate.AddDefaultBinding(Key.W);
         Accelerate.AddDefaultBinding(InputControlType.LeftStickUp);
+        Accelerate.AddDefaultBinding(InputControlType.DPadUp);
 
         Decelerate.AddDefaultBinding(Key.S);
         Decelerate.AddDefaultBinding(InputControlType.LeftStickDown);
+        Decelerate.AddDefaultBinding(InputControlType.DPadDown);
 
         Fire.AddDefaultBinding(Key.Space);
         Fire.AddDefaultBinding(InputControlType.Action1);
+        Fire.AddDefaultBinding(InputControlType.RightTrigger);
     }
 }
