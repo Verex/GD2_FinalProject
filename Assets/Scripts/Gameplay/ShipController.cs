@@ -9,8 +9,8 @@ public class ShipController : NetworkBehaviour
     [SerializeField] private float m_BaseAcceleration = 5.0f;
     [SerializeField] private float m_VerticalAcceleration = 1.5f;
     [SerializeField] private float m_MaxHorizontalVelocity = 8.0f;
-    [SerializeField] private float m_MinimumHorizontalVelocity = 3f;
-    [SerializeField] private float m_MaxVerticalVelocity = 3f;
+    [SerializeField] private float m_MinimumVerticalVelocity = 3f;
+    [SerializeField] private float m_MaxVerticalVelocity = 8f;
     [SerializeField] private float m_FrictionCoefficient = 0.3f;
     [SerializeField] private float m_HorizontalDecceleration = 0.1f;
     [SerializeField] private float m_BrakingDecceleration = 1.5f;
@@ -25,6 +25,7 @@ public class ShipController : NetworkBehaviour
     private Vector3 m_CurrentVelocity;
     private Vector3 m_CurrentPosition;
     private bool m_OverrideVelocity = false;
+    private bool m_ControlThresholdHit = false;
 
     public Vector3 Velocity
     {
@@ -101,8 +102,11 @@ public class ShipController : NetworkBehaviour
         m_BoxCollider = GetComponent<BoxCollider2D>();
         RaceManager.Instance.OnRaceStateChanged.AddListener(
             newState => {
-                m_AcceleratorAcceleration = m_AcceleratorMaxAcceleration;
-                m_RaceBegun = true;
+                if(newState == RaceManager.RaceState.IN_PROGRESS)
+                {
+                    m_CurrentAcceleration.y = 10f;
+                    m_RaceBegun = true;
+                }
             }
         );
     }
@@ -151,23 +155,36 @@ public class ShipController : NetworkBehaviour
             startingVelocity = ApplyFriction(dt, startingVelocity);
         }
 
-        if (accel ^ deccel)
+        if(m_ControlThresholdHit)
         {
-            if(accel)
+            if (accel ^ deccel)
             {
-                m_AcceleratorAcceleration = Mathf.Clamp(m_AcceleratorAcceleration + (3 * dt), 0f, m_AcceleratorMaxAcceleration);
-                m_CurrentAcceleration.y = m_AcceleratorAcceleration;
-            }
-            if(deccel)
-            {
-                m_AcceleratorAcceleration = 0f;
-                if(m_CurrentVelocity.y > m_MinimumHorizontalVelocity)
+                if(accel)
                 {
-                    m_CurrentAcceleration.y = -m_BrakingDecceleration;
+                    m_AcceleratorAcceleration = Mathf.Clamp(m_AcceleratorAcceleration + (3 * dt), 0f, m_AcceleratorMaxAcceleration);
+                    m_CurrentAcceleration.y = m_AcceleratorAcceleration;
+                }
+                else
+                {
+                    m_AcceleratorAcceleration = Mathf.Clamp(m_AcceleratorAcceleration - (3 * dt), 0f, m_AcceleratorMaxAcceleration);
+                }
+                if(deccel)
+                {
+                    m_AcceleratorAcceleration = 0f;
+                    if(m_CurrentVelocity.y > m_MinimumVerticalVelocity)
+                    {
+                        m_CurrentAcceleration.y = -m_BrakingDecceleration;
+                    }
                 }
             }
         }
-
+        else
+        {
+            if(startingVelocity.y > m_MinimumVerticalVelocity)
+            {
+                m_ControlThresholdHit = true;
+            }
+        }
         if(!m_RaceBegun)
         {
             m_CurrentAcceleration = Vector3.zero;
@@ -175,7 +192,7 @@ public class ShipController : NetworkBehaviour
 
         newState.Velocity = startingVelocity + m_CurrentAcceleration * dt;
         newState.Velocity.x = Mathf.Clamp(newState.Velocity.x, -m_MaxHorizontalVelocity, m_MaxHorizontalVelocity);
-        newState.Velocity.y = Mathf.Clamp(newState.Velocity.y, 0f, m_MaxVerticalVelocity);
+        newState.Velocity.y = Mathf.Clamp(newState.Velocity.y, (m_ControlThresholdHit) ? m_MinimumVerticalVelocity : 0f, m_MaxVerticalVelocity);
         newState.Origin = startingOrigin + newState.Velocity * dt;
 
         if(isServer)
@@ -238,6 +255,9 @@ public class ShipController : NetworkBehaviour
                 }
             }
         }
+
+        newState.Velocity.x = Mathf.Clamp(newState.Velocity.x, -m_MaxHorizontalVelocity, m_MaxHorizontalVelocity);
+        newState.Velocity.y = Mathf.Clamp(newState.Velocity.y, (m_ControlThresholdHit) ? m_MinimumVerticalVelocity : 0f, m_MaxVerticalVelocity);
         m_CurrentVelocity = newState.Velocity;
         m_CurrentPosition = newState.Origin;
         return newState;
