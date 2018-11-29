@@ -4,59 +4,28 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class Enemy : NetworkBehaviour {
-
-    //distance of the raycast
-    [SerializeField]
-    private float rayDistance;
+public class Enemy : NetworkBehaviour
+{
 
     [SerializeField]
-    private float maxHP;
-
-    [SerializeField]
-    private Slider healthbar;
-
-    [SerializeField]
-    private CanvasGroup canvasgroup;
-
+    private float maxHP = 5;
     [SyncVar]
     private float currentHP = 1;
+    [SerializeField] private Animator animator;
+    [SerializeField] private AudioSource audiosource;
+    [SerializeField] private AudioClip sound_explode;
 
-    private int layerMask;
-    private bool hit;
-    private Animator animator;
-
-    void Start () {
-        //does not collide outside of player layer
-        layerMask = (LayerMask.GetMask("Player"));
+    // Use this for initialization
+    void Start()
+    {
         currentHP = maxHP;
-        animator = GetComponent<Animator>();
-    }
-	
-	void Update () {
-
-        if (currentHP > 0)
-        {
-            //raycasting
-            Debug.DrawRay(transform.position, Vector2.down * 4f, Color.yellow);
-            RaycastHit2D raycast = Physics2D.Raycast(transform.position, Vector2.down, rayDistance, layerMask);
-            if (raycast.collider)
-            {
-                Debug.DrawRay(transform.position, Vector2.down * raycast.distance, Color.red);
-                hit = true;
-            }
-
-            //healthbar.value = currentHP / maxHP;
-        }
-        else
-        {
-            //canvasgroup.alpha = 0f;
-
-        }
-
     }
 
+    // Update is called once per frame
+    void Update()
+    {
 
+    }
 
     public void TakeDamage(int amount)
     {
@@ -76,10 +45,9 @@ public class Enemy : NetworkBehaviour {
 
     private IEnumerator Death()
     {
-        
-        animator.Play("defexplosion");
-        yield return new WaitForSeconds(0.6f);
+        audiosource.PlayOneShot(sound_explode, 0.7f);
+        animator.Play("explosion");
+        yield return new WaitForSeconds(1f);
         NetworkServer.Destroy(this.gameObject);
     }
-
 }

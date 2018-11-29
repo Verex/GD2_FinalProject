@@ -211,8 +211,8 @@ MonoBehaviour:
   m_BaseAcceleration: 21
   m_VerticalAcceleration: 1.5
   m_MaxHorizontalVelocity: 9
-  m_MinimumVerticalVelocity: 3
-  m_MaxVerticalVelocity: 8
+  m_MinimumVerticalVelocity: 2
+  m_MaxVerticalVelocity: 5
   m_FrictionCoefficient: 2
   m_HorizontalDecceleration: 8
   m_BrakingDecceleration: 1.5

@@ -11,6 +11,7 @@ public class ShipController : NetworkBehaviour
     [SerializeField] private float m_MaxHorizontalVelocity = 8.0f;
     [SerializeField] private float m_MinimumVerticalVelocity = 3f;
     [SerializeField] private float m_MaxVerticalVelocity = 8f;
+    [SerializeField] private float m_MaxVerticalBoostVelocity = 11f;
     [SerializeField] private float m_FrictionCoefficient = 0.3f;
     [SerializeField] private float m_HorizontalDecceleration = 0.1f;
     [SerializeField] private float m_BrakingDecceleration = 1.5f;
@@ -60,6 +61,7 @@ public class ShipController : NetworkBehaviour
 
     private float m_CollisionInvincibility = 1f;
     private bool m_CollisionImmunity = false;
+    private float m_LastMoveDirection = 0f;
 
     [TargetRpc]
     public void TargetSetupShip(NetworkConnection target)
@@ -131,7 +133,11 @@ public class ShipController : NetworkBehaviour
         }
         if(isClient && !isServer)
         {
-            transform.position = Vector3.Lerp(transform.position, TargetPosition, 1 - Mathf.Exp(-m_MovementSharpness * Time.deltaTime));
+            var newPosition = Vector3.Lerp(transform.position, TargetPosition, 1 - Mathf.Exp(-m_MovementSharpness * Time.deltaTime));
+            if(newPosition.x != float.NaN && newPosition.y != float.NaN && newPosition.z != float.NaN)
+            {
+                transform.position = newPosition;
+            }
         }
     }
 
@@ -157,6 +163,12 @@ public class ShipController : NetworkBehaviour
         if (moveLeft ^ moveRight)
         {
             m_CurrentAcceleration.x = ((moveLeft) ? -1 : 1) * m_BaseAcceleration;
+            var moveDirection = Mathf.Sign(m_CurrentAcceleration.x);
+            if(moveDirection != m_LastMoveDirection && (m_LastMoveDirection < 0f || m_LastMoveDirection > 0f))
+            {
+                m_CurrentAcceleration.x *= 1.5f;
+            }
+            m_LastMoveDirection = Mathf.Sign(m_CurrentAcceleration.x);
         }
         else
         {
@@ -245,7 +257,7 @@ public class ShipController : NetworkBehaviour
                         newState = predictedState;
                         newState.Velocity = collisionVelocity1;
                     }
-                    if(!m_CollisionImmunity && collider.tag == "Obstacle")
+                    if(!m_CollisionImmunity && (collider.tag == "Obstacle") || (collider.tag == "Enemy"))
                     {
                         audiosource.PlayOneShot(sound_hit, 0.7f);
                         TakeDamage(1);
@@ -258,7 +270,8 @@ public class ShipController : NetworkBehaviour
                     {
                         audiosource.PlayOneShot(sound_boost, 0.7f);
                         newState = predictedState;
-                        newState.Velocity.y *= 1.3f; //Speed up
+                        newState.Velocity.y *= 2f; //Speed up
+                        StartCoroutine(DecaySpeedBoost(3f));
                         StartCoroutine(CollisionImmunity());
                     }
                     if(collider.tag == "Border")
@@ -266,6 +279,10 @@ public class ShipController : NetworkBehaviour
                         newState = predictedState;
                         newState.Velocity.x = 0f;
                         m_CurrentAcceleration.x = 0;
+                    }
+                    if(collider.tag == "Finish")
+                    {
+                        RaceManager.Instance.CurrentState = RaceManager.RaceState.FINISHED;
                     }
                 }
             }
@@ -278,15 +295,31 @@ public class ShipController : NetworkBehaviour
         return newState;
     }
 
-    private IEnumerator CollisionImmunity()
+    private IEnumerator CollisionImmunity(float collisionTime = 0f)
     {
         if(!isServer)
         {
             yield return null;
         }
         m_CollisionImmunity = true;
-        yield return new WaitForSeconds(m_CollisionInvincibility);
+        yield return new WaitForSeconds((collisionTime < 0f || collisionTime > 0f) ? collisionTime : m_CollisionInvincibility);
         m_CollisionImmunity = false;
+        yield return null;
+    }
+
+    private IEnumerator DecaySpeedBoost(float timePeriod = 1f)
+    {
+        float elapsedTime = 0f;
+        var previousMax = m_MaxHorizontalVelocity;
+        m_MaxHorizontalVelocity = m_MaxVerticalBoostVelocity;
+        var deltaSpeed = (m_MaxHorizontalVelocity - previousMax) / timePeriod;
+        while(elapsedTime < timePeriod)
+        {
+            m_MaxHorizontalVelocity = Mathf.Clamp(m_MaxHorizontalVelocity - (deltaSpeed * Time.deltaTime), previousMax, m_MaxVerticalBoostVelocity);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        m_MaxHorizontalVelocity = previousMax;
         yield return null;
     }
 
@@ -320,12 +353,17 @@ public class ShipController : NetworkBehaviour
     {
         animator.Play("explosion");
         audiosource.PlayOneShot(sound_explode, 0.7f);
-        yield return new WaitForSeconds(2f);
+        OverrideNextVelocity(Vector3.zero);
+        m_CurrentAcceleration = Vector3.zero;
+        m_ControlThresholdHit = false;
+        m_RaceBegun = false;
+        m_CollisionImmunity = true;
+        yield return new WaitForSeconds(0.7f);
         animator.Play("ship2", -1, 0f);
-        m_CurrentAcceleration.y = 0f;
-        Debug.Log("died");
-        yield return new WaitForSeconds(3f);
+        m_RaceBegun = true;
+        m_CurrentAcceleration.y = 5f;
+        StartCoroutine(CollisionImmunity(2f));
         currentHP = maxHP;
-        m_CurrentAcceleration.y = 10f;
+        yield return null;
     }
 }

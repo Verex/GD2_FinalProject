@@ -9,6 +9,8 @@ TagManager:
   - Obstacle
   - Border
   - Bullet
+  - Enemy
+  - Finish
   layers:
   - Default
   - TransparentFX

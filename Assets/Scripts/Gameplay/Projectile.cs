@@ -80,6 +80,10 @@ public class Projectile : NetworkBehaviour
 
     private void UpdateCollisions()
     {
+        if(!isServer)
+        {
+            return;
+        }
         if (BoxCollider.OverlapCollider(m_ContactFilter, m_ContactColliders) != 0)
         {
             var collidedObject = m_ContactColliders[0].gameObject;

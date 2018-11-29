@@ -20,15 +20,16 @@ GameObject:
   m_Component:
   - component: {fileID: 4218861110511378}
   - component: {fileID: 212128810687924526}
-  - component: {fileID: 114617747638302018}
   - component: {fileID: 114529508062734292}
   - component: {fileID: 114769468053418242}
   - component: {fileID: 95690420643254348}
   - component: {fileID: 82453593755277030}
   - component: {fileID: 61627752684123426}
+  - component: {fileID: 114994506467325396}
+  - component: {fileID: 114370480470604722}
   m_Layer: 0
   m_Name: enemynew
-  m_TagString: Obstacle
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40,7 +41,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1061094125856038}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.44638634, y: -377.9586, z: 0}
+  m_LocalPosition: {x: 0.40431428, y: -141.99756, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -184,6 +185,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114370480470604722
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1061094125856038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3503169a8ebc7bc4295bb67c9b255e2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 2
+  animator: {fileID: 95690420643254348}
+  audiosource: {fileID: 82453593755277030}
+  sound_explode: {fileID: 8300000, guid: e28c0762b22d7a349b90d85c9d517e8a, type: 3}
 --- !u!114 &114529508062734292
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -197,21 +213,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delta: 5.5
   speed: 2
---- !u!114 &114617747638302018
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1061094125856038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1eb69df2c0fde6546b1c32b3b4ba0d17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHP: 1
-  animator: {fileID: 95690420643254348}
-  audiosource: {fileID: 82453593755277030}
-  sound_explode: {fileID: 8300000, guid: e28c0762b22d7a349b90d85c9d517e8a, type: 3}
 --- !u!114 &114769468053418242
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -244,6 +245,17 @@ MonoBehaviour:
     i15: 35
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &114994506467325396
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1061094125856038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf0a0855a779beb458abbf194a0d876d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212128810687924526
 SpriteRenderer:
   m_ObjectHideFlags: 1
