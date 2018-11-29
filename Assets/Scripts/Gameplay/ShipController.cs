@@ -261,6 +261,10 @@ public class ShipController : NetworkBehaviour
                         newState.Velocity.x = 0f;
                         m_CurrentAcceleration.x = 0;
                     }
+                    if (collider.tag == "FinishLine")
+                    {
+                        RaceManager.Instance.FinishRace();
+                    }
                 }
             }
         }

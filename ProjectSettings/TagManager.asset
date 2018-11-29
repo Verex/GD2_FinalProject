@@ -8,6 +8,7 @@ TagManager:
   - Speed
   - Obstacle
   - Border
+  - FinishLine
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Ship
   - Collision
   - Projectile
-  - 
+  - FinishLine
   - 
   - 
   - 

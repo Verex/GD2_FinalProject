@@ -1448,7 +1448,7 @@ Tilemap:
       - {fileID: 21300008, guid: c7db9bbab87d2f4419bb36c7230dece3, type: 3}
       - {fileID: 21300010, guid: c7db9bbab87d2f4419bb36c7230dece3, type: 3}
       - {fileID: 21300012, guid: c7db9bbab87d2f4419bb36c7230dece3, type: 3}
-      m_AnimationSpeed: 6
+      m_AnimationSpeed: 6.0000005
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: -4, y: 210, z: 0}
@@ -37275,7 +37275,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: 21300000, guid: 7a925920b704d624bbe85712f6e127cf, type: 3}
       - {fileID: 21300002, guid: 7a925920b704d624bbe85712f6e127cf, type: 3}
-      m_AnimationSpeed: 6.0000005
+      m_AnimationSpeed: 6
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 2, y: 61, z: 0}
@@ -37283,7 +37283,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: 21300000, guid: 7a925920b704d624bbe85712f6e127cf, type: 3}
       - {fileID: 21300002, guid: 7a925920b704d624bbe85712f6e127cf, type: 3}
-      m_AnimationSpeed: 6.0000005
+      m_AnimationSpeed: 6
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: -4, y: 84, z: 0}
@@ -42391,7 +42391,7 @@ GameObject:
   - component: {fileID: 846724231}
   m_Layer: 14
   m_Name: Finish
-  m_TagString: Untagged
+  m_TagString: FinishLine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

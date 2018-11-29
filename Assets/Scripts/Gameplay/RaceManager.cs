@@ -22,7 +22,7 @@ public class RaceManager : NetworkBehaviour
 
     public bool IsRacing
     {
-        get 
+        get
         {
             return CurrentState == RaceState.IN_PROGRESS;
         }
@@ -98,7 +98,17 @@ public class RaceManager : NetworkBehaviour
 
     public override void OnStartClient()
     {
+
         HandleRaceState(CurrentState);
+    }
+
+    public void FinishRace()
+    {
+        if (CurrentState == RaceState.IN_PROGRESS)
+        {
+            CurrentState = RaceState.FINISHED;
+            OnRaceStateChanged.Invoke(CurrentState);
+        }
     }
 
     private void OnRaceStateReceived(RaceState raceState)
