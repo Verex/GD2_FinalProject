@@ -11,6 +11,17 @@ public class ShipController : NetworkBehaviour
     [SerializeField] private float m_BaseHorizontalSpeed = 1.0f;
     [SerializeField] private float m_BaseHorizontalDistance = 1.0f;
 
+    [SerializeField] private float m_BaseAcceleration = 5.0f;
+    [SerializeField] private float m_MaxHorizontalVelocity = 3.0f;
+    [SerializeField] private float m_FrictionCoefficient = 0.3f;
+    [SerializeField] private float m_HorizontalDecceleration = 0.1f;
+    private Vector3 m_CurrentAcceleration = Vector3.zero;
+    private float m_NewSpeed = 0f;
+    private float m_SpeedDrop = 0f;
+    private float m_CurrentSpeed = 0f;
+    private Vector3 m_CurrentVelocity;
+    
+
     public int HorizontalMoveDirection = 0;
     public Player Owner;
 
@@ -37,11 +48,28 @@ public class ShipController : NetworkBehaviour
         }
     }
 
+    private Vector3 ApplyFriction(float dt, Vector3 velocity)
+    {
+        float currentSpeed = velocity.magnitude;
+        m_CurrentSpeed = currentSpeed;
+        float speedDrop = m_HorizontalDecceleration * m_FrictionCoefficient * dt;
+        m_SpeedDrop = speedDrop;
+        float newSpeed = currentSpeed - speedDrop;
+        m_NewSpeed = newSpeed;
+        if(newSpeed < 0.0f)
+            newSpeed = 0.0f;
+        if(currentSpeed > 0f)
+            newSpeed /= currentSpeed;
+
+        return velocity * newSpeed;
+    }
+
     public PlayerState StateUpdate(UserCmd cmd, PlayerState predictedState, float dt)
     {
 
-        PlayerState newState = new PlayerState();
+        PlayerState newState = new PlayerState(Vector3.zero, Vector3.zero);
         Vector3 startingOrigin = predictedState.Origin;
+        Vector3 startingVelocity = predictedState.Velocity;
 
         bool moveLeft = cmd.ActionIsPressed(PlayerInputSynchronization.IN_LEFT),
             moveRight = cmd.ActionIsPressed(PlayerInputSynchronization.IN_RIGHT);
@@ -49,18 +77,21 @@ public class ShipController : NetworkBehaviour
         Vector3 startingPosition = predictedState.Origin;
         if (moveLeft ^ moveRight)
         {
-            HorizontalMoveDirection = (moveLeft) ? -1 : 1;
+            m_CurrentAcceleration.x = ((moveLeft) ? -1 : 1) * m_BaseAcceleration;
         }
         else
         {
-            HorizontalMoveDirection = 0;
+            m_CurrentAcceleration.x = 0;
         }
+        if(m_CurrentAcceleration.x == 0)
+        {
+            startingVelocity = ApplyFriction(dt, startingVelocity);
+        }
+        newState.Velocity = startingVelocity + m_CurrentAcceleration * dt;
+        m_CurrentVelocity = newState.Velocity;
+        newState.Velocity.x = Mathf.Clamp(newState.Velocity.x, -m_MaxHorizontalVelocity, m_MaxHorizontalVelocity);
+        newState.Origin = startingOrigin + newState.Velocity * dt;
 
-        newState.Origin = new Vector3(
-            startingPosition.x + (m_BaseHorizontalSpeed * HorizontalMoveDirection * dt),
-            startingPosition.y,
-            startingPosition.z
-        );
 
         return newState;
     }

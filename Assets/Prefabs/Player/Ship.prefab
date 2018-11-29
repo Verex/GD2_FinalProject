@@ -91,10 +91,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c315c261ffae1145874e07dba879ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ProjectilePrefab: {fileID: 0}
   m_BaseForwardSpeed: 10
   m_BaseForwardDistance: 1
   m_BaseHorizontalSpeed: 10
   m_BaseHorizontalDistance: 1
+  m_BaseAcceleration: 21
+  m_MaxHorizontalVelocity: 9
+  m_FrictionCoefficient: 3
+  m_HorizontalDecceleration: 8
   HorizontalMoveDirection: 0
   Owner: {fileID: 0}
 --- !u!114 &114246120271303700
