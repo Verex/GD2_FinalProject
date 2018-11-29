@@ -13,12 +13,14 @@ public class Player : NetworkBehaviour
 
     //This is the target ship controller, it can be set in the editor or overrided at runtime. 
     [SerializeField] private ShipController m_TargetController;
+    [SerializeField] private GameObject m_ProjectilePrefab;
+    [SerializeField] private Vector3 m_ProjectileOffset;
 
     private PlayerInputSynchronization m_Input;
 
     public PlayerInputSynchronization Input
     {
-        get 
+        get
         {
             if (m_Input == null)
             {
@@ -34,7 +36,7 @@ public class Player : NetworkBehaviour
     public void Possess(ShipController sc)
     {
         Assert.IsNotNull(sc, "Cannot possess a null ship controller, stupid");
-        
+
         m_TargetController = sc; //Possess target ship controller
 
         // Assign reference to this player.
@@ -45,7 +47,7 @@ public class Player : NetworkBehaviour
         pnt.Initialize(sc.transform.position);
         //TODO(Any): Maybe create an OnShipPossessed event or something
 
-        if(!isServer)
+        if (!isServer)
         {
             sc.GetComponent<DynamicNetworkTransform>().enabled = false; //Disable client's dynamic network transform
         }
@@ -54,7 +56,7 @@ public class Player : NetworkBehaviour
 
     public void MoveShip(Vector3 position) //Move our ship here
     {
-        if(m_TargetController == null)
+        if (m_TargetController == null)
         {
             return;
         }
@@ -79,27 +81,30 @@ public class Player : NetworkBehaviour
      */
     public PlayerState ProcessUserCmd(UserCmd cmd, PlayerState playerState, float dt)
     {
-        // Check if we're trying to fire.
-        if (cmd.ActionWasReleased(PlayerInputSynchronization.IN_FIRE, Input.LastUserCommand))
+        if (isServer)
         {
-            Debug.Log("Fired!");
-        }
-        else
-        {
-            //Debug.Log("NOt fired");
+            // Check if we're trying to fire.
+            if (cmd.ActionWasReleased(PlayerInputSynchronization.IN_FIRE, Input.LastUserCommand))
+            {
+                GameObject projectile = Instantiate(
+                    m_ProjectilePrefab, 
+                    m_TargetController.transform.position + m_ProjectileOffset, 
+                    m_ProjectilePrefab.transform.rotation);
+
+                NetworkServer.Spawn(projectile);
+            }
+            else
+            {
+                //Debug.Log("NOt fired");
+            }
         }
 
-        if(m_TargetController)
+        if (m_TargetController)
         {
             return m_TargetController.StateUpdate(cmd, playerState, dt); //Move our ship
         }
-        
-        return null;
-    }
 
-    public void Update()
-    {
-        
+        return null;
     }
 
 }

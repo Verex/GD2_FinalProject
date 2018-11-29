@@ -193,9 +193,13 @@ public class NetworkHandler : NetworkManager
         if (message.conn.playerControllers[0].unetView.netId == netId)
         {
             PlayerNetworkTransform networkTransform = foundObj.GetComponent<PlayerNetworkTransform>();
-            PlayerState serverState = new PlayerState();
-            serverState.Origin = updateMessage.Origin;
-            networkTransform.OnServerFrame(serverState);
+            //Update the player network transform from the server
+            networkTransform.OnServerFrame(
+                new PlayerState(
+                    updateMessage.Origin,
+                    updateMessage.Velocity
+                )
+            );
         }
     }
 }
