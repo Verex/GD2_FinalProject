@@ -224,13 +224,9 @@ public class PlayerNetworkTransform : NetworkBehaviour
         ServerState = serverUpdate;
         m_ServerPosition = serverUpdate.Origin;
 
-        Debug.Log(serverUpdate.Velocity);
-
         //If we're teleporting, go ahead and replay inputs from server position
         if((ServerState.Velocity - m_LagRecord.FrameHistory[0].Velocity).magnitude > 1f)
-        {
-            Debug.Log("REPLAYING INPUTS FROM SERVER STATE");
-            
+        {            
             LastPredictedState = ServerState;
             foreach(var frame in m_LagRecord.FrameHistory)
             {

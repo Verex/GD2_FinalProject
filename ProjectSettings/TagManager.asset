@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ship
+  - Speed
+  - Obstacle
+  - Border
   layers:
   - Default
   - TransparentFX
@@ -16,7 +20,6 @@ TagManager:
   - Ship
   - Collision
   - Projectile
-  - 
   - 
   - 
   - 
